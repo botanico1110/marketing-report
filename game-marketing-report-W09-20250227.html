@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏营销动态周报 W09 2025 | Game Marketing Weekly</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --accent-yellow: #eab308;
+            --accent-blue: #3b82f6;
+            --border: #334155;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        
+        h1 { font-size: 2rem; margin-bottom: 10px; }
+        
+        .subtitle { color: var(--text-muted); font-size: 1rem; }
+        
+        .lang-switch {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .lang-btn {
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .section { margin-bottom: 50px; }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .burst-card {
+            border-left: 4px solid var(--accent-red);
+        }
+        
+        .burst-badge {
+            background: var(--accent-red);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), transparent);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .tag.positive { background: rgba(34, 197, 94, 0.2); color: var(--accent-green); }
+        .tag.negative { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .tag.neutral { background: rgba(234, 179, 8, 0.2); color: var(--accent-yellow); }
+        
+        .source-link {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .source-link a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+        
+        .source-link a:hover { text-decoration: underline; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        
+        .radar-item {
+            padding: 15px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .radar-item strong { color: var(--primary-light); }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+            color: var(--text-muted);
+        }
+        
+        .review-checklist {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .review-checklist h4 { color: var(--accent-yellow); margin-bottom: 10px; }
+        .review-checklist ul { padding-left: 20px; }
+        .review-checklist li { margin-bottom: 8px; color: var(--text-muted); }
+        
+        /* Language visibility */
+        [lang="en"] { display: none; }
+        html[lang="en"] [lang="zh"] { display: none; }
+        html[lang="en"] [lang="en"] { display: block; }
+
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.5rem; }
+            .card { padding: 16px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 lang="zh">🎮 游戏营销动态周报</h1>
+            <h1 lang="en">🎮 Game Marketing Weekly Report</h1>
+            <p class="subtitle" lang="zh">W09 2025 | 2025.02.20 - 2025.02.27</p>
+            <p class="subtitle" lang="en">W09 2025 | Feb 20 - Feb 27, 2025</p>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
+                <button class="lang-btn" onclick="switchLang('en')">English</button>
+            </div>
+        </header>
+
+        <!-- ==================== 新品快报 / BURST ALERTS ==================== -->
+        <section class="section">
+            <h2 class="section-title" lang="zh">🚨 新品快报</h2>
+            <h2 class="section-title" lang="en">🚨 New Release Alerts</h2>
+            
+            <!-- TRIBE NINE - Chinese -->
+            <div class="card burst-card" lang="zh">
+                <h3 class="card-title">
+                    <span class="burst-badge">BURST</span>
+                    TRIBE NINE
+                </h3>
+                <p><strong>📌 是什么</strong></p>
+                <p>由 TooKyo Games 开发、Akatsuki Games 发行的3D动作RPG手游，设定于被极端死亡游戏统治的"新东京"世界观。全球同步上线，覆盖 iOS / Android / PC (Steam) 平台。</p>
+                
+                <p style="margin-top:15px;"><strong>📈 为什么现在热</strong></p>
+                <p>2月20日全球正式上线，是本周最受关注的 gacha 新品之一。游戏由《弹丸论破》系列主创小高和刚参与，自带话题度。Steam 版与移动版同步发售，走多平台策略。然而，热度背后存在巨大阴影——仅在上线3个月后（5月），官方即宣布将于11月27日终止服务，成为近年来"最短命"的 gacha 游戏之一，引发社区热议。Reddit r/gachagaming 出现大量讨论，玩家情绪复杂，既有惋惜也有对运营策略的质疑。</p>
+                
+                <p style="margin-top:15px;"><strong>⚠️ 值得关注的信号</strong></p>
+                <p>尽管IP知名度高、画面表现力强，但快速停服的决定暴露了市场验证失败的风险。Steam 社区反馈显示 gacha 抽卡率偏低（"doing 100% content seemingly nets 1 pull per hour on average"）可能是玩家流失的关键因素。对于营销团队而言，这是一个典型的"高开低走"案例，值得研究其上线营销与长期留存策略的脱节。NA/EU 市场反应相对冷淡，未能进入主流榜单。</p>
+                
+                <div class="source-link">
+                    📎 信源：<a href="https://tribenine.tokyo/en/news/250220/" target="_blank">官方公告</a> | 
+                    <a href="https://www.reddit.com/r/gachagaming/comments/1ikiw11/tribe_nine_global_release_announced_for_february/" target="_blank">Reddit讨论</a> | 
+                    <a href="https://www.gematsu.com/2025/05/tribe-nine-to-end-service-on-november-27" target="_blank">停服公告</a>
+                </div>
+            </div>
+            
+            <!-- TRIBE NINE - English -->
+            <div class="card burst-card" lang="en">
+                <h3 class="card-title">
+                    <span class="burst-badge">BURST</span>
+                    TRIBE NINE
+                </h3>
+                <p><strong>📌 What It Is</strong></p>
+                <p>A 3D action RPG developed by TooKyo Games and published by Akatsuki Games. Set in "Neo Tokyo," a dystopian world ruled by brutal death games. Launched globally on iOS, Android, and PC (Steam).</p>
+                
+                <p style="margin-top:15px;"><strong>📈 Why It's Hot Now</strong></p>
+                <p>Global launch on February 20 made it one of the most anticipated gacha releases this week. The game features involvement from Kazutaka Kodaka, creator of the Danganronpa series, generating significant buzz. However, the hype is shadowed by a grim reality — just three months after launch (May), the developer announced service termination for November 27, 2025, making it one of the shortest-lived gacha games in recent memory. Reddit's r/gachagaming saw extensive discussion with mixed emotions ranging from disappointment to criticism of the monetization strategy.</p>
+                
+                <p style="margin-top:15px;"><strong>⚠️ Signals to Watch</strong></p>
+                <p>Despite strong IP recognition and visual appeal, the rapid shutdown decision exposes a failed market validation. Steam community feedback highlighted punishing gacha rates ("doing 100% content seemingly nets 1 pull per hour on average") as a potential cause for player churn. This represents a textbook case of launch marketing disconnect from long-term retention strategy. NA/EU market response remained lukewarm, failing to chart on mainstream rankings.</p>
+                
+                <div class="source-link">
+                    📎 Sources: <a href="https://tribenine.tokyo/en/news/250220/" target="_blank">Official Announcement</a> | 
+                    <a href="https://www.reddit.com/r/gachagaming/comments/1ikiw11/tribe_nine_global_release_announced_for_february/" target="_blank">Reddit Discussion</a> | 
+                    <a href="https://www.gematsu.com/2025/05/tribe-nine-to-end-service-on-november-27" target="_blank">EoS Announcement</a>
+                </div>
+            </div>
+            
+            <!-- Dark and Darker Mobile - Chinese -->
+            <div class="card burst-card" lang="zh">
+                <h3 class="card-title">
+                    <span class="burst-badge">BURST</span>
+                    Dark and Darker Mobile
+                </h3>
+                <p><strong>📌 是什么</strong></p>
+                <p>由 Krafton 发行的提取类（Extraction）地牢探索手游，基于 PC 端热门游戏《Dark and Darker》改编。玩家在黑暗地牢中探索、战斗、收集战利品，支持 PvE 和 PvP 玩法。</p>
+                
+                <p style="margin-top:15px;"><strong>📈 为什么现在热</strong></p>
+                <p>2月4日在美国和加拿大开启 Soft Launch，是 Krafton 响应玩家高需求后的紧急扩展决策（原计划仅加拿大测试）。多家媒体（PocketGamer、MassivelyOP、GameSpot）给予报道，Pocket Tactics 评测称其"极易上手，无论20分钟还是2小时都能获得良好体验"。正式版预计2025年上半年全球发布。</p>
+                
+                <p style="margin-top:15px;"><strong>⚠️ 值得关注的信号</strong></p>
+                <p>移动端相比 PC 端做了大量优化，动画更流畅、细节更丰富（如开门动画、血溅效果）。Reddit 玩家反馈"手游版似乎比 PC 版获得了更多关爱"。风险信号包括：游戏后续更名为"Abyss of Dungeons"，品牌延续性存疑；提取类玩法在移动端的长期吸引力有待验证。NA 市场 Soft Launch 阶段表现积极，值得持续关注正式上线时的营销动作。</p>
+                
+                <div class="source-link">
+                    📎 信源：<a href="https://www.krafton.com/en/news/press/dark-and-darker-mobile-expands-february-soft-launch-to-now-include-the-u-s/" target="_blank">Krafton官方</a> | 
+                    <a href="https://www.pockettactics.com/dark-and-darker/review" target="_blank">Pocket Tactics评测</a> | 
+                    <a href="https://www.reddit.com/r/DarkAndDarker/comments/1iipiti/why_does_dark_and_darker_mobile_seem_like_it_got/" target="_blank">Reddit反馈</a>
+                </div>
+            </div>
+            
+            <!-- Dark and Darker Mobile - English -->
+            <div class="card burst-card" lang="en">
+                <h3 class="card-title">
+                    <span class="burst-badge">BURST</span>
+                    Dark and Darker Mobile
+                </h3>
+                <p><strong>📌 What It Is</strong></p>
+                <p>An extraction-style dungeon crawler published by Krafton, adapted from the popular PC game "Dark and Darker." Players explore dark dungeons, fight enemies, and extract loot in both PvE and PvP modes.</p>
+                
+                <p style="margin-top:15px;"><strong>📈 Why It's Hot Now</strong></p>
+                <p>Soft launched in the US and Canada on February 4, an emergency expansion responding to high player demand (originally planned for Canada only). Multiple outlets including PocketGamer, MassivelyOP, and GameSpot covered the launch. Pocket Tactics praised it as "extremely easy to hop into, whether you've got 20 minutes spare or a couple of hours." Global launch expected in H1 2025.</p>
+                
+                <p style="margin-top:15px;"><strong>⚠️ Signals to Watch</strong></p>
+                <p>The mobile version features significant improvements over PC, including smoother animations and added details (door opening animations, blood splatters). Reddit users noted "the mobile version seems to have gotten more love." Risk signals include a subsequent name change to "Abyss of Dungeons," raising brand continuity questions; and the unproven long-term appeal of extraction gameplay on mobile. NA soft launch performance has been positive — worth monitoring marketing activities at official launch.</p>
+                
+                <div class="source-link">
+                    📎 Sources: <a href="https://www.krafton.com/en/news/press/dark-and-darker-mobile-expands-february-soft-launch-to-now-include-the-u-s/" target="_blank">Krafton Official</a> | 
+                    <a href="https://www.pockettactics.com/dark-and-darker/review" target="_blank">Pocket Tactics Review</a> | 
+                    <a href="https://www.reddit.com/r/DarkAndDarker/comments/1iipiti/why_does_dark_and_darker_mobile_seem_like_it_got/" target="_blank">Reddit Feedback</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 长期追踪产品 / CORE LIST ==================== -->
+        <section class="section">
+            <h2 class="section-title" lang="zh">🔍 长期追踪产品快报</h2>
+            <h2 class="section-title" lang="en">🔍 Core Watch List Updates</h2>
+            
+            <div class="grid">
+                <!-- Fortnite - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">🎯 Fortnite</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>Chapter 6 Season 2: LAWLESS 于2月21日上线，以犯罪主题为核心，引入全新 POI「Crime City」及西部风格地图区域。社区反应两极分化：部分玩家对新武器平衡和任务设计表示不满（Reddit 出现"this season is unplayable"等负面帖子），但整体热度依然高涨。</p>
+                    <span class="tag neutral">社区反应两极</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>本周最大营销亮点是 <strong>Cowboy Bebop 联动</strong>，Spike Spiegel 和 Faye Valentine 皮肤于2月27日上架商店，配套任务和免费奖励同步推出。Forbes 评论称"这次联动比表面看起来更有深意"，强调了经典动漫 IP 与游戏的文化契合度。</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>亮点案例</strong>：Cowboy Bebop 联动展示了 Fortnite 持续深耕经典动漫 IP 的策略，通过怀旧情怀触达更广泛的成年玩家群体。联动不仅包含皮肤，还设计了配套任务系统，提升玩家参与深度。
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://www.fortnite.com/news/run-amok-in-fortnite-battle-royale-chapter-6-season-2-lawless" target="_blank">官方公告</a> | 
+                        <a href="https://www.forbes.com/sites/olliebarder/2025/02/25/the-cowboy-bebop-and-fortnite-collab-has-more-to-it-than-it-seems/" target="_blank">Forbes分析</a>
+                    </div>
+                </div>
+                
+                <!-- Fortnite - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">🎯 Fortnite</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>Chapter 6 Season 2: LAWLESS launched February 21 with a crime theme, introducing new POIs including "Crime City" and western-style map areas. Community reaction is polarized — some players expressed frustration with weapon balance and quest design (Reddit posts like "this season is unplayable" appeared), though overall engagement remains strong.</p>
+                    <span class="tag neutral">Mixed Reception</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>The week's marketing highlight is the <strong>Cowboy Bebop collaboration</strong>. Spike Spiegel and Faye Valentine skins arrived in the Item Shop on February 27, accompanied by themed quests and free rewards. Forbes noted "this collab has more to it than it seems," highlighting the cultural synergy between the classic anime IP and the game.</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>Highlight Case</strong>: The Cowboy Bebop collaboration demonstrates Fortnite's continued strategy of leveraging classic anime IPs to reach broader adult audiences through nostalgia. Beyond cosmetics, the integration includes a quest system to deepen player engagement.
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://www.fortnite.com/news/run-amok-in-fortnite-battle-royale-chapter-6-season-2-lawless" target="_blank">Official Announcement</a> | 
+                        <a href="https://www.forbes.com/sites/olliebarder/2025/02/25/the-cowboy-bebop-and-fortnite-collab-has-more-to-it-than-it-seems/" target="_blank">Forbes Analysis</a>
+                    </div>
+                </div>
+                
+                <!-- Genshin Impact - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">🌟 Genshin Impact</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>FTC 和解案持续发酵：HoYoverse 因向16岁以下玩家销售抽卡内容被罚款2000万美元，并被要求实施年龄验证系统。社区讨论热度高，部分玩家对游戏内货币透明度改进表示欢迎，但也有人担忧这是否会影响游戏体验。</p>
+                    <span class="tag negative">监管风险</span>
+                    <span class="tag neutral">收入下滑</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>Version 5.4「月下梦游」于2月12日上线，新角色 Yumemizuki Mizuki（梦见月·美月）登场，配套「御建�的花祭」活动回归稻妻。然而，2月收入据报大幅下滑约74%（约2600万美元），主要原因是1月强势角色（如 Mavuika、Citlali）透支了玩家消费意愿。Mizuki 作为标准池即将入库角色，吸金能力有限。</p>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://www.ftc.gov/news-events/news/press-releases/2025/01/genshin-impact-game-developer-will-be-banned-selling-lootboxes-teens-under-16-without-parental" target="_blank">FTC公告</a> | 
+                        <a href="https://gamerant.com/genshin-impact-revenue-drop/" target="_blank">GameRant收入分析</a> | 
+                        <a href="https://genshin.hoyoverse.com/en/news/detail/127791" target="_blank">5.4版本公告</a>
+                    </div>
+                </div>
+                
+                <!-- Genshin Impact - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">🌟 Genshin Impact</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>The FTC settlement continues to make waves: HoYoverse was fined $20 million for selling gacha to players under 16 and required to implement age verification. Community discussion remains active — some players welcome improved in-game currency transparency, while others worry about potential gameplay impact.</p>
+                    <span class="tag negative">Regulatory Risk</span>
+                    <span class="tag neutral">Revenue Decline</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>Version 5.4 "Moonlight Amidst Dreams" launched February 12, introducing new character Yumemizuki Mizuki alongside the returning Mikawa Flower Festival in Inazuma. However, February revenue reportedly dropped approximately 74% (~$26 million), primarily due to January's strong characters (Mavuika, Citlali) exhausting player spending. Mizuki, slated to join the standard banner soon, has limited monetization appeal.</p>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://www.ftc.gov/news-events/news/press-releases/2025/01/genshin-impact-game-developer-will-be-banned-selling-lootboxes-teens-under-16-without-parental" target="_blank">FTC Announcement</a> | 
+                        <a href="https://gamerant.com/genshin-impact-revenue-drop/" target="_blank">GameRant Revenue Analysis</a> | 
+                        <a href="https://genshin.hoyoverse.com/en/news/detail/127791" target="_blank">Version 5.4 Notes</a>
+                    </div>
+                </div>
+                
+                <!-- Zenless Zone Zero - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">⚡ Zenless Zone Zero</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>Version 2.6「旧梦的余音」即将于2月6日上线（已进入预热期）。Season 2 主线剧情于 2.5 版本完结，玩家对结局评价分化，部分认为"更像是叶顺光的角色任务而非赛季终章"。2月玩家数据显示活跃用户环比下滑约23%。</p>
+                    <span class="tag neutral">剧情评价分化</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>2.6 版本主打虚拟偶像团体「妄惑天使」(Angels of Delusion) 正式出道，新角色 Sunna（作曲家）和 Aria 登场。这是 ZZZ 首次引入偶像企划元素，尝试拓展粉丝文化和周边衍生潜力。HoYoverse 官方强调"期待已久的偶像团出道"，显示其在 IP 多元化上的野心。</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>亮点案例</strong>：「妄惑天使」偶像团的引入是 ZZZ 在内容营销上的新尝试，借助虚拟偶像文化拓展玩家粘性和衍生商业化空间。
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://zenless.hoyoverse.com/en-us/news/161728" target="_blank">2.5版本公告</a> | 
+                        <a href="https://www.hoyoverse.com/en-us/news/162487" target="_blank">2.6偶像团预告</a>
+                    </div>
+                </div>
+                
+                <!-- Zenless Zone Zero - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">⚡ Zenless Zone Zero</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>Version 2.6 "Encore for an Old Dream" is approaching launch on February 6 (now in pre-hype phase). Season 2's main story concluded in version 2.5, with divided player reactions — some felt it was "more like a Ye Shunguang character quest than a season finale." February data shows approximately 23% month-over-month decline in active players.</p>
+                    <span class="tag neutral">Divided Story Reception</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>Version 2.6 features the official debut of virtual idol group "Angels of Delusion," introducing new characters Sunna (the composer) and Aria. This marks ZZZ's first venture into idol project elements, exploring fan culture and merchandise potential. HoYoverse's messaging emphasizes the "long-awaited idol group debut," signaling IP diversification ambitions.</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>Highlight Case</strong>: The Angels of Delusion idol group represents ZZZ's new content marketing experiment, leveraging virtual idol culture to expand player engagement and derivative commercialization opportunities.
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://zenless.hoyoverse.com/en-us/news/161728" target="_blank">Version 2.5 Notes</a> | 
+                        <a href="https://www.hoyoverse.com/en-us/news/162487" target="_blank">Version 2.6 Idol Teaser</a>
+                    </div>
+                </div>
+                
+                <!-- Wuthering Waves - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">🌊 Wuthering Waves</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>Version 2.1「浪涌，云雀鸣啼」于2月13日上线，新角色 Phoebe 作为光属性双形态角色（主C/副C切换）获得玩家好评，Reddit 攻略帖热度较高。社区整体情绪积极，TGA 2024 玩家之声投票进入前五为游戏带来正面口碑延续。</p>
+                    <span class="tag positive">社区反馈正面</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>本周最大技术亮点是 <strong>全光线追踪功能</strong> 正式上线，支持 NVIDIA RTX 40 系列显卡。官方发布了专门的 Ray Tracing Showcase 视频，Reddit r/nvidia 社区讨论热烈。这是 Kuro Games 在画面技术上的重要里程碑，展示了与竞品差异化的技术投入。</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>亮点案例</strong>：光追功能的上线是 Wuthering Waves 技术营销的标杆动作，通过与 NVIDIA 合作的官方 Showcase 视频在硬核玩家群体中建立技术领先形象。
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://www.gematsu.com/2025/02/wuthering-waves-version-2-1-update-waves-sing-and-the-cerulean-bird-calls-launches-february-13" target="_blank">Gematsu报道</a> | 
+                        <a href="https://www.siliconera.com/wuthering-waves-ray-tracing-arrives-in-2-1/" target="_blank">光追功能公告</a>
+                    </div>
+                </div>
+                
+                <!-- Wuthering Waves - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">🌊 Wuthering Waves</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>Version 2.1 "Waves Sing, and the Cerulean Bird Calls" launched February 13, introducing Phoebe — a Spectro dual-form character (DPS/Sub-DPS switch) that received positive player reception. Reddit guides saw high engagement. Overall community sentiment remains positive, with The Game Awards 2024 Player's Voice top-5 placement contributing to sustained goodwill.</p>
+                    <span class="tag positive">Positive Community Feedback</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>The week's biggest technical highlight is the launch of <strong>full ray tracing support</strong> for NVIDIA RTX 40 series GPUs. The official Ray Tracing Showcase video generated significant discussion on Reddit's r/nvidia. This represents a major technical milestone for Kuro Games, demonstrating differentiated investment in visual technology versus competitors.</p>
+                    
+                    <div class="highlight">
+                        💡 <strong>Highlight Case</strong>: The ray tracing launch exemplifies Wuthering Waves' tech marketing strategy, building a technology leadership image among hardcore gamers through the official NVIDIA-partnered showcase video.
+                    </div>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://www.gematsu.com/2025/02/wuthering-waves-version-2-1-update-waves-sing-and-the-cerulean-bird-calls-launches-february-13" target="_blank">Gematsu Coverage</a> | 
+                        <a href="https://www.siliconera.com/wuthering-waves-ray-tracing-arrives-in-2-1/" target="_blank">Ray Tracing Announcement</a>
+                    </div>
+                </div>
+                
+                <!-- Arknights: Endfield - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">🔧 Arknights: Endfield</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>Beta Test II 于2月17日结束，玩家测试反馈整体积极。NeoGAF 评论"画面精致华丽"，Reddit 长评分析指出系统堆叠过多可能是潜在问题。游戏预计2026年1月22日正式发售，采用多平台策略（PS5/PC/iOS/Android）。</p>
+                    <span class="tag positive">测试反馈积极</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>Beta 结束后进入静默期，官方确认下一轮测试将于11月进行，届时将新增区域和角色。Hypergryph 采用稳扎稳打的测试迭代策略，持续收集玩家反馈优化。The Game Awards 2025 已确认游戏发售日，说明其在重要行业节点的曝光布局。</p>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://www.gematsu.com/2025/12/arknights-endfield-launches-january-22-2026" target="_blank">发售日公告</a> | 
+                        <a href="https://xboxera.com/2025/02/21/arknights-endfield-closed-beta-impressions/" target="_blank">Beta评测</a>
+                    </div>
+                </div>
+                
+                <!-- Arknights: Endfield - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">🔧 Arknights: Endfield</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>Beta Test II concluded February 17 with generally positive player feedback. NeoGAF praised the "pristine, gorgeous visuals," while Reddit deep-dives noted potential concerns about system complexity. The game is scheduled for official launch on January 22, 2026, with a multi-platform strategy (PS5/PC/iOS/Android).</p>
+                    <span class="tag positive">Positive Beta Feedback</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>Post-beta, the game enters a quiet period with the next test confirmed for November, featuring new regions and characters. Hypergryph employs a measured iterative testing approach, continuously incorporating player feedback. The Game Awards 2025 release date reveal indicates strategic exposure planning at major industry events.</p>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://www.gematsu.com/2025/12/arknights-endfield-launches-january-22-2026" target="_blank">Release Date Announcement</a> | 
+                        <a href="https://xboxera.com/2025/02/21/arknights-endfield-closed-beta-impressions/" target="_blank">Beta Impressions</a>
+                    </div>
+                </div>
+                
+                <!-- NTE - Chinese -->
+                <div class="card" lang="zh">
+                    <h3 class="card-title">🌆 NTE: Neverness to Everness</h3>
+                    
+                    <p><strong>社媒热点</strong></p>
+                    <p>游戏在 TGS 2025 上大放异彩，成为现场关注度最高的手游之一。媒体评价其为"开放世界 gacha 领域的下一个大事件"。Hotta Studio（《幻塔》开发商）的技术积累获得认可，Reddit r/gachagaming 讨论热度持续走高。</p>
+                    <span class="tag positive">高期待值</span>
+                    
+                    <p style="margin-top:15px;"><strong>内容更新与营销</strong></p>
+                    <p>本周主要为预热期，游戏预计2026年4月29日全球上线（中国区4月23日）。TGS 展示的核心卖点包括：完全自由探索、动漫风格视觉、四角色队伍系统，以及类似 GTA 的开放世界互动体验。Taptap 2025 最受期待游戏奖项进一步提升了市场预期。</p>
+                    
+                    <div class="source-link">
+                        📎 信源：<a href="https://www.gamerbraves.com/tgs2025-neverness-to-everness-preview-freedom-and-style-in-an-anime-open-world/" target="_blank">TGS试玩评测</a> | 
+                        <a href="https://nte.perfectworld.com/" target="_blank">官网</a>
+                    </div>
+                </div>
+                
+                <!-- NTE - English -->
+                <div class="card" lang="en">
+                    <h3 class="card-title">🌆 NTE: Neverness to Everness</h3>
+                    
+                    <p><strong>Community Buzz</strong></p>
+                    <p>The game made a significant impact at TGS 2025, becoming one of the most talked-about mobile titles at the show. Media described it as "potentially the next big thing in the open-world gacha genre." Hotta Studio's (Tower of Fantasy developer) technical expertise earned recognition, with sustained discussion on Reddit's r/gachagaming.</p>
+                    <span class="tag positive">High Anticipation</span>
+                    
+                    <p style="margin-top:15px;"><strong>Content Updates & Marketing</strong></p>
+                    <p>This week primarily involves pre-launch hype, with global release scheduled for April 29, 2026 (China on April 23). TGS showcased key selling points: complete exploration freedom, anime-style visuals, four-character party system, and GTA-like open-world interactions. The Taptap 2025 Most Anticipated Game award further elevated market expectations.</p>
+                    
+                    <div class="source-link">
+                        📎 Sources: <a href="https://www.gamerbraves.com/tgs2025-neverness-to-everness-preview-freedom-and-style-in-an-anime-open-world/" target="_blank">TGS Hands-On Preview</a> | 
+                        <a href="https://nte.perfectworld.com/" target="_blank">Official Website</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 雷达信号 / RADAR SIGNALS ==================== -->
+        <section class="section">
+            <h2 class="section-title" lang="zh">🎯 雷达信号</h2>
+            <h2 class="section-title" lang="en">🎯 Radar Signals</h2>
+            
+            <div lang="zh">
+                <div class="radar-item">
+                    <strong>Duet Night Abyss</strong> — IGN Preview 报道 + Reddit 社区讨论。Hero Games 开发的幻想动作 RPG，以大胆角色设计和双叙事系统为卖点。预计 Q4 2025 全球上线，持续关注中。
+                </div>
+                <div class="radar-item">
+                    <strong>Mecha Break</strong> — Reddit r/Games 热帖，2月23日开启 Open Beta。机甲对战竞技游戏，非 gacha 模式，角色创建系统细节度高。值得观察其在竞技游戏市场的表现。
+                </div>
+            </div>
+            
+            <div lang="en">
+                <div class="radar-item">
+                    <strong>Duet Night Abyss</strong> — IGN Preview coverage + Reddit community discussion. Fantasy action RPG by Hero Games featuring bold character designs and dual narrative system. Expected Q4 2025 global launch, under continued monitoring.
+                </div>
+                <div class="radar-item">
+                    <strong>Mecha Break</strong> — Reddit r/Games hot post, Open Beta launching February 23. Mech combat PvP game, non-gacha model, featuring highly detailed character creation. Worth observing its competitive gaming market performance.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 审核提示 ==================== -->
+        <div class="review-checklist" lang="zh">
+            <h4>📌 审核提示</h4>
+            <ul>
+                <li>Core List 6款游戏信息是否完整</li>
+                <li>Burst 标的（TRIBE NINE、Dark and Darker Mobile）定性是否准确</li>
+                <li>候选池是否需要手动调整（晋升/加入）</li>
+                <li>是否需要对任意 Burst 条目进行深挖（Reddit讨论/发行商背景/榜单数据等）</li>
+            </ul>
+        </div>
+        
+        <div class="review-checklist" lang="en">
+            <h4>📌 Review Checklist</h4>
+            <ul>
+                <li>Is information complete for all 6 Core List games?</li>
+                <li>Are Burst classifications (TRIBE NINE, Dark and Darker Mobile) accurate?</li>
+                <li>Does the candidate pool need manual adjustment (promotion/addition)?</li>
+                <li>Is deeper investigation needed for any Burst item (Reddit discussions/publisher background/chart data)?</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p lang="zh">游戏营销动态周报 | 自动生成于 2025-02-27</p>
+            <p lang="en">Game Marketing Weekly Report | Auto-generated on Feb 27, 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // URL parameter support
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang');
+        if (langParam === 'en') {
+            switchLang('en');
+            document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+        }
+    </script>
+</body>
+</html>
