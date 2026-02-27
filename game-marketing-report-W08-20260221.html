@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏营销监测周报 W08 | Game Marketing Weekly W08</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --accent: #6c5ce7;
+    --accent2: #00cec9;
+    --burst: #ff6b6b;
+    --text: #e2e2e2;
+    --text-muted: #8b8fa3;
+    --tag-bg: #2d2f3e;
+    --success: #00b894;
+    --warning: #fdcb6e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  
+  /* Language Toggle */
+  .lang-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 100;
+    display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  }
+  .lang-btn {
+    padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 600; transition: all .2s;
+    background: transparent; color: var(--text-muted);
+  }
+  .lang-btn.active { background: var(--accent); color: #fff; }
+
+  /* Header */
+  .header {
+    text-align: center; padding: 40px 0 32px; border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .header .meta { color: var(--text-muted); font-size: 14px; }
+
+  /* Section */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 20px; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--accent);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title.burst { border-bottom-color: var(--burst); }
+
+  /* Cards */
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card.burst-card { border-left: 4px solid var(--burst); }
+  .card-title {
+    font-size: 18px; font-weight: 700; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .game-icon { font-size: 22px; }
+
+  .subsection { margin-bottom: 14px; }
+  .subsection-label {
+    font-size: 13px; font-weight: 600; color: var(--accent2);
+    text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px;
+  }
+  .subsection p, .subsection ul { font-size: 14.5px; color: var(--text); }
+  .subsection ul { padding-left: 18px; }
+  .subsection li { margin-bottom: 4px; }
+
+  .tag {
+    display: inline-block; background: var(--tag-bg); color: var(--text-muted);
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-right: 4px;
+  }
+  .tag.burst-tag { background: rgba(255,107,107,.15); color: var(--burst); }
+  .tag.positive { background: rgba(0,184,148,.12); color: var(--success); }
+  .tag.neutral { background: rgba(253,203,110,.12); color: var(--warning); }
+
+  .highlight {
+    background: rgba(108,92,231,.08); border-left: 3px solid var(--accent);
+    padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0;
+    font-size: 14px;
+  }
+
+  .source-ref {
+    font-size: 12px; color: var(--text-muted); margin-top: 10px;
+    padding-top: 8px; border-top: 1px solid var(--border);
+  }
+  .source-ref a { color: var(--accent); text-decoration: none; }
+  .source-ref a:hover { text-decoration: underline; }
+
+  /* Radar */
+  .radar-item {
+    padding: 10px 14px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; margin-bottom: 8px; font-size: 14px;
+  }
+  .radar-item strong { color: var(--accent2); }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px; padding: 20px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px; font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer h3 { font-size: 15px; color: var(--text); margin-bottom: 10px; }
+  .footer ul { padding-left: 18px; }
+  .footer li { margin-bottom: 4px; }
+
+  /* Language visibility — scope to .container children only, never match <html> */
+  .container [lang="en"] { display: none; }
+  html[lang="en"] .container [lang="en"] { display: block; }
+  html[lang="en"] .container [lang="zh"] { display: none; }
+
+  @media (max-width: 640px) {
+    .container { padding: 16px 12px; }
+    .header h1 { font-size: 22px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('zh')">中文</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="container">
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+  <div lang="zh">
+    <h1>🎮 游戏营销监测周报</h1>
+    <div class="meta">W08 · 2026年2月17日 — 2月23日<br>Core Watch: Fortnite · Genshin Impact · League of Legends · Brawl Stars · Wuthering Waves</div>
+  </div>
+  <div lang="en">
+    <h1>🎮 Game Marketing Weekly</h1>
+    <div class="meta">W08 · February 17 – 23, 2026<br>Core Watch: Fortnite · Genshin Impact · League of Legends · Brawl Stars · Wuthering Waves</div>
+  </div>
+</div>
+
+<!-- ========== BURST: NEW PRODUCTS ========== -->
+<div class="section">
+  <div lang="zh">
+    <div class="section-title burst">🚨 新品快报</div>
+  </div>
+  <div lang="en">
+    <div class="section-title burst">🚨 Burst Alert — New Titles</div>
+  </div>
+
+  <!-- Burst 1: Rainbow Six Mobile -->
+  <div class="card burst-card">
+    <div class="card-title">
+      <span class="game-icon">🎯</span>
+      Rainbow Six Mobile
+      <span class="tag burst-tag">🔴 Global Launch</span>
+    </div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">触发原因</div>
+        <p>硬信号·上市 — Ubisoft 官方确认 2月23日全球正式上线，EN 区官方渠道同步宣发，PocketGamer / Reddit / YouTube 等多媒体独立报道。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📌 是什么（What）</div>
+        <p>Ubisoft 旗下的免费 PvP 战术射击手游，改编自《彩虹六号：围攻》IP。上线时携带7张地图和超过20名干员，首个全球赛季"沙漠幽灵行动"(Operation Sand Wraith) 同步开启。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📈 为什么现在热（Why Now）</div>
+        <p>该游戏经历了漫长的开发周期——2023年8月软启动后，2024年3月因质量问题宣布暂停更新长达七个月，期间月收入不足$5,000。2024年11月重启后，Ubisoft 设定了三阶段路线图逐步推进至全球上线。经过超一年的数据积累和内容迭代，最终确定2月23日全球发布。然而，社区反馈呈现两极化：YouTube 上出现"2026年最差手游发布"的评论视频，批评锁定60FPS、优化不足等问题。目前2月收入仅约$60,000，游戏生命周期总收入$110万（软启动期间），市场对其营收潜力持观望态度。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">⚠️ 值得关注的信号</div>
+        <p><span class="tag positive">正面</span> 彩虹六号 IP 在 NA/EU 拥有深厚的核心玩家基础，战术射击品类在移动端仍有增长空间。首个赛季 Battle Pass 及丰富运营内容为留存提供支撑。<br>
+        <span class="tag burst-tag">风险</span> 上线即遭遇社区品质质疑（帧率限制、画质争议），Ubisoft 当前财务压力下移动端投资回报面临考验。软启动期间长期低收入引发外界对变现模型可持续性的担忧。PressPlayFinance 专门发文分析其财务前景。需持续关注首周下载量与收入数据。</p>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://www.pocketgamer.biz/rainbow-six-mobile-launches-globally-today-after-navigating-long-roadmap/">PocketGamer</a> · <a href="https://www.ubisoft.com/en-us/game/rainbow-six/mobile">Ubisoft Official</a> · <a href="https://www.reddit.com/r/AndroidGaming/comments/1rcmdsw/tom_clancys_rainbow_six_mobile_is_out_for_mobile/">r/AndroidGaming</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Trigger</div>
+        <p>Hard Signal — Global Launch: Ubisoft confirmed worldwide release on February 23; covered independently by PocketGamer, Reddit, and YouTube creators.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📌 What Is It</div>
+        <p>A free-to-play tactical PvP mobile shooter from Ubisoft, adapted from the Rainbow Six Siege IP. It launches with seven maps, 20+ Operators, and its first global season "Operation Sand Wraith."</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📈 Why Now</div>
+        <p>Rainbow Six Mobile has had an unusually protracted development arc. After entering soft launch in August 2023, Ubisoft paused updates for seven months in 2024 to address quality concerns — monthly revenue during hiatus barely exceeded $5,000. A November 2024 comeback introduced a three-phase roadmap toward global release, with spending gradually climbing to a soft-launch peak of $197K in July 2025. Over a year of testing culminated in the February 23 worldwide launch. Community reception is polarized: YouTube reviewers have called it "the worst mobile game launch of 2026," citing a 60 FPS lock and underwhelming optimization. February revenue sits at roughly $60K, with lifetime earnings of $1.1M from the soft launch period.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">⚠️ Signals to Watch</div>
+        <p><span class="tag positive">Opportunity</span> The Rainbow Six brand commands a loyal core audience in NA/EU, and the tactical shooter niche remains underserved on mobile. The launch Battle Pass and seasonal content could drive retention if early tech issues are patched.<br>
+        <span class="tag burst-tag">Risk</span> Day-one quality backlash (frame rate caps, visual fidelity) threatens first impressions. Ubisoft's broader financial pressures raise questions about sustained mobile investment. PressPlayFinance has published a dedicated financial analysis. First-week downloads and revenue will be the key metrics to track.</p>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://www.pocketgamer.biz/rainbow-six-mobile-launches-globally-today-after-navigating-long-roadmap/">PocketGamer</a> · <a href="https://www.ubisoft.com/en-us/game/rainbow-six/mobile">Ubisoft Official</a> · <a href="https://www.reddit.com/r/AndroidGaming/comments/1rcmdsw/tom_clancys_rainbow_six_mobile_is_out_for_mobile/">r/AndroidGaming</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Burst 2: Arknights Endfield -->
+  <div class="card burst-card">
+    <div class="card-title">
+      <span class="game-icon">⚔️</span>
+      Arknights: Endfield
+      <span class="tag burst-tag">🔴 Media Surge</span>
+    </div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">触发原因</div>
+        <p>硬信号·媒体集火 — 手游首月收入达$4,600万的里程碑数据被 PocketGamer、TechNode、GAM3S.GG 等3家以上媒体独立报道。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📌 是什么（What）</div>
+        <p>鹰角网络(Hypergryph/Gryphline)开发的 Gacha 动作 RPG，兼具工厂建造元素，1月22日全球发布于移动端、PC 和 PS5。被社区评价为"2026年首个重磅Gacha，先游戏后抽卡"。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📈 为什么现在热（Why Now）</div>
+        <p>据 AppMagic 数据，Arknights: Endfield 手游端首月收入达$4,600万（iOS 61% / Google Play 39%），日本和中国为主要市场，美国占全球消费的10%。全平台(含PC/PS5/网页商店)总收入据 TechNode 报道已达$1.73亿。2月7日六星角色 Gilberta 卡池上线当日消费激增107%（从$110万飙至$240万），展现出典型的 Gacha 角色驱动消费模式。2月24日新卡池角色 Yvonne 上线预计将带来又一轮消费高峰。值得注意的是，游戏上线时曾出现 PayPal 误扣款 bug，至今仍禁用 PayPal 支付。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">⚠️ 值得关注的信号</div>
+        <p><span class="tag positive">正面</span> 收入表现强劲，全平台生态（手游+PC+PS5）策略成功拓展了 Gacha 游戏的受众边界——PC/PS5 贡献了60-70%的收入。角色卡池驱动的消费峰值为后续运营提供了可预测的营收节奏。<br>
+        <span class="tag neutral">注意</span> 美国市场仅占10%，NA/EU 市场渗透率仍有提升空间。PayPal 支付问题对部分西方玩家造成了负面体验。首月后的留存和持续消费趋势需要观察——上线后连续13天消费下滑是一个值得关注的信号。</p>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://www.pocketgamer.biz/arknights-endfield-makes-46m-in-first-month-on-mobile/">PocketGamer</a> · <a href="https://technode.com/2026/02/09/hypergryphs-arknights-endfield-hits-173-million-in-two-weeks-expands-player-focus-to-pc-and-consoles/">TechNode</a> · <a href="https://gam3s.gg/news/arknights-endfield-earns-46-million-in-first-month/">GAM3S.GG</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Trigger</div>
+        <p>Hard Signal — Media Surge: The $46M first-month mobile revenue milestone was independently reported by PocketGamer, TechNode, and GAM3S.GG.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📌 What Is It</div>
+        <p>A gacha action RPG with factory-building elements from Hypergryph (Gryphline), launched globally on January 22 across mobile, PC, and PS5. Widely regarded as "2026's first major gacha — game first, gacha second."</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">📈 Why Now</div>
+        <p>Per AppMagic estimates, Arknights: Endfield generated $46M in mobile player spending during its first month, split between iOS (61%) and Google Play (39%). Japan and China lead the revenue charts, with the US at 10% of global spend. Total cross-platform revenue (including PC, PS5, and the web shop) reportedly reached $173M according to TechNode. A notable spending spike hit on February 7 when six-star character Gilberta debuted — daily revenue surged 107% from $1.1M to $2.4M. A second banner featuring Yvonne on February 24 is expected to trigger another peak. Notably, a PayPal billing bug at launch wrongly charged some players for others' purchases; PayPal remains disabled as a payment method.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">⚠️ Signals to Watch</div>
+        <p><span class="tag positive">Opportunity</span> Exceptional revenue performance. The cross-platform strategy (mobile + PC + PS5) has successfully broadened the gacha audience — PC/PS5 accounts for 60–70% of total revenue. Character banner-driven spending peaks provide a predictable monetization rhythm.<br>
+        <span class="tag neutral">Caution</span> The US market represents only 10% of revenue, suggesting room to grow in NA/EU. The PayPal bug at launch created friction for some Western players. Post-launch retention warrants monitoring — a 13-day consecutive spending decline after day one is a data point to track as the game enters its second month.</p>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://www.pocketgamer.biz/arknights-endfield-makes-46m-in-first-month-on-mobile/">PocketGamer</a> · <a href="https://technode.com/2026/02/09/hypergryphs-arknights-endfield-hits-173-million-in-two-weeks-expands-player-focus-to-pc-and-consoles/">TechNode</a> · <a href="https://gam3s.gg/news/arknights-endfield-earns-46-million-in-first-month/">GAM3S.GG</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CORE WATCH ========== -->
+<div class="section">
+  <div lang="zh">
+    <div class="section-title">🔍 长期追踪产品快报</div>
+  </div>
+  <div lang="en">
+    <div class="section-title">🔍 Core Watch List</div>
+  </div>
+
+  <!-- Fortnite -->
+  <div class="card">
+    <div class="card-title"><span class="game-icon">🏗️</span> Fortnite</div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">社媒热点</div>
+        <p>本周 Fortnite 热度集中在两大事件：<strong>"Love & Legends" 情人节活动持续推进</strong>（2月21日举办第三次 Power Hour 特别活动）和 <strong>2月23日"The Seven 回归"更新</strong>（v39.51），后者引发了大量 lore 向讨论与 Chapter 7 Season 2 期待。此外，<strong>Chapter 7 Season 2 延期至3月19日</strong>的消息在社区引发了不满情绪——当前赛季从11月延续至3月，被认为持续时间过长。</p>
+        <p><span class="tag positive">情绪</span> The Seven 回归带来正面兴奋感；延期引发轻微负面情绪但整体可控。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">内容更新与营销</div>
+        <ul>
+          <li><strong>2月19日更新 (v39.50)</strong>：DeLorean 载具回归；Lantern Fest 灯笼节活动上线（8人 Reload 组队模式，2月19-25日）；Solo Leveling 联动内容；新 Lunar/春节主题内容</li>
+          <li><strong>2月21日</strong>：Battle Royale Power Hour 限时活动</li>
+          <li><strong>2月23日</strong>：The Seven 回归 + Seven Cannon 新武器上线；Chapter 7 Season 2 预告放出（冰雪主题、Foundation 回归）</li>
+          <li><strong>商城联动</strong>：Kim Kardashian、Marvel、Hogwarts Legacy、Fast & Furious 等 IP 皮肤持续轮换</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>亮点案例：</strong>Fortnite 的"Love & Legends"为期整月的活动框架是一个值得关注的营销范式——通过每周滚动解锁内容（Power Hour、灯笼节、The Seven 回归）维持整月活跃度，配合多品牌 IP 联动商城轮换，形成"常驻节日+事件驱动"的混合运营节奏。
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://insider-gaming.com/fortnite-february-2026-roadmap/">Insider Gaming</a> · <a href="https://www.fortnite.com/news/love-and-legends-meet-in-fortnite-for-a-month-full-of-rewards?lang=en-US">Epic Games Official</a> · <a href="https://www.fortnite.com/news/lantern-fest-2026-brings-8-player-reload-teams-to-fortnite?lang=en-US">Fortnite Lantern Fest</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Community & Social</div>
+        <p>This week's Fortnite buzz centers on two major beats: the <strong>ongoing "Love & Legends" Valentine's event</strong> (third Power Hour on Feb 21) and <strong>The Seven's Return on February 23</strong> (v39.51), which ignited a wave of lore speculation and Season 2 anticipation. Meanwhile, Epic's confirmation that <strong>Chapter 7 Season 2 has been delayed to March 19</strong> drew mild frustration — players feel the current season (running since November) has overstayed its welcome.</p>
+        <p><span class="tag positive">Sentiment</span> The Seven's comeback generates genuine excitement; the delay causes minor negativity but is manageable overall.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">Content Updates & Marketing</div>
+        <ul>
+          <li><strong>Feb 19 Update (v39.50):</strong> DeLorean vehicle returns; Lantern Fest event live (8-player Reload squads, Feb 19–25); Solo Leveling crossover content; Lunar-themed additions</li>
+          <li><strong>Feb 21:</strong> Battle Royale Power Hour limited-time event</li>
+          <li><strong>Feb 23:</strong> The Seven Return + Seven Cannon weapon; Chapter 7 Season 2 teaser drops (ice theme, The Foundation comeback)</li>
+          <li><strong>Item Shop:</strong> Rotating collabs including Kim Kardashian, Marvel, Hogwarts Legacy, Fast & Furious</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>Highlight:</strong> Fortnite's month-long "Love & Legends" framework exemplifies a best-in-class event cadence — weekly content rollouts (Power Hour, Lantern Fest, The Seven) sustain engagement throughout the month, while rotating IP collabs in the Item Shop create a "permanent festival + event-driven" hybrid rhythm worth studying.
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://insider-gaming.com/fortnite-february-2026-roadmap/">Insider Gaming</a> · <a href="https://www.fortnite.com/news/love-and-legends-meet-in-fortnite-for-a-month-full-of-rewards?lang=en-US">Epic Games Official</a> · <a href="https://www.fortnite.com/news/lantern-fest-2026-brings-8-player-reload-teams-to-fortnite?lang=en-US">Fortnite Lantern Fest</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Genshin Impact -->
+  <div class="card">
+    <div class="card-title"><span class="game-icon">🌬️</span> Genshin Impact</div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">社媒热点</div>
+        <p>本周话题完全围绕 <strong>Version 6.4 "Luna V"（2月25日上线）</strong>的预热。核心焦点是 <strong>Varka 终于作为可操作角色登场</strong>——这位蒙德城骑士团大团长从游戏第一天就以 NPC 身份被提及，历经近6年终于 playable，社区称之为"Varka终于带着牛奶回来了"。作为五星风元素双手剑角色，Varka 的独特元素附魔机制（可根据队伍配置输出火/水/雷/冰伤害）引发了大量配队讨论。</p>
+        <p><span class="tag positive">情绪</span> 强烈正面。回归蒙德+期待已久的角色上线，唤起老玩家情怀。r/gachagaming 也有相关预热贴。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">内容更新与营销</div>
+        <ul>
+          <li><strong>Version 6.4 "Luna V"</strong>（2月25日）：回归蒙德、主线剧情新篇章；Varka（五星·风·双手剑）首次限定卡池 + Flins（五星·雷·长柄武器）复刻</li>
+          <li><strong>"Challenge Varka" 互动活动</strong>：骑士团试炼主题的社区参与活动</li>
+          <li><strong>Windblume 风花节</strong>相关活动回归蒙德主题</li>
+          <li>6.4 从 Nod-Krai 篇章过渡回蒙德，带来叙事上的"回家"情感</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>亮点案例：</strong>HoYoverse 的"长线叙事伏笔兑现"策略值得关注——Varka 从1.0版本就被提及但始终未登场，近6年的等待让其上线自带极高情感价值。"回归蒙德"的叙事设计则是一次经典的"origin story callback"，精准触发老玩家的怀旧情结与回归动力。
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://www.hoyoverse.com/en-us/news/162828">HoYoverse Official</a> · <a href="https://game8.co/games/Genshin-Impact/archives/575185">Game8</a> · <a href="https://www.polygon.com/genshin-impact-guide-version-luna-5-6-4-release-times-maintenance-end/">Polygon</a> · <a href="https://www.cbr.com/genshin-impact-free-to-play-open-world-game-february-25/">CBR</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Community & Social</div>
+        <p>All eyes are on <strong>Version 6.4 "Luna V" (launching February 25)</strong>. The headline: <strong>Varka is finally playable</strong>. The Grand Master of the Knights of Favonius has been name-dropped since the game's launch nearly six years ago but never appeared as a playable character — the community jokingly calls it "Varka finally came back with the milk." As a 5-star Anemo Claymore user with a unique elemental infusion mechanic (dealing Pyro/Hydro/Electro/Cryo damage based on team composition), he's already driving extensive team-building theorycrafting.</p>
+        <p><span class="tag positive">Sentiment</span> Overwhelmingly positive. Returning to Mondstadt plus a long-awaited character release triggers deep nostalgia among veteran players.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">Content Updates & Marketing</div>
+        <ul>
+          <li><strong>Version 6.4 "Luna V" (Feb 25):</strong> Mondstadt return with new main story chapter; Varka (5★ Anemo Claymore) debut banner + Flins (5★ Electro Polearm) rerun</li>
+          <li><strong>"Challenge Varka" event:</strong> Knights' Trial-themed community engagement activity</li>
+          <li><strong>Windblume Festival:</strong> Mondstadt-themed seasonal event revival</li>
+          <li>Narrative pivot from Nod-Krai arc back to Mondstadt — a deliberate "homecoming" beat</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>Highlight:</strong> HoYoverse's "long-horizon narrative payoff" strategy is worth studying. Varka was referenced from Version 1.0 but withheld for nearly six years, building anticipation organically. His debut carries exceptional emotional weight without a single dollar of paid marketing. The "return to Mondstadt" framing is a textbook "origin story callback" designed to re-engage lapsed players.
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://www.hoyoverse.com/en-us/news/162828">HoYoverse Official</a> · <a href="https://game8.co/games/Genshin-Impact/archives/575185">Game8</a> · <a href="https://www.polygon.com/genshin-impact-guide-version-luna-5-6-4-release-times-maintenance-end/">Polygon</a> · <a href="https://www.cbr.com/genshin-impact-free-to-play-open-world-game-february-25/">CBR</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- League of Legends -->
+  <div class="card">
+    <div class="card-title"><span class="game-icon">⚡</span> League of Legends</div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">社媒热点</div>
+        <p>本周焦点是 <strong>Patch 26.4（2月18/19日上线）</strong>，以 Lunar Revel 春节庆典为主题。社区讨论集中在 Aphelios 再次被削弱（尽管已经hotfix过一次仍然过强）、Gwen 双位置（上单/打野）均过于强势被双重削弱，以及 Braum 大招 CD 显著增加等平衡调整。Petals of Spring 皮肤线（特别是 Lillia 传说皮肤）获得视觉好评。</p>
+        <p><span class="tag positive">情绪</span> 整体中性偏正面。新皮肤受欢迎，平衡调整被认为方向正确但部分玩家对 Aphelios 连续削弱不满。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">内容更新与营销</div>
+        <ul>
+          <li><strong>Patch 26.4</strong>：大规模英雄平衡调整（Ambessa / Aphelios / Braum / Gwen / Fizz 等十余位英雄）；打野生态优化（Brand / Darius / Fizz 野怪伤害调整）</li>
+          <li><strong>Petals of Spring 皮肤线</strong>：Camille / Jayce / Katarina / Lillia / Yasuo（Lillia 为1820 RP传说皮肤）；均为限时Legacy皮肤（Lillia除外），26.6版本入库</li>
+          <li><strong>Divine Architect Porcelain Aurelion Sol</strong>：特别展示级皮肤</li>
+          <li><strong>Ionia Cup Clash</strong>：ARAM 模式特别锦标赛活动（注册从2月16日开始）</li>
+          <li><strong>冬季运动主题皮肤回归</strong>（2月19-26日限时）：Curling Veigar、Ice Toboggan Corki 等经典皮肤</li>
+          <li>ARAM Mayhem 和 Arena 模式也获得更新</li>
+        </ul>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://www.leagueoflegends.com/en-us/news/game-updates/league-of-legends-patch-26-4-notes/">Riot Games Official Patch Notes</a> · <a href="https://bo3.gg/lol/news/new-patch-26-4-in-league-of-legends">bo3.gg</a> · <a href="https://www.reddit.com/r/leagueoflegends/comments/1r8c8n0/league_of_legends_patch_264_notes/">r/leagueoflegends</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Community & Social</div>
+        <p>The spotlight this week falls on <strong>Patch 26.4 (live Feb 18/19)</strong>, themed around the Lunar Revel celebration. Community discussion centers on continued Aphelios nerfs (still dominant after a prior hotfix), Gwen's double nerf across both top lane and jungle, and a significant Braum ult cooldown increase. The Petals of Spring skin line — particularly the Legendary Lillia skin — drew visual praise.</p>
+        <p><span class="tag positive">Sentiment</span> Neutral to positive overall. New skins are well-received; balance direction is seen as correct, though serial Aphelios mains are vocally frustrated.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">Content Updates & Marketing</div>
+        <ul>
+          <li><strong>Patch 26.4:</strong> Sweeping champion balance pass (10+ champions); jungle ecosystem tuning (Brand/Darius/Fizz monster damage adjustments)</li>
+          <li><strong>Petals of Spring skins:</strong> Camille, Jayce, Katarina, Lillia (1820 RP Legendary), Yasuo — all limited Legacy except Lillia, vaulting in 26.6</li>
+          <li><strong>Divine Architect Porcelain Aurelion Sol:</strong> Special showcase-tier skin</li>
+          <li><strong>Ionia Cup Clash:</strong> ARAM-format tournament event (registration from Feb 16)</li>
+          <li><strong>Winter Sports skins return</strong> (Feb 19–26): Classic skins like Curling Veigar, Ice Toboggan Corki</li>
+          <li>ARAM Mayhem and Arena modes also receive updates</li>
+        </ul>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://www.leagueoflegends.com/en-us/news/game-updates/league-of-legends-patch-26-4-notes/">Riot Games Official</a> · <a href="https://bo3.gg/lol/news/new-patch-26-4-in-league-of-legends">bo3.gg</a> · <a href="https://www.reddit.com/r/leagueoflegends/comments/1r8c8n0/league_of_legends_patch_264_notes/">r/leagueoflegends</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brawl Stars -->
+  <div class="card">
+    <div class="card-title"><span class="game-icon">💥</span> Brawl Stars</div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">社媒热点</div>
+        <p>本周是 Brawl Stars 的<strong>里程碑时刻</strong>——<strong>第100位Brawler "Sirius" 公布</strong>（Brawl Talk 于2月21日播出），叠加全新的 <strong>Prestige 奖杯系统</strong>彻底改变了游戏的进度结构。社区对 Sirius 的解锁方式（用全部99位Brawler各赢一场即可免费获得）反响热烈，被称为"最佳Brawl Stars更新"。<strong>#Brawlentines</strong> 情人节社区活动也在持续进行中。</p>
+        <p><span class="tag positive">情绪</span> 强烈正面。100th Brawler 里程碑+免费解锁路径+Prestige系统无赛季重置的设计深受好评。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">内容更新与营销</div>
+        <ul>
+          <li><strong>2月25日大版本更新</strong>：
+            <ul>
+              <li><strong>Sirius</strong>（Ultra Legendary · Controller）：第100位Brawler，影子召唤机制；支持多种解锁方式（全Brawler胜利挑战 / Sirius Box 挑战 / 随机开出）</li>
+              <li><strong>Najia</strong>（Mythic · Damage Dealer）：第101位Brawler，毒蛇投掷+毒素叠加机制</li>
+            </ul>
+          </li>
+          <li><strong>Prestige 系统</strong>：Brawler 达到1000杯后可 Prestige 解锁永久奖励，<strong>无赛季重置</strong>，匹配基于隐藏 MMR 而非杯数——这是对长期玩家的重大让步</li>
+          <li><strong>Rush Events</strong>：新增多种限时加速奖励活动（杯数/金币/升星点/Starr Drops等）</li>
+          <li><strong>Crow / Bibi / Bull / Nita</strong> 获得全套 Buffy 重做（Gadget+Star Power+Hypercharge）</li>
+          <li><strong>#Brawlentines 社区活动</strong>延长至2月26日</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>亮点案例：</strong>Sirius 的解锁设计是"里程碑庆典营销"的教科书案例——"用全部99位角色各赢一场来解锁第100位"，既是对忠实玩家的奖励，也是驱动角色广度参与的巧妙机制。Prestige 系统取消赛季重置则直接回应了社区最大痛点之一，展示了"倾听社区→系统性改革"的正循环。
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-february-2026">Supercell Official</a> · <a href="https://clutchpoints.com/gaming/brawl-stars-brawl-talk-reveals-100th-brawler-sirius">ClutchPoints</a> · <a href="https://www.reddit.com/r/Brawlstars/comments/1rav5ed/sirius_can_be_unlocked_by_winning_a_match_with/">r/Brawlstars</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Community & Social</div>
+        <p>A <strong>landmark week</strong> for Brawl Stars: the <strong>100th Brawler "Sirius" was revealed</strong> during Brawl Talk on February 21, alongside an entirely new <strong>Prestige Trophy system</strong> that fundamentally reworks progression. The community is buzzing about the unlock method — win one match with all 99 existing Brawlers to get Sirius for free — calling it "the best Brawl Stars update ever." The <strong>#Brawlentines</strong> Valentine's community event also continued running.</p>
+        <p><span class="tag positive">Sentiment</span> Overwhelmingly positive. The 100th Brawler milestone, free unlock path, and Prestige system with zero seasonal resets are all community crowd-pleasers.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">Content Updates & Marketing</div>
+        <ul>
+          <li><strong>Major Update (Feb 25):</strong>
+            <ul>
+              <li><strong>Sirius</strong> (Ultra Legendary Controller): 100th Brawler with shadow-summoning mechanics; multiple unlock paths (all-Brawler win challenge / Sirius Box challenge / random drop)</li>
+              <li><strong>Najia</strong> (Mythic Damage Dealer): 101st Brawler with snake-throw poison-stacking kit</li>
+            </ul>
+          </li>
+          <li><strong>Prestige System:</strong> Brawlers reaching 1,000 Trophies can Prestige for permanent rewards with <strong>no seasonal resets</strong>; matchmaking now based on hidden MMR — a major concession to long-term players</li>
+          <li><strong>Rush Events:</strong> Expanded time-limited boosted reward events (Trophies, Coins, Power Points, Starr/Chaos Drops)</li>
+          <li><strong>Crow / Bibi / Bull / Nita:</strong> Full Buffy overhauls (reworked Gadgets, Star Powers, Hypercharges)</li>
+          <li><strong>#Brawlentines community event</strong> extended to Feb 26</li>
+        </ul>
+        <div class="highlight">
+          💡 <strong>Highlight:</strong> Sirius's unlock design is a textbook "milestone celebration" marketing play — "win one match with all 99 Brawlers to unlock the 100th" simultaneously rewards loyalty and drives broad character engagement. The Prestige system's elimination of seasonal resets directly addresses a top community pain point, showcasing a "listen → structural reform" feedback loop in action.
+        </div>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://supercell.com/en/games/brawlstars/blog/release-notes/release-notes-february-2026">Supercell Official</a> · <a href="https://clutchpoints.com/gaming/brawl-stars-brawl-talk-reveals-100th-brawler-sirius">ClutchPoints</a> · <a href="https://www.reddit.com/r/Brawlstars/comments/1rav5ed/sirius_can_be_unlocked_by_winning_a_match_with/">r/Brawlstars</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wuthering Waves -->
+  <div class="card">
+    <div class="card-title"><span class="game-icon">🌊</span> Wuthering Waves</div>
+
+    <div lang="zh">
+      <div class="subsection">
+        <div class="subsection-label">社媒热点</div>
+        <p>Version 3.1 "For You Who Walk in Snow"（2月5日上线）持续发酵，本周社区讨论的核心是<strong>剧情的超高评价</strong>——Reddit上"3.1可能是鸣潮迄今为止最好的故事"获得大量共鸣，YouTube 上多个"Streamers react to 3.1 story FINALE"视频传播广泛。新角色 <strong>Aemeath 的卡池收入突破10亿日元</strong>（约$640万，仅移动端日服数据）被社区视为鸣潮商业能力的证明。新地区 <strong>Roya Frostlands（冰霜荒原）</strong> 的视觉设计获得赞赏。</p>
+        <p><span class="tag positive">情绪</span> 强烈正面。"叙事大师课"的评价在社区广泛流传。Phase 2（2月26日 Luuk Herssen 卡池）即将到来。</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">内容更新与营销</div>
+        <ul>
+          <li><strong>Version 3.1 持续运营</strong>：Phase 1 Aemeath（融合·剑）+ Chisa + Lupa 卡池运行中（至2月26日）</li>
+          <li><strong>Phase 2（2月26日）</strong>：Luuk Herssen 新角色卡池即将上线</li>
+          <li><strong>新地区 Roya Frostlands</strong>：Ginnungamere 内的冰雪区域，大幅扩展世界地图</li>
+          <li><strong>主线剧情 Chapter 3 Act 3</strong>：围绕 Aemeath 展开的情感叙事获得社区"催泪"级评价</li>
+          <li>大量 QoL 改进：简化升级系统、新战斗玩法（Aemeath可操控机甲）</li>
+          <li>Aemeath 卡池 Game-i 数据：约10亿日元 / $640万收入（iOS JP），创鸣潮角色卡池新纪录</li>
+        </ul>
+      </div>
+      <div class="source-ref">
+        📎 信源：<a href="https://www.reddit.com/r/WutheringWaves/comments/1qwefaj/31_might_be_the_best_story_wuwa_has_ever_done_so/">r/WutheringWaves</a> · <a href="https://wutheringwaves.fandom.com/wiki/Version/3.1">WuWa Wiki</a> · <a href="https://www.mmorpg.com/news/wuthering-waves-31-frostlands-surface-adds-the-chill-new-combat-possibilities-and-major-improvements-2000137213">MMORPG.com</a> · <a href="https://x.com/shu96hz/status/2025093304610910361">Game-i Data</a>
+      </div>
+    </div>
+
+    <div lang="en">
+      <div class="subsection">
+        <div class="subsection-label">Community & Social</div>
+        <p>Version 3.1 "For You Who Walk in Snow" (live since Feb 5) continues to dominate conversation. The central narrative this week: <strong>the story has been praised as the game's best yet</strong>. A Reddit post titled "3.1 might be the best story WuWa has ever done so far" resonated widely, and multiple "streamers react to 3.1 story finale" videos spread across YouTube. New character <strong>Aemeath's banner revenue crossed ¥1 billion</strong> (~$6.4M, iOS Japan mobile only per Game-i), seen by the community as proof of Wuthering Waves' commercial potential. The new <strong>Roya Frostlands</strong> region drew praise for its visual design.</p>
+        <p><span class="tag positive">Sentiment</span> Strongly positive. "A masterclass in storytelling" is the prevailing take. Phase 2 (Luuk Herssen banner on Feb 26) is imminent.</p>
+      </div>
+      <div class="subsection">
+        <div class="subsection-label">Content Updates & Marketing</div>
+        <ul>
+          <li><strong>Version 3.1 live ops:</strong> Phase 1 Aemeath (Fusion Sword) + Chisa + Lupa banners running through Feb 26</li>
+          <li><strong>Phase 2 (Feb 26):</strong> Luuk Herssen debut banner incoming</li>
+          <li><strong>New region — Roya Frostlands:</strong> A snow-covered zone within Ginnungamere, significantly expanding the world map</li>
+          <li><strong>Main Story Chapter 3 Act 3:</strong> Aemeath-centered emotional narrative earning "I cried" reactions across the community</li>
+          <li>Major QoL improvements: streamlined leveling, new combat mechanics (Aemeath's pilotable mech)</li>
+          <li>Aemeath banner revenue per Game-i: ~¥1B / $6.4M (iOS JP), a new record for a WuWa character banner</li>
+        </ul>
+      </div>
+      <div class="source-ref">
+        📎 Sources: <a href="https://www.reddit.com/r/WutheringWaves/comments/1qwefaj/31_might_be_the_best_story_wuwa_has_ever_done_so/">r/WutheringWaves</a> · <a href="https://wutheringwaves.fandom.com/wiki/Version/3.1">WuWa Wiki</a> · <a href="https://www.mmorpg.com/news/wuthering-waves-31-frostlands-surface-adds-the-chill-new-combat-possibilities-and-major-improvements-2000137213">MMORPG.com</a> · <a href="https://x.com/shu96hz/status/2025093304610910361">Game-i Data</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== RADAR SIGNALS ========== -->
+<div class="section">
+  <div lang="zh">
+    <div class="section-title">🎯 雷达信号</div>
+    <div class="radar-item">
+      <strong>Star Sailors</strong> (Com2uS) — 回合制 JRPG Gacha，2月25日全球上线。r/gachagaming 有发布讨论帖。Com2uS 旗下新IP，需观察首周表现。
+    </div>
+    <div class="radar-item">
+      <strong>Warframe (Android)</strong> — 2月19日 Android 全球上线。Digital Extremes 的经典 F2P Looter Shooter 扩展至移动端，支持跨平台存档。MassivelyOP / WCCFTech 等媒体报道。
+    </div>
+    <div class="radar-item">
+      <strong>Subway Surfers City</strong> — 经典无尽跑酷续作，2月26日全球上线。Variety / The Verge / PocketGamer 多家媒体报道。虽非 Gacha 品类，但作为 Casual GaaS 标杆IP的续作值得关注。
+    </div>
+    <div class="radar-item">
+      <strong>Zenless Zone Zero × Sanrio</strong> — HoYoverse 旗下 ZZZ 与三丽鸥（Hello Kitty / My Melody / Cinnamoroll / Kuromi）联动周边，2月11日起在日本 GiGO / Animate 发售。Siliconera / CBR 报道。品牌跨界合作案例。
+    </div>
+  </div>
+  <div lang="en">
+    <div class="section-title">🎯 Radar Signals</div>
+    <div class="radar-item">
+      <strong>Star Sailors</strong> (Com2uS) — Turn-based JRPG gacha launching globally Feb 25. Discussed on r/gachagaming. New IP from Com2uS; first-week performance will be telling.
+    </div>
+    <div class="radar-item">
+      <strong>Warframe (Android)</strong> — Global Android launch on Feb 19. Digital Extremes' flagship F2P looter-shooter extends to mobile with cross-save support. Covered by MassivelyOP, WCCFTech.
+    </div>
+    <div class="radar-item">
+      <strong>Subway Surfers City</strong> — Sequel to the iconic endless runner, launching globally Feb 26. Covered by Variety, The Verge, PocketGamer. Not gacha, but a noteworthy casual GaaS IP sequel.
+    </div>
+    <div class="radar-item">
+      <strong>Zenless Zone Zero × Sanrio</strong> — HoYoverse's ZZZ collab with Sanrio (Hello Kitty, My Melody, Cinnamoroll, Kuromi) merch, on sale at GiGO/Animate Japan from Feb 11. Covered by Siliconera, CBR. A notable brand crossover play.
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <div lang="zh">
+    <h3>📌 审核提示</h3>
+    <ul>
+      <li>Core List 5款游戏信息是否完整 ✅</li>
+      <li>Burst 定性（Rainbow Six Mobile 全球上线 / Arknights: Endfield 媒体集火）是否准确</li>
+      <li>候选池是否需要手动调整（晋升/加入）——如需将某款 Radar 标的升级为下周 Active 或 Core，请告知</li>
+      <li>是否需要对任何 Burst 标的进行深挖（Reddit讨论 / 发行商背景 / 榜单数据等）</li>
+    </ul>
+  </div>
+  <div lang="en">
+    <h3>📌 Review Checklist</h3>
+    <ul>
+      <li>Core List — all 5 titles covered ✅</li>
+      <li>Burst classification accuracy (Rainbow Six Mobile global launch / Arknights: Endfield media surge)</li>
+      <li>Candidate pool adjustments needed? (promote Radar titles to Active or Core for next week)</li>
+      <li>Any Burst items requiring deeper investigation? (Reddit threads / publisher background / chart data)</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === (lang === 'zh' ? '中文' : 'EN'));
+  });
+  // Update URL
+  const url = new URL(window.location);
+  url.searchParams.set('lang', lang);
+  window.history.replaceState({}, '', url);
+}
+// Check URL param on load
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('lang') === 'en') setLang('en');
+})();
+</script>
+
+</body>
+</html>
