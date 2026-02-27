@@ -41,7 +41,7 @@ REPO_DIR = Path(__file__).parent.resolve()
 PAGES_BASE = "https://botanico1110.github.io/marketing-report"
 
 # Branch to push reports to
-TARGET_BRANCH = "master"
+TARGET_BRANCH = "main"
 
 # Pattern that identifies a valid weekly report filename
 REPORT_PATTERN = re.compile(r".+-W\d{2}-\d{8}\.html$")
