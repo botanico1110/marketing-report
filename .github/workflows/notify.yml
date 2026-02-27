@@ -38,7 +38,7 @@ jobs:
             fi
           else
             REPORT_FILE=$(git diff --name-only --diff-filter=A HEAD~1 HEAD \
-              | grep -E '^[^/].*-W[0-9]{2}-[0-9]{8}\.html$' \
+              | grep -E '^[^/].*-W[0-9]{1,2}-[0-9]{8}\.html$' \
               | head -1 || true)
           fi
 
@@ -51,7 +51,7 @@ jobs:
           echo "skip=false"               >> "$GITHUB_OUTPUT"
           echo "report_file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
 
-          WEEK=$(echo "$REPORT_FILE" | grep -oE 'W[0-9]{2}')
+          WEEK=$(echo "$REPORT_FILE" | grep -oE 'W[0-9]{1,2}')
           DATE_RAW=$(echo "$REPORT_FILE" | grep -oE '[0-9]{8}' | tail -1)
           DATE_DISPLAY="${DATE_RAW:0:4}-${DATE_RAW:4:2}-${DATE_RAW:6:2}"
 
