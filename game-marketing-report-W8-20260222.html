@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏营销动态周报 (Game Marketing Weekly) - Week 8, 2026</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f5f6fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --secondary-text: #7f8c8d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 2.5em; }
+        .subtitle { opacity: 0.9; margin-top: 10px; }
+
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+
+        .section {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .game-card {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .game-title {
+            color: var(--accent-color);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .metric-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .tag.positive { background: #e8f5e9; color: #2e7d32; }
+        .tag.negative { background: #ffebee; color: #c62828; }
+        .tag.neutral { background: #e3f2fd; color: #1565c0; }
+
+        .source-link {
+            font-size: 0.85em;
+            color: var(--secondary-text);
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .source-link:hover { text-decoration: underline; color: var(--accent-color); }
+
+        [lang="en"] { display: none; }
+        body.show-en [lang="zh"] { display: none; }
+        body.show-en [lang="en"] { display: block; }
+
+        /* Highlights & Trends */
+        .highlight-box {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            border: 1px solid #e1e8ed;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <button class="lang-btn" onclick="toggleLang()">Switch to English / 切换中文</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 lang="zh">🎮 游戏营销动态周报 (2026)</h1>
+            <h1 lang="en">🎮 Game Marketing Weekly Report (2026)</h1>
+            <div class="subtitle">
+                <span lang="zh">第8周 | 2026.02.16 - 2026.02.22</span>
+                <span lang="en">Week 8 | Feb 16 - Feb 22, 2026</span>
+            </div>
+        </header>
+
+        <!-- 1. Overview -->
+        <section class="section">
+            <h2 lang="zh">📊 数据概览</h2>
+            <h2 lang="en">📊 Market Overview</h2>
+            <div lang="zh">
+                <p>本周（2026年2月16日-22日）游戏市场聚焦于版本更新的前夜与长尾运营。<strong>Fortnite</strong> 延长了 "Love and Legends" 活动，但社区对 Chapter 7 的内容疲劳感显现；<strong>Genshin Impact</strong> 蓄势待发，即将推出 6.4 "Luna V" 版本，Varka 的登场传闻推高了热度；<strong>League of Legends</strong> 发布 Patch 26.4，对竞技环境进行大幅调整；<strong>VALORANT</strong> 开启 2026 VCT 赛季胶囊售卖，全力备战 Masters Santiago；<strong>Wuthering Waves</strong> 3.1 版本进入下半段，新角色 Luuk Herssen 备受期待。</p>
+            </div>
+            <div lang="en">
+                <p>This week (Feb 16-22, 2026) focuses on pre-update hype and long-tail operations. <strong>Fortnite</strong> extended its "Love and Legends" event, though community fatigue regarding Chapter 7 is evident. <strong>Genshin Impact</strong> is gearing up for Version 6.4 "Luna V," with Varka rumors driving engagement. <strong>League of Legends</strong> released Patch 26.4 with significant meta adjustments. <strong>VALORANT</strong> launched sales for 2026 VCT Season Capsules ahead of Masters Santiago. <strong>Wuthering Waves</strong> Version 3.1 enters its second phase, with high anticipation for new character Luuk Herssen.</p>
+            </div>
+        </section>
+
+        <!-- 2. Key Events -->
+        <section class="section">
+            <h2 lang="zh">🔍 重点事件回顾</h2>
+            <h2 lang="en">🔍 Key Events Deep Dive</h2>
+
+            <!-- Fortnite -->
+            <div class="game-card">
+                <div class="game-title">Fortnite</div>
+                
+                <div class="highlight-box">
+                    <h3 lang="zh">🔥 社媒热度</h3>
+                    <h3 lang="en">🔥 Social Buzz</h3>
+                    <div lang="zh">
+                        <p><strong>Chapter 7 疲劳感</strong>：Reddit 热门话题 "Is it just me or is Chapter 7 extremely boring" 反映出玩家对当前赛季的长草期不满。不过，"Solo Leveling"（我独自升级）和 "Disney Tsum Tsum" 的联动传闻成功维持了商城热度。</p>
+                        <p><strong>怀旧情结</strong>：2月22日是 Chapter 1 Season 3 发布8周年，社区爆发了一波怀旧讨论。</p>
+                    </div>
+                    <div lang="en">
+                        <p><strong>Chapter 7 Fatigue</strong>: A top Reddit thread "Is it just me or is Chapter 7 extremely boring" highlights player dissatisfaction with the current content drought. However, rumors of "Solo Leveling" and "Disney Tsum Tsum" collaborations kept the Item Shop buzz alive.</p>
+                        <p><strong>Nostalgia</strong>: Feb 22 marked the 8th anniversary of Chapter 1 Season 3, triggering a wave of nostalgic discussions in the community.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 lang="zh">📅 内容与营销</h3>
+                    <h3 lang="en">📅 Content & Campaigns</h3>
+                    <div lang="zh">
+                        <ul>
+                            <li><strong>活动延期</strong>："Love and Legends Power Hour" 活动延长至2月22日，作为情人节活动的尾声。</li>
+                            <li><strong>更新预告</strong>：新版本更新于2月19日发布，为后续内容铺路。</li>
+                        </ul>
+                    </div>
+                    <div lang="en">
+                        <ul>
+                            <li><strong>Event Extension</strong>: "Love and Legends Power Hour" extended to Feb 22, wrapping up Valentine's celebrations.</li>
+                            <li><strong>Update Teaser</strong>: A new update dropped on Feb 19, paving the way for upcoming content.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="source-link">Sources: fortnite.com/news, r/FortNiteBR</div>
+            </div>
+
+            <!-- Genshin Impact -->
+            <div class="game-card">
+                <div class="game-title">Genshin Impact (原神)</div>
+                
+                <div class="highlight-box">
+                    <h3 lang="zh">🔥 社媒热度</h3>
+                    <h3 lang="en">🔥 Social Buzz</h3>
+                    <div lang="zh">
+                        <p><strong>6.4 版本 "Luna V" 前瞻</strong>：预计2月24/25日上线的 6.4 版本成为焦点，特别是关于蒙德（Mondstadt）地区回归和传奇角色 Varka（法尔伽）可能实装的讨论。Code "GS64YTW65O" 的传播也带动了社群互动。</p>
+                        <p><strong>海灯节回顾</strong>：尽管已近尾声，玩家仍对今年的海灯节剧情进行复盘，评价偏向"Lore-heavy"（剧情深度向）。</p>
+                    </div>
+                    <div lang="en">
+                        <p><strong>Version 6.4 "Luna V" Hype</strong>: With the release expected on Feb 24/25, discussions focus on the return to Mondstadt and potential Varka release. The distribution of code "GS64YTW65O" also boosted community interaction.</p>
+                        <p><strong>Lantern Rite Review</strong>: Though ending, players are reviewing this year's Lantern Rite, praising its "Lore-heavy" direction.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 lang="zh">📅 内容与营销</h3>
+                    <h3 lang="en">📅 Content & Campaigns</h3>
+                    <div lang="zh">
+                        <ul>
+                            <li><strong>版本前瞻</strong>：官方发布 6.4 版本维护预览，定档2月25日。</li>
+                            <li><strong>长尾运营</strong>：6.3 版本末期，主要依靠日常问答贴维持活跃。</li>
+                        </ul>
+                    </div>
+                    <div lang="en">
+                        <ul>
+                            <li><strong>Version Preview</strong>: Official maintenance preview for Version 6.4, confirmed for Feb 25.</li>
+                            <li><strong>Long-tail</strong>: Late Version 6.3 activity relies mainly on daily megathreads.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="source-link">Sources: genshin.hoyoverse.com, r/Genshin_Impact</div>
+            </div>
+
+            <!-- League of Legends -->
+            <div class="game-card">
+                <div class="game-title">League of Legends (英雄联盟)</div>
+                
+                <div class="highlight-box">
+                    <h3 lang="zh">🔥 社媒热度</h3>
+                    <h3 lang="en">🔥 Social Buzz</h3>
+                    <div lang="zh">
+                        <p><strong>Patch 26.4 平衡性</strong>：Gwen、Swain 和 Zac 的大幅削弱引发了专精玩家的抗议，而 Annie 和 Xayah 的加强则受到好评。Mel 的紧急热补丁（Hotfix）显示出新英雄平衡的难度。</p>
+                        <p><strong>视觉系统争议</strong>：关于 "Faelights" 和视野机制的改动成为 Reddit 热议话题。</p>
+                    </div>
+                    <div lang="en">
+                        <p><strong>Patch 26.4 Balance</strong>: Massive nerfs to Gwen, Swain, and Zac triggered outcry from mains, while buffs to Annie and Xayah were welcomed. A hotfix for Mel highlights ongoing balancing struggles.</p>
+                        <p><strong>Vision System Controversy</strong>: Changes to "Faelights" and vision mechanics are a hot topic on Reddit.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 lang="zh">📅 内容与营销</h3>
+                    <h3 lang="en">📅 Content & Campaigns</h3>
+                    <div lang="zh">
+                        <ul>
+                            <li><strong>更新发布</strong>：Patch 26.4 本周上线，伴随 "Winter Sports" 系列皮肤回归。</li>
+                            <li><strong>云顶之弈</strong>：TFT Patch 16.5 同期发布，保持了自走棋模式的更新频率。</li>
+                        </ul>
+                    </div>
+                    <div lang="en">
+                        <ul>
+                            <li><strong>Update</strong>: Patch 26.4 released this week, featuring the return of "Winter Sports" skins.</li>
+                            <li><strong>TFT</strong>: TFT Patch 16.5 released simultaneously, maintaining auto-battler cadence.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="source-link">Sources: leagueoflegends.com, r/leagueoflegends</div>
+            </div>
+
+            <!-- VALORANT -->
+            <div class="game-card">
+                <div class="game-title">VALORANT (瓦罗兰特)</div>
+                
+                <div class="highlight-box">
+                    <h3 lang="zh">🔥 社媒热度</h3>
+                    <h3 lang="en">🔥 Social Buzz</h3>
+                    <div lang="zh">
+                        <p><strong>VCT 2026 胶囊</strong>：2月19日上线的 2026 赛季战队胶囊成为氪金热点，"Represent your region" 的口号成功调动了粉丝情绪。</p>
+                        <p><strong>赛事隐忧</strong>：尽管 Masters Santiago 掉落奖励（Drops）已公布，但 VCT Americas Kickoff 的收视率增长微乎其微，引发对赛制扩张效果的质疑。</p>
+                    </div>
+                    <div lang="en">
+                        <p><strong>VCT 2026 Capsules</strong>: The Feb 19 launch of 2026 Season Capsules drove spending, with the "Represent your region" slogan effectively mobilizing fans.</p>
+                        <p><strong>Esports Concerns</strong>: Despite Masters Santiago drops being revealed, VCT Americas Kickoff viewership showed minimal growth, questioning the effectiveness of format expansion.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 lang="zh">📅 内容与营销</h3>
+                    <h3 lang="en">📅 Content & Campaigns</h3>
+                    <div lang="zh">
+                        <ul>
+                            <li><strong>商业化</strong>：VCT 2026 Season Capsules 全球上架。</li>
+                            <li><strong>赛事预热</strong>：公布 Masters Santiago 的观赛奖励，提升直播平台的留存率。</li>
+                        </ul>
+                    </div>
+                    <div lang="en">
+                        <ul>
+                            <li><strong>Monetization</strong>: VCT 2026 Season Capsules launched globally.</li>
+                            <li><strong>Hype Building</strong>: Announced Masters Santiago viewership rewards to boost retention.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="source-link">Sources: valorantesports.com, r/VALORANT</div>
+            </div>
+
+            <!-- Wuthering Waves -->
+            <div class="game-card">
+                <div class="game-title">Wuthering Waves (鸣潮)</div>
+                
+                <div class="highlight-box">
+                    <h3 lang="zh">🔥 社媒热度</h3>
+                    <h3 lang="en">🔥 Social Buzz</h3>
+                    <div lang="zh">
+                        <p><strong>3.1 版本下半期待</strong>：玩家正在积攒资源等待2月26日上线的 3.1 版本第二阶段卡池，新角色 Luuk Herssen 是讨论核心。</p>
+                        <p><strong>社区氛围</strong>：情人节活动 "Your month your Valentine" 的余温仍在，社区二创活跃。老玩家（2.0入坑）与新玩家的体验对比帖也引发了共鸣。</p>
+                    </div>
+                    <div lang="en">
+                        <p><strong>Version 3.1 Phase 2 Hype</strong>: Players are hoarding resources for the Phase 2 banner dropping Feb 26, with new character Luuk Herssen as the core topic.</p>
+                        <p><strong>Community Vibes</strong>: Valentine's event "Your month your Valentine" still resonates, fueling fan art. Discussions comparing veteran (2.0 starter) vs. new player experiences are gaining traction.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 lang="zh">📅 内容与营销</h3>
+                    <h3 lang="en">📅 Content & Campaigns</h3>
+                    <div lang="zh">
+                        <ul>
+                            <li><strong>版本进程</strong>：处于 3.1 "For You Who Walk in Snow" 版本的中间过渡期。</li>
+                            <li><strong>活动</strong>：情人节活动收尾，准备迎接下半个卡池。</li>
+                        </ul>
+                    </div>
+                    <div lang="en">
+                        <ul>
+                            <li><strong>Version Progress</strong>: Mid-phase transition of Version 3.1 "For You Who Walk in Snow".</li>
+                            <li><strong>Events</strong>: Wrapping up Valentine's events, prepping for Phase 2 banners.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="source-link">Sources: wutheringwaves.kurogames.com, r/WutheringWaves</div>
+            </div>
+
+        </section>
+
+        <!-- 3. Highlights Analysis -->
+        <section class="section">
+            <h2 lang="zh">💡 营销亮点分析</h2>
+            <h2 lang="en">💡 Highlight Analysis</h2>
+            <div class="highlight-box">
+                <h3 lang="zh">1. 怀旧营销的即时性 (Fortnite)</h3>
+                <p lang="zh">在内容疲软期（Chapter 7 Boring），社区自发利用 "8年前的今天"（Chapter 1 Season 3 Anniversary）进行怀旧。Epic 虽未大张旗鼓，但顺势推出的经典风格物品或社交媒体互动，低成本地维持了用户情感连接。</p>
+                <h3 lang="en">1. Immediacy of Nostalgia Marketing (Fortnite)</h3>
+                <p lang="en">During a content lull (Chapter 7 Boring), the community spontaneously used the "8 years ago today" milestone for nostalgia. Epic maintained emotional connection at low cost by leveraging this with classic-style items or social engagement.</p>
+            </div>
+            <div class="highlight-box">
+                <h3 lang="zh">2. 地区归属感变现 (VALORANT)</h3>
+                <p lang="zh">VCT 2026 胶囊不仅是皮肤，更是"身份标识"。通过强调 "Represent your region"，将电竞的地域对抗情绪转化为消费动力，即使在赛事收视率波动的情况下，依然能保证商业化收入的稳定。</p>
+                <h3 lang="en">2. Monetizing Regional Identity (VALORANT)</h3>
+                <p lang="en">VCT 2026 Capsules are more than skins; they are "identity badges." By emphasizing "Represent your region," Riot converts regional esports rivalry into spending power, ensuring stable revenue even amidst viewership fluctuations.</p>
+            </div>
+        </section>
+
+        <!-- 4. Trends -->
+        <section class="section">
+            <h2 lang="zh">📈 趋势洞察</h2>
+            <h2 lang="en">📈 Trend Insights</h2>
+            <ul lang="zh">
+                <li><strong>版本末期的"垃圾时间"管理</strong>：本周多个游戏（Genshin, WuWa, Fortnite）都处于大版本更新前的最后一周。厂商普遍采取 "复刻活动"（Love and Legends 延期）或 "高强度预告"（Genshin 6.4 Preview）的双向策略，既填补空白又拉高期待。</li>
+                <li><strong>二次元游戏的数值膨胀与回溯</strong>：LoL 的 Patch 26.4 大幅削弱数值怪（Gwen/Swain）和 Genshin 玩家期待老角色（Varka）的登场，显示出长线运营游戏在第6-7年时，如何平衡"新机制"与"数值控制"成为核心难题。</li>
+            </ul>
+            <ul lang="en">
+                <li><strong>Managing "Garbage Time" at Version End</strong>: Multiple titles (Genshin, WuWa, Fortnite) are in the final week before major updates. Publishers universally adopt a dual strategy of "Rerun Extensions" (Love and Legends) and "High-Intensity Teasers" (Genshin 6.4 Preview) to fill gaps and build hype.</li>
+                <li><strong>Power Creep vs. Regression</strong>: LoL's massive nerfs in Patch 26.4 and Genshin players' anticipation for legacy characters (Varka) highlight the core challenge of balancing "New Mechanics" vs. "Stat Control" in games reaching their 6th-7th year.</li>
+            </ul>
+        </section>
+
+        <!-- 5. Next Week -->
+        <section class="section">
+            <h2 lang="zh">👀 下周关注点</h2>
+            <h2 lang="en">👀 What to Watch Next Week</h2>
+            <div lang="zh">
+                <ul>
+                    <li><strong>Genshin Impact</strong>: 2月25日 6.4 版本上线后的口碑，特别是蒙德新区域的质量。</li>
+                    <li><strong>Wuthering Waves</strong>: 2月26日 Luuk Herssen 卡池的流水表现。</li>
+                    <li><strong>Fortnite</strong>: Chapter 7 后续更新能否挽回"Boring"的社区口碑。</li>
+                </ul>
+            </div>
+            <div lang="en">
+                <ul>
+                    <li><strong>Genshin Impact</strong>: Reception of Version 6.4 post-launch on Feb 25, especially the quality of the new Mondstadt area.</li>
+                    <li><strong>Wuthering Waves</strong>: Revenue performance of the Luuk Herssen banner on Feb 26.</li>
+                    <li><strong>Fortnite</strong>: Whether upcoming Chapter 7 updates can reverse the "Boring" community sentiment.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function toggleLang() {
+            document.body.classList.toggle('show-en');
+            const btn = document.querySelector('.lang-btn');
+            if (document.body.classList.contains('show-en')) {
+                btn.textContent = "Switch to Chinese / 切换中文";
+            } else {
+                btn.textContent = "Switch to English / 切换英文";
+            }
+        }
+
+        // Detect URL parameter for default language
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('lang') === 'en') {
+            toggleLang();
+        }
+    </script>
+</body>
+</html>
