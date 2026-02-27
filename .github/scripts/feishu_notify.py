@@ -12,6 +12,7 @@ Required env vars:
 
 Optional env vars:
   REPORT_SUMMARY      — English summary text
+  REPORT_SUMMARY_ZH   — Chinese summary text
 """
 
 import json
@@ -35,7 +36,7 @@ def week_range(week_str: str, date_str: str) -> str:
         return date_str
 
 
-def build_payload(week: str, date: str, report_url: str, summary: str) -> dict:
+def build_payload(week: str, date: str, report_url: str, summary: str, summary_zh: str = "") -> dict:
     """
     Build a simple JSON payload for the enterprise app webhook.
     The enterprise automation will parse these fields as variables
@@ -54,6 +55,9 @@ def build_payload(week: str, date: str, report_url: str, summary: str) -> dict:
             f"{week} · {span}\n\n"
             "本期游戏营销监测周报已发布。\n"
             "This week's game marketing report is ready for review."
+        ),
+        "summary_zh":  summary_zh.strip() if summary_zh.strip() else (
+            f"{week} · {span}\n\n本期游戏营销监测周报已发布。"
         ),
     }
 
@@ -78,7 +82,8 @@ def main() -> None:
     report_week    = os.environ.get("REPORT_WEEK", "")
     report_date    = os.environ.get("REPORT_DATE", "")
     report_url     = os.environ.get("REPORT_URL", "")
-    report_summary = os.environ.get("REPORT_SUMMARY", "")
+    report_summary    = os.environ.get("REPORT_SUMMARY",    "")
+    report_summary_zh = os.environ.get("REPORT_SUMMARY_ZH", "")
 
     if not webhook_url:
         print("FEISHU_WEBHOOK_URL not set — skipping.")
@@ -91,9 +96,10 @@ def main() -> None:
     print(f"  Week    : {report_week}")
     print(f"  Date    : {report_date}")
     print(f"  URL     : {report_url}")
-    print(f"  Summary : {len(report_summary)} chars")
+    print(f"  Summary    : {len(report_summary)} chars")
+    print(f"  Summary ZH : {len(report_summary_zh)} chars")
 
-    payload = build_payload(report_week, report_date, report_url, report_summary)
+    payload = build_payload(report_week, report_date, report_url, report_summary, report_summary_zh)
     print(f"  Payload : {json.dumps(payload, ensure_ascii=False, indent=2)}")
 
     try:
