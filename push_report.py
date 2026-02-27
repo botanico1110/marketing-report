@@ -44,7 +44,7 @@ PAGES_BASE = "https://botanico1110.github.io/marketing-report"
 TARGET_BRANCH = "main"
 
 # Pattern that identifies a valid weekly report filename
-REPORT_PATTERN = re.compile(r".+-W\d{2}-\d{8}\.html$")
+REPORT_PATTERN = re.compile(r".+-W\d{1,2}-\d{8}\.html$")
 # ---------------------------------------------------------------------------
 
 
