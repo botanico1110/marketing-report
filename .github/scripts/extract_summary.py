@@ -105,18 +105,16 @@ def _strip_emoji(text: str) -> str:
 # ---------------------------------------------------------------------------
 
 def extract_header(html: str) -> list[str]:
+    # The Feishu template already renders the title and date.
+    # Only surface the Core Watch game list as a single orientation line.
     blocks = _find_all_divs(html, re.compile(r'<div\s[^>]*class=["\']header["\'][^>]*>'))
     if not blocks:
         return []
     text = _en_text(blocks[0])
-    lines = []
-    week_m = re.search(r'(W\d{2}\s*[·•]\s*.+?)(?:\n|$)', text)
     core_m = re.search(r'Core Watch:\s*(.+)', text)
-    if week_m:
-        lines.append(f"📅 {week_m.group(1).strip()}")
     if core_m:
-        lines.append(f"🎮 {core_m.group(1).strip()}")
-    return lines
+        return [f"🎮 {core_m.group(1).strip()}"]
+    return []
 
 
 def _card_title(card_html: str) -> str:
@@ -147,6 +145,11 @@ def extract_burst(html: str) -> list[str]:
             trig_m.group(1).replace('\n', ' ').strip(), 130
         ) if trig_m else ''
 
+        # Strip signal-classification prefixes like "Hard Signal — Global Launch:"
+        # that are structural metadata, not readable narrative.
+        desc = re.sub(
+            r'^(Hard|Medium|Low)\s+Signal\s*[—–]\s*[\w\s]+:\s*', '', desc
+        )
         lines.append(f"• **{title}** — {desc}")
     return lines
 
@@ -159,13 +162,13 @@ def extract_watch(html: str) -> list[str]:
         return []
 
     lines = ['**🔍 Core Watch**']
-    for card in cards:
+    for card in cards[:3]:  # cap at 3 to keep the digest tight
         title = _card_title(card)
 
         en = _en_text(card)
         # First paragraph with >60 chars = community/social lead
         paras = [p.strip() for p in en.splitlines() if len(p.strip()) > 60]
-        desc = _first_sentence(paras[0], 140) if paras else ''
+        desc = _first_sentence(paras[0], 90) if paras else ''  # 140 → 90
 
         if title and desc:
             lines.append(f"• **{title}** — {desc}")
