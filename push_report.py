@@ -96,7 +96,7 @@ def git(args: list[str], check: bool = True) -> str:
 
 
 def ensure_on_target_branch() -> None:
-    """Warn (but don't abort) if the repo is not on TARGET_BRANCH."""
+    """Switch to TARGET_BRANCH if needed, then pull latest changes."""
     current = git(["rev-parse", "--abbrev-ref", "HEAD"])
     if current != TARGET_BRANCH:
         print(
@@ -105,7 +105,8 @@ def ensure_on_target_branch() -> None:
             f"   Switching to '{TARGET_BRANCH}' now..."
         )
         git(["checkout", TARGET_BRANCH])
-        git(["pull", "origin", TARGET_BRANCH])
+    print(f"  ⬇  Pulling latest from origin/{TARGET_BRANCH} ...")
+    git(["pull", "origin", TARGET_BRANCH])
 
 
 def publish(src: Path) -> None:
