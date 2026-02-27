@@ -81,6 +81,19 @@ def _en_text(block: str) -> str:
     return '\n'.join(parts)
 
 
+def _zh_text(block: str) -> str:
+    """Extract text only from lang="zh" divs inside block, skip lang="en"."""
+    ZH = re.compile(r'<div\s[^>]*lang=["\']zh["\'][^>]*>', re.IGNORECASE)
+    EN = re.compile(r'<div\s[^>]*lang=["\']en["\'][^>]*>', re.IGNORECASE)
+    parts = []
+    for zh_inner in _find_all_divs(block, ZH):
+        sanitised = zh_inner
+        for en_inner in _find_all_divs(zh_inner, EN):
+            sanitised = sanitised.replace(en_inner, '', 1)
+        parts.append(_clean(sanitised))
+    return '\n'.join(parts)
+
+
 def _first_sentence(text: str, max_chars: int = 160) -> str:
     """Truncate to max_chars, preferring a sentence boundary."""
     if len(text) <= max_chars:
@@ -196,6 +209,59 @@ def extract_radar(html: str) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# Chinese section extractors
+# ---------------------------------------------------------------------------
+
+def extract_burst_zh(html: str) -> list[str]:
+    BURST = re.compile(r'<div\s[^>]*class=["\']card burst-card["\'][^>]*>', re.IGNORECASE)
+    cards = _find_all_divs(html, BURST)
+    if not cards:
+        return []
+    lines = ['**🚨 本周爆发**']
+    for card in cards:
+        title = _card_title(card)
+        zh = _zh_text(card)
+        paras = [p.strip() for p in zh.splitlines() if len(p.strip()) > 20]
+        desc = _first_sentence(paras[0], 80) if paras else ''
+        if title and desc:
+            lines.append(f"• **{title}** — {desc}")
+    return lines
+
+
+def extract_watch_zh(html: str) -> list[str]:
+    WATCH = re.compile(r'<div\s+class=["\']card["\']>', re.IGNORECASE)
+    cards = _find_all_divs(html, WATCH)
+    if not cards:
+        return []
+    lines = ['**🔍 重点关注**']
+    for card in cards[:3]:
+        title = _card_title(card)
+        zh = _zh_text(card)
+        paras = [p.strip() for p in zh.splitlines() if len(p.strip()) > 20]
+        desc = _first_sentence(paras[0], 80) if paras else ''
+        if title and desc:
+            lines.append(f"• **{title}** — {desc}")
+    return lines
+
+
+def extract_radar_zh(html: str) -> list[str]:
+    ZH   = re.compile(r'<div\s[^>]*lang=["\']zh["\'][^>]*>', re.IGNORECASE)
+    RADAR = re.compile(r'<div\s[^>]*class=["\']radar-item["\'][^>]*>', re.IGNORECASE)
+    zh_items = []
+    for zh_block in _find_all_divs(html, ZH):
+        for radar_inner in _find_all_divs(zh_block, RADAR):
+            text = _clean(radar_inner).replace('\n', ' ').strip()
+            if len(text) > 10:
+                zh_items.append(text[:110])
+    if not zh_items:
+        return []
+    lines = ['**🎯 雷达监测**']
+    for item in zh_items[:4]:
+        lines.append(f"• {item}")
+    return lines
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -226,8 +292,30 @@ def extract_summary(html_path: str) -> str:
     return '\n\n'.join(parts)
 
 
+def extract_summary_zh(html_path: str) -> str:
+    html = Path(html_path).read_text(encoding='utf-8', errors='ignore')
+
+    m = re.search(
+        r'<div[^>]*id=["\']wave-summary-zh["\'][^>]*>(.*?)</div>',
+        html, re.DOTALL | re.IGNORECASE
+    )
+    if m:
+        return _clean(m.group(1))
+
+    sections: list[list[str]] = [
+        extract_burst_zh(html),
+        extract_watch_zh(html),
+        extract_radar_zh(html),
+    ]
+    parts = ['\n'.join(s) for s in sections if s]
+    return '\n\n'.join(parts)
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print('Usage: extract_summary.py <report.html>', file=sys.stderr)
-        sys.exit(1)
-    print(extract_summary(sys.argv[1]))
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('report', help='HTML report file path')
+    ap.add_argument('--lang', choices=['en', 'zh'], default='en')
+    args = ap.parse_args()
+    fn = extract_summary_zh if args.lang == 'zh' else extract_summary
+    print(fn(args.report))

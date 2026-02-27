@@ -72,19 +72,30 @@ jobs:
           REPORT_FILE="${{ steps.detect.outputs.report_file }}"
           SUMMARY=$(python3 .github/scripts/extract_summary.py "$REPORT_FILE" 2>&1)
           EXIT_CODE=$?
-
           if [ $EXIT_CODE -ne 0 ]; then
-            echo "Warning: summary extraction failed (exit $EXIT_CODE), will send card without summary."
+            echo "Warning: EN summary extraction failed (exit $EXIT_CODE), will send card without summary."
             SUMMARY=""
           else
-            echo "Summary extracted: ${#SUMMARY} chars"
+            echo "Summary (EN) extracted: ${#SUMMARY} chars"
           fi
 
-          # Write multiline output safely
+          SUMMARY_ZH=$(python3 .github/scripts/extract_summary.py "$REPORT_FILE" --lang zh 2>&1)
+          EXIT_CODE_ZH=$?
+          if [ $EXIT_CODE_ZH -ne 0 ]; then
+            echo "Warning: ZH summary extraction failed (exit $EXIT_CODE_ZH), will send card without zh summary."
+            SUMMARY_ZH=""
+          else
+            echo "Summary (ZH) extracted: ${#SUMMARY_ZH} chars"
+          fi
+
+          # Write multiline outputs safely
           {
             echo "text<<__SUMMARY_EOF__"
             echo "$SUMMARY"
             echo "__SUMMARY_EOF__"
+            echo "text_zh<<__SUMMARY_ZH_EOF__"
+            echo "$SUMMARY_ZH"
+            echo "__SUMMARY_ZH_EOF__"
           } >> "$GITHUB_OUTPUT"
 
       # ------------------------------------------------------------------ #
@@ -99,4 +110,5 @@ jobs:
           REPORT_DATE:        ${{ steps.detect.outputs.date_display }}
           REPORT_URL:         ${{ steps.detect.outputs.report_url }}
           REPORT_SUMMARY:     ${{ steps.summary.outputs.text }}
+          REPORT_SUMMARY_ZH:  ${{ steps.summary.outputs.text_zh }}
         run: python3 .github/scripts/feishu_notify.py
