@@ -1,0 +1,65 @@
+name: Notify Feishu on New Report
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "*.html"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new report file
+        id: detect
+        run: |
+          # Find HTML files Added (not modified) in this push that match report naming pattern
+          # Pattern: anything ending in -W##-########.html
+          REPORT_FILE=$(git diff --name-only --diff-filter=A HEAD~1 HEAD \
+            | grep -E '^[^/].*-W[0-9]{2}-[0-9]{8}\.html$' \
+            | head -1 || true)
+
+          if [ -z "$REPORT_FILE" ]; then
+            echo "No new report file detected in this push. Skipping notification."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "skip=false"           >> "$GITHUB_OUTPUT"
+          echo "report_file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+
+          # Extract W## from filename
+          WEEK=$(echo "$REPORT_FILE" | grep -oE 'W[0-9]{2}')
+          echo "week=$WEEK" >> "$GITHUB_OUTPUT"
+
+          # Extract date (8 digits) from filename
+          DATE_RAW=$(echo "$REPORT_FILE" | grep -oE '[0-9]{8}' | tail -1)
+          YEAR="${DATE_RAW:0:4}"
+          MONTH="${DATE_RAW:4:2}"
+          DAY="${DATE_RAW:6:2}"
+          DATE_DISPLAY="${YEAR}-${MONTH}-${DAY}"
+          echo "date_display=$DATE_DISPLAY" >> "$GITHUB_OUTPUT"
+
+          # GitHub Pages URL — default to English
+          REPORT_URL="https://botanico1110.github.io/marketing-report/${REPORT_FILE}?lang=en"
+          echo "report_url=$REPORT_URL" >> "$GITHUB_OUTPUT"
+
+          echo "Detected: $REPORT_FILE | $WEEK | $DATE_DISPLAY"
+          echo "URL: $REPORT_URL"
+
+      - name: Send Feishu notification
+        if: steps.detect.outputs.skip != 'true'
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          REPORT_FILE:        ${{ steps.detect.outputs.report_file }}
+          REPORT_WEEK:        ${{ steps.detect.outputs.week }}
+          REPORT_DATE:        ${{ steps.detect.outputs.date_display }}
+          REPORT_URL:         ${{ steps.detect.outputs.report_url }}
+        run: python3 .github/scripts/feishu_notify.py
