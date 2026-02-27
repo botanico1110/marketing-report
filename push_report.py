@@ -41,7 +41,7 @@ REPO_DIR = Path(__file__).parent.resolve()
 PAGES_BASE = "https://botanico1110.github.io/marketing-report"
 
 # Branch to push reports to
-TARGET_BRANCH = "master"
+TARGET_BRANCH = "main"
 
 # Pattern that identifies a valid weekly report filename
 REPORT_PATTERN = re.compile(r".+-W\d{2}-\d{8}\.html$")
@@ -96,7 +96,7 @@ def git(args: list[str], check: bool = True) -> str:
 
 
 def ensure_on_target_branch() -> None:
-    """Warn (but don't abort) if the repo is not on TARGET_BRANCH."""
+    """Switch to TARGET_BRANCH if needed, then pull latest changes."""
     current = git(["rev-parse", "--abbrev-ref", "HEAD"])
     if current != TARGET_BRANCH:
         print(
@@ -105,7 +105,8 @@ def ensure_on_target_branch() -> None:
             f"   Switching to '{TARGET_BRANCH}' now..."
         )
         git(["checkout", TARGET_BRANCH])
-        git(["pull", "origin", TARGET_BRANCH])
+    print(f"  ⬇  Pulling latest from origin/{TARGET_BRANCH} ...")
+    git(["pull", "origin", TARGET_BRANCH])
 
 
 def publish(src: Path) -> None:

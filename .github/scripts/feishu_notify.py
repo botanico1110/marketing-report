@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Send a Feishu (Lark) interactive card for a new marketing report.
+Send a structured JSON payload to an enterprise internal-app webhook.
+The enterprise automation parses the JSON variables and fills in the message template.
 
 Required env vars:
-  FEISHU_WEBHOOK_URL  — custom bot webhook URL
+  FEISHU_WEBHOOK_URL  — enterprise app webhook URL
   REPORT_FILE         — e.g. game-marketing-report-W08-20260223.html
   REPORT_WEEK         — e.g. W08
   REPORT_DATE         — e.g. 2026-02-23
   REPORT_URL          — full GitHub Pages URL with ?lang=en
 
 Optional env vars:
-  REPORT_SUMMARY      — English summary text (lark_md format)
+  REPORT_SUMMARY      — English summary text
 """
 
 import json
@@ -34,67 +35,26 @@ def week_range(week_str: str, date_str: str) -> str:
         return date_str
 
 
-def build_card(week: str, date: str, report_url: str, summary: str) -> dict:
+def build_payload(week: str, date: str, report_url: str, summary: str) -> dict:
+    """
+    Build a simple JSON payload for the enterprise app webhook.
+    The enterprise automation will parse these fields as variables
+    and inject them into the message template.
+    """
     latest_url = "https://botanico1110.github.io/marketing-report/latest.html"
     span = week_range(week, date)
 
-    elements = []
-
-    # --- Summary block (or fallback tagline) ---
-    if summary.strip():
-        elements.append({
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": summary.strip()
-            }
-        })
-    else:
-        elements.append({
-            "tag": "div",
-            "text": {
-                "tag": "lark_md",
-                "content": (
-                    f"**{week} · {span}**\n\n"
-                    "本期游戏营销监测周报已发布 🚀\n"
-                    "This week's report is ready for review."
-                )
-            }
-        })
-
-    elements.append({"tag": "hr"})
-
-    # --- Action buttons ---
-    elements.append({
-        "tag": "action",
-        "actions": [
-            {
-                "tag": "button",
-                "text": {"tag": "plain_text", "content": "📖 Read Full Report (EN)"},
-                "url": report_url,
-                "type": "primary"
-            },
-            {
-                "tag": "button",
-                "text": {"tag": "plain_text", "content": "🔗 Latest Report"},
-                "url": latest_url,
-                "type": "default"
-            }
-        ]
-    })
-
     return {
-        "msg_type": "interactive",
-        "card": {
-            "header": {
-                "title": {
-                    "tag": "plain_text",
-                    "content": f"🎮 Game Marketing Weekly {week} is out"
-                },
-                "template": "indigo"
-            },
-            "elements": elements
-        }
+        "report_week": week,
+        "week_span":   span,
+        "report_date": date,
+        "report_url":  report_url,
+        "latest_url":  latest_url,
+        "summary":     summary.strip() if summary.strip() else (
+            f"{week} · {span}\n\n"
+            "本期游戏营销监测周报已发布。\n"
+            "This week's game marketing report is ready for review."
+        ),
     }
 
 
@@ -108,11 +68,8 @@ def send(webhook_url: str, payload: dict) -> None:
     )
     with urllib.request.urlopen(req, timeout=15) as resp:
         body = resp.read().decode("utf-8")
-        result = json.loads(body)
-        code = result.get("code", 0)
-        if code != 0:
-            raise RuntimeError(f"Feishu API error (code={code}): {body}")
-        print(f"✓ Feishu notification sent. Response: {body}")
+        print(f"✓ Webhook delivered. Response: {body}")
+        # Enterprise apps vary in response format; we only fail on HTTP errors.
 
 
 def main() -> None:
@@ -130,13 +87,14 @@ def main() -> None:
         print("REPORT_URL is empty.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Sending Feishu card for {report_file}")
+    print(f"Sending webhook for {report_file}")
     print(f"  Week    : {report_week}")
     print(f"  Date    : {report_date}")
     print(f"  URL     : {report_url}")
     print(f"  Summary : {len(report_summary)} chars")
 
-    payload = build_card(report_week, report_date, report_url, report_summary)
+    payload = build_payload(report_week, report_date, report_url, report_summary)
+    print(f"  Payload : {json.dumps(payload, ensure_ascii=False, indent=2)}")
 
     try:
         send(webhook_url, payload)
