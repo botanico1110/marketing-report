@@ -17,43 +17,64 @@ jobs:
         with:
           fetch-depth: 2
 
+      # ------------------------------------------------------------------ #
+      # 1. Detect which new report HTML was added in this push              #
+      # ------------------------------------------------------------------ #
       - name: Detect new report file
         id: detect
         run: |
-          # Find HTML files Added (not modified) in this push that match report naming pattern
-          # Pattern: anything ending in -W##-########.html
           REPORT_FILE=$(git diff --name-only --diff-filter=A HEAD~1 HEAD \
             | grep -E '^[^/].*-W[0-9]{2}-[0-9]{8}\.html$' \
             | head -1 || true)
 
           if [ -z "$REPORT_FILE" ]; then
-            echo "No new report file detected in this push. Skipping notification."
+            echo "No new report file in this push. Skipping notification."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          echo "skip=false"           >> "$GITHUB_OUTPUT"
+          echo "skip=false"               >> "$GITHUB_OUTPUT"
           echo "report_file=$REPORT_FILE" >> "$GITHUB_OUTPUT"
 
-          # Extract W## from filename
           WEEK=$(echo "$REPORT_FILE" | grep -oE 'W[0-9]{2}')
-          echo "week=$WEEK" >> "$GITHUB_OUTPUT"
-
-          # Extract date (8 digits) from filename
           DATE_RAW=$(echo "$REPORT_FILE" | grep -oE '[0-9]{8}' | tail -1)
-          YEAR="${DATE_RAW:0:4}"
-          MONTH="${DATE_RAW:4:2}"
-          DAY="${DATE_RAW:6:2}"
-          DATE_DISPLAY="${YEAR}-${MONTH}-${DAY}"
-          echo "date_display=$DATE_DISPLAY" >> "$GITHUB_OUTPUT"
+          DATE_DISPLAY="${DATE_RAW:0:4}-${DATE_RAW:4:2}-${DATE_RAW:6:2}"
 
-          # GitHub Pages URL — default to English
-          REPORT_URL="https://botanico1110.github.io/marketing-report/${REPORT_FILE}?lang=en"
-          echo "report_url=$REPORT_URL" >> "$GITHUB_OUTPUT"
+          echo "week=$WEEK"                  >> "$GITHUB_OUTPUT"
+          echo "date_display=$DATE_DISPLAY"  >> "$GITHUB_OUTPUT"
+          echo "report_url=https://botanico1110.github.io/marketing-report/${REPORT_FILE}?lang=en" \
+                                             >> "$GITHUB_OUTPUT"
 
           echo "Detected: $REPORT_FILE | $WEEK | $DATE_DISPLAY"
-          echo "URL: $REPORT_URL"
 
+      # ------------------------------------------------------------------ #
+      # 2. Extract English summary from the HTML report                     #
+      # ------------------------------------------------------------------ #
+      - name: Extract report summary
+        if: steps.detect.outputs.skip != 'true'
+        id: summary
+        run: |
+          REPORT_FILE="${{ steps.detect.outputs.report_file }}"
+          SUMMARY=$(python3 .github/scripts/extract_summary.py "$REPORT_FILE" 2>&1)
+          EXIT_CODE=$?
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Warning: summary extraction failed (exit $EXIT_CODE), will send card without summary."
+            SUMMARY=""
+          else
+            echo "Summary extracted: ${#SUMMARY} chars"
+          fi
+
+          # Write multiline output safely
+          {
+            echo "text<<__SUMMARY_EOF__"
+            echo "$SUMMARY"
+            echo "__SUMMARY_EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------------------ #
+      # 3. Send Feishu interactive card                                     #
+      # ------------------------------------------------------------------ #
       - name: Send Feishu notification
         if: steps.detect.outputs.skip != 'true'
         env:
@@ -62,4 +83,5 @@ jobs:
           REPORT_WEEK:        ${{ steps.detect.outputs.week }}
           REPORT_DATE:        ${{ steps.detect.outputs.date_display }}
           REPORT_URL:         ${{ steps.detect.outputs.report_url }}
+          REPORT_SUMMARY:     ${{ steps.summary.outputs.text }}
         run: python3 .github/scripts/feishu_notify.py
