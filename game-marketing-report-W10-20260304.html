@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Marketing Report W10 | 游戏营销周报</title>
+  <style>
+    /* ============================================
+       语言切换核心样式 - 禁止修改
+       ============================================ */
+    body > [data-lang="zh"] { display: none; }
+    html[lang="zh"] body > [data-lang="zh"] { display: block; }
+    html[lang="zh"] body > [data-lang="en"] { display: none; }
+
+    /* ============================================
+       基础重置与字体 - 禁止修改
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f5f6f8;
+    }
+
+    /* ============================================
+       语言切换按钮 - 禁止修改
+       ============================================ */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 7px 18px;
+      border: 1.5px solid #c9d0db;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.18s;
+    }
+    .lang-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+    .lang-btn.active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+
+    /* ============================================
+       页面容器 - 禁止修改
+       ============================================ */
+    .report-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ============================================
+       报告头部 - 禁止修改
+       ============================================ */
+    .report-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+    .report-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 6px;
+    }
+    .report-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ============================================
+       板块标题 - 禁止修改
+       ============================================ */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 40px 0 16px;
+      padding-left: 12px;
+      border-left: 4px solid #1a73e8;
+    }
+
+    /* ============================================
+       游戏卡片 - 禁止修改
+       ============================================ */
+    .game-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e8ebf0;
+    }
+    .game-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .card-section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1a73e8;
+      margin: 16px 0 6px;
+    }
+    .card-body { font-size: 14px; color: #333; line-height: 1.75; }
+    .card-highlight {
+      background: #f0f7ff;
+      border-left: 3px solid #1a73e8;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+    .card-sources {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .card-sources a { color: #1a73e8; text-decoration: none; }
+    .card-sources a:hover { text-decoration: underline; }
+
+    /* ============================================
+       Burst 快报卡片 - 禁止修改
+       ============================================ */
+    .burst-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      border: 1.5px solid #f0b840;
+      box-shadow: 0 1px 4px rgba(240,184,64,0.10);
+    }
+    .burst-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #b8600a;
+      margin-bottom: 8px;
+    }
+    .burst-trigger-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f0b840;
+      color: #fff;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       风险标签 - 禁止修改
+       ============================================ */
+    .risk-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fff0f0;
+      color: #d93025;
+      border: 1px solid #f5c6c6;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================
+       雷达信号板块 - 禁止修改
+       ============================================ */
+    .radar-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border: 1px solid #e8ebf0;
+      font-size: 14px;
+      color: #333;
+    }
+    .radar-item-name {
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================
+       审核提示 - 禁止修改
+       ============================================ */
+    .review-notice {
+      margin-top: 48px;
+      padding: 18px 22px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border: 1px dashed #c9d0db;
+      font-size: 13px;
+      color: #666;
+    }
+    .review-notice ul { padding-left: 18px; margin-top: 8px; }
+    .review-notice li { margin-bottom: 4px; }
+
+    /* ============================================
+       响应式 - 禁止修改
+       ============================================ */
+    @media (max-width: 600px) {
+      .report-container { padding: 32px 14px 60px; }
+      .game-card, .burst-card { padding: 18px 16px; }
+      .lang-switch { top: 12px; right: 12px; }
+      .report-title { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 语言切换按钮 -->
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-lang="zh" onclick="switchLang('zh')">中文</button>
+  </div>
+
+  <!-- ==================== ENGLISH ==================== -->
+  <div data-lang="en">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 Game Marketing Report · W10</div>
+        <div class="report-meta">Feb 25 – Mar 4, 2026 · Core: 6 games · Burst: 1 (Neo Artifacts)</div>
+      </div>
+
+      <!-- 🚨 Burst Alert -->
+      <div class="section-title">🚨 New Game Alert</div>
+      <div class="burst-card">
+        <div class="burst-card-title">Neo Artifacts</div>
+        <span class="burst-trigger-badge">GLOBAL LAUNCH</span>
+        <div class="card-section-label">What</div>
+        <div class="card-body">
+          Neo Artifacts is a strategy RPG gacha developed by cipaishe studio (a subsidiary of Dragonest Games). The game personifies historical artifacts and famous artworks as anime-style collectible characters called "Artifacters." It targets a global audience across Japan, Taiwan, and worldwide servers, available on both iOS and Android.
+        </div>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">
+          The game's full global launch is confirmed for March 5, 2026, following a closed beta test held January 15–24 that helped refine mechanics and performance. Pre-registration has been active, and content creator ByteStix along with multiple YouTube channels have spotlighted the launch in their "New Gacha Games March 2026" coverage. The launch offers 70 free gacha pulls to early players, a strong onboarding incentive that is generating social buzz on r/gachagaming and across gaming communities.
+        </div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">
+          The SRPG gacha category is competitive, and Neo Artifacts faces pressure from established titles. Its art-based personification concept is distinctive but niche — early retention and first-week revenue will be critical indicators. Watch for US App Store / Google Play chart performance in the first 72 hours, community sentiment on r/gachagaming for reroll guides and first impressions, and whether Dragonest secures additional content creator partnerships to sustain visibility beyond launch day.
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://www.reddit.com/r/gachagaming/comments/1r689tn/neo_artifacts_global_launch_march_5/">r/gachagaming</a> ·
+          <a href="https://game8.co/articles/release-dates/neo-artifacts-release-date-and-time">Game8</a> ·
+          <a href="https://ultimategacha.com/neo-artifacts-global-release-exact-launch-date-time-zones-server-list/">UltimateGacha</a> ·
+          <a href="https://x.com/ByteStix/status/2029207049427435575/photo/2">ByteStix (X)</a>
+        </div>
+      </div>
+
+      <!-- 🔍 Core Watch List -->
+      <div class="section-title">🔍 Core Watch List</div>
+
+      <!-- Fortnite -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          The biggest community talking point this week is the Honkai: Star Rail crossover — Kafka and Blade skins arrived in the Item Shop on February 26 and ran through March 4. This marks a significant bridge between the gacha community and Fortnite's massive Battle Royale audience, and the collab generated substantial discussion on both r/FortNiteBR and r/gachagaming. Separately, Epic Games confirmed that Chapter 7 Season 2 has been delayed from its original March 4 date to approximately March 14, prompting mixed reactions from the community — some frustration at the wait, others excited about leaked Season 2 collabs (Looney Tunes, Kingdom Hearts, Yakuza).
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          The v39.50 update (Feb 19) introduced the Lantern Fest 2026 event and Solo Leveling collaboration, closing out Chapter 7 Season 1 with a packed final content drop. The Resident Evil crossover also overlapped this monitoring window, with Grace Ashcroft's outfit purchasable from Feb 28 – Mar 7, tying into Resident Evil: Requiem promotional efforts. Epic confirmed 40+ collaborations planned for 2026 as part of its EGS gift-with-purchase strategy. March Mobile Series rewards were also announced, offering exclusive items for tournament participants starting March 6.
+          <div class="card-highlight">💡 Highlight: The Honkai: Star Rail x Fortnite crossover (Kafka and Blade skins, Feb 26 – Mar 4) represents a landmark gacha-meets-Battle-Royale collab, expanding both franchises' reach into each other's core audiences.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://fortnitetracker.com/article/2415/fortnite-39-50-update-all-you-need-to-know">FortniteTracker</a> ·
+          <a href="https://www.vice.com/en/article/honkai-star-rail-fortnite-skins-revealed-blade-kafka-release-date-times-confirmed/">Vice</a> ·
+          <a href="https://www.reddit.com/r/gachagaming/comments/1rejirm/hsr_x_fortnite_collab_skins_revealed/">r/gachagaming</a> ·
+          <a href="https://insider-gaming.com/fortnite-february-2026-roadmap/">Insider Gaming</a> ·
+          <a href="https://esports.gg/news/fortnite/fortnite-collabs-2026/">Esports.gg</a>
+        </div>
+      </div>
+
+      <!-- Genshin Impact -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          Version 6.4 "Luna V" launched on February 25, headlined by the long-awaited debut of Varka, Mondstadt's Grand Master — one of the most anticipated characters since the game's launch in 2020. Community reception has been enthusiastic, with the Varka Challenge event (Feb 25 – Mar 4) driving engagement. On the revenue front, Genshin retained the #1 spot among gacha games in February with an estimated $54M in mobile revenue, marking two consecutive months atop the chart. However, the announcement that PS4 support will end after this version's cycle (April 8, 2026) has sparked some concern among console players.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          Version 6.4 features Varka's debut banner alongside a Flins rerun, a Chronicled Wish banner featuring Eula, and the first season of Imaginarium Theater launching March 1. The update returns the story to Mondstadt and carries the subtitle "Homeward, He Who Caught the Wind." HoYoverse's marketing for this version has been steady with drip marketing, official calendar wallpapers, and code distribution via Eurogamer and other media. The PS4 end-of-life notice also serves as an indirect push toward PS5 and mobile platform migration.
+          <div class="card-highlight">💡 Highlight: Varka's debut after five years of lore buildup delivered a strong emotional hook, helping Genshin hold #1 in February gacha revenue ($54M) despite an overall revenue decline versus prior peaks.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://genshin.hoyoverse.com/m/en/news/detail/162806">HoYoverse Official</a> ·
+          <a href="https://game8.co/games/Genshin-Impact/archives/305012">Game8</a> ·
+          <a href="https://x.com/GachaGamingGG/status/2028109099934589174">GachaGaming (X)</a> ·
+          <a href="https://m.imdb.com/news/ni65718038/">IMDb News</a> ·
+          <a href="https://www.eurogamer.net/genshin-impact-codes-livestream-active-working-how-to-redeem-9026">Eurogamer</a>
+        </div>
+      </div>
+
+      <!-- Zenless Zone Zero -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          ZZZ's Version 2.6 "Encore for an Old Dream" is mid-cycle, with the Angels of Delusion idol faction generating ongoing community discussion. The debut of Sunna and Aria as playable agents has been well-received, and Aria's new outfit "Discordant Note" — announced March 2 — generated social media buzz. The Phase I limited-time channels ran through March 4, creating a natural engagement spike at the deadline. On the revenue side, ZZZ placed around #7–8 in the February gacha rankings, a solid but not standout position relative to its HoYoverse siblings.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          Version 2.6 (launched Feb 6) introduced the Angels of Delusion faction as a major new content pillar — a musically themed idol group that represents ZZZ's most ambitious faction marketing to date. The "Gilded Surprise" limited-time rewards event ran throughout the version, while the main story concluded the Waifei Peninsula arc. Push Square noted that the PS5 update "transforms the flow of the game," indicating continued investment in console-quality experience. Gematsu's early coverage of the 2.6 announcement also helped drive awareness in the Western games press.
+          <div class="card-highlight">💡 Highlight: The Angels of Delusion idol faction launch is ZZZ's most marketing-forward content push yet — the faction received heavier promotional treatment than any prior ZZZ faction, including dedicated costume reveals and social media campaigns.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://zenless.hoyoverse.com/en-us/news/162561">HoYoverse Official</a> ·
+          <a href="https://zenless.hoyoverse.com/en-us/news/162957">ZZZ Official (Calendar)</a> ·
+          <a href="https://game8.co/games/Zenless-Zone-Zero/archives/572598">Game8</a> ·
+          <a href="https://www.gematsu.com/2026/01/zenless-zone-zero-version-2-6-update-encore-for-an-old-dream-launches-february-6">Gematsu</a> ·
+          <a href="https://gamespace.com/all-articles/news/zenless-zone-zero-version-2-6-impressions/">GameSpace</a>
+        </div>
+      </div>
+
+      <!-- Arknights: Endfield -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          The headline event for Arknights: Endfield this week is the Version 1.1 announcement. The Dev Log program aired on March 1, previewing the first major content update titled "Old Deep Water Dies, by Rising Tide It is Denied," set to launch March 12. The community responded positively, with the Dev Log thread on r/Endfield highlighting a commemoration reward (1,000 Oroberyl + materials). Coverage from Crunchyroll, Gematsu, RPGamer, and GamesPress simultaneously amplified the announcement, signaling sustained media interest in Endfield's post-launch trajectory. The January PayPal fraudulent charges incident — where some players' PayPal accounts were charged without authorization — is now considered resolved after Gryphline issued refunds, and no new developments surfaced this week.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          Version 1.1 will introduce new operators (including Rossi, whose banner "Wolf Pearl" runs Mar 29 – Apr 14), new story content, and multiple events: Exploration Day (Mar 19), Cleanse and Rinse (Mar 29), and Survival Training. The Dev Log specifically addressed optimization progress, a direct response to performance feedback from the January global launch. The PocketGamer.biz January chart confirmed Endfield entered the top-grossing charts at 39th place globally upon launch. In February, it appears to have settled around the #11–12 range in gacha revenue, with original Arknights rivaling Endfield's numbers thanks to a strong Sakiko banner.
+          <div class="card-highlight">💡 Highlight: The multi-outlet V1.1 media blitz (Crunchyroll, Gematsu, RPGamer, GamesPress all publishing on the same day) demonstrates Gryphline's growing PR sophistication — a coordinated press push typically reserved for more established live-service titles.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://www.crunchyroll.com/news/latest/2026/3/2/arknights-endfield-trailer-dates-and-previews-first-major-update">Crunchyroll</a> ·
+          <a href="https://www.gematsu.com/2026/03/arknights-endfield-version-1-1-update-old-deep-water-dies-by-rising-tide-it-is-denied-launches-march-12">Gematsu</a> ·
+          <a href="https://rpgamer.com/2026/03/arknights-endfields-first-major-content-update-arriving-next-week/">RPGamer</a> ·
+          <a href="https://www.gamespress.com/en-US/Arknights-Endfield-Announces-First-Major-Content-Update-Old-Deep-Water">GamesPress</a> ·
+          <a href="https://www.pocketgamer.biz/january-2026-mobile-game-charts/">PocketGamer.biz</a>
+        </div>
+      </div>
+
+      <!-- Wuthering Waves -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          Wuthering Waves had one of its strongest revenue months ever in February 2026, surging to #2 in the gacha revenue charts with an estimated $46M — rising 9 places and landing just behind Genshin Impact. The community celebrated the milestone, with discussions on r/gachagaming noting that Kuro Games "finally stopped pure waifu-baiting" by featuring a male character, Luuk Herssen, in the Phase 2 banner (Feb 26). The "Whimpering Wastes" event continued to drive engagement through the monitoring window. Version 3.2 is expected March 19, building anticipation.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          Version 3.1 "For You Who Walk in Snow" (launched Feb 5) reached its Phase 2 on February 26, introducing Luuk Herssen as a new playable Resonator. The version has been praised by MassivelyOP for its quality-of-life improvements to leveling, farming, and performance. The "Thousand Gateways" content and "Whimpering Wastes" event are currently active. Notably, LDShop reported WuWa rose 9 places in the February revenue rankings, and GachaGaming's official Twitter account confirmed the $46M figure, further amplifying the narrative that Wuthering Waves is now a genuine contender among the "Big Five" gacha titles alongside Genshin, HSR, ZZZ, and Arknights: Endfield.
+          <div class="card-highlight">💡 Highlight: Wuthering Waves' leap to #2 in February gacha revenue ($46M, +9 ranks) marks its strongest commercial month yet, reinforcing Kuro Games' post-launch growth trajectory and signaling genuine competitive pressure on Genshin Impact's long-held dominance.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://x.com/GachaGamingGG/status/2028109099934589174">GachaGaming (X)</a> ·
+          <a href="https://se7en.ws/most-profitable-gacha-games-of-february-2026-revealed-genshin-impact-revenue-drops-but-prevents-wuthering-waves-from-topping-the-chart/?lang=en">Se7en</a> ·
+          <a href="https://massivelyop.com/2026/01/26/wuthering-waves-february-5-patch-focuses-on-quality-of-life-for-leveling-farming-and-performance/">MassivelyOP</a> ·
+          <a href="https://www.sportskeeda.com/esports/wuthering-waves-3-1-second-phase-banners-events">Sportskeeda</a> ·
+          <a href="https://x.com/LDShop_Official/status/2028316606846390565">LDShop (X)</a>
+        </div>
+      </div>
+
+      <!-- NTE -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          The week's headline for NTE is the official global launch date announcement: April 29, 2026. This confirmation, shared by the official NTE_GL account on social media, immediately became one of the top-discussed topics on r/NevernessToEverness and r/gachagaming. The game will launch simultaneously on PC, Android, iOS, PlayStation 5, and Mac with full cross-platform support — an aggressive multi-platform strategy. GosuGamers noted that NTE's launch is scheduled just one week after its Chinese release, a remarkably short gap that signals Perfect World Games' commitment to a near-simultaneous global rollout. IGN Fan Fest 2026 featured an "Anomaly Hunter's Guide" dedicated segment for NTE, providing significant mainstream media exposure.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          The Co-Ex Test (CBT3) has been running, with a Game8 review posted on Feb 26 providing detailed hands-on coverage. IGN published a feature article on the beta improvements, noting "latest improvements" to the open-world RPG formula. UberStrategist's press release distribution for the Co-Ex Test indicates professional PR agency involvement, with registration open for PC and PS5. The game's position as a Hotta Studio (Tower of Fantasy developer) title on a much larger budget is generating both excitement and cautious skepticism — the community is closely watching whether NTE avoids Tower of Fantasy's turbulent post-launch phase.
+          <div class="card-highlight">💡 Highlight: NTE's April 29 global launch announcement — just one week behind the Chinese release — represents one of the tightest CN-to-Global gaps in gacha history, a clear strategic bet on global-first mindshare by Perfect World Games.</div>
+        </div>
+        <div class="card-sources">
+          Sources:
+          <a href="https://x.com/NTE_GL/status/2026824534544855522">NTE_GL Official (X)</a> ·
+          <a href="https://www.gosugamers.net/entertainment/news/78042-neverness-to-everness-nte-release-date-finally-revealed-launching-in-april-2026">GosuGamers</a> ·
+          <a href="https://www.ign.com/articles/neverness-to-everness-launches-new-closed-beta-with-latest-improvements">IGN</a> ·
+          <a href="https://game8.co/articles/reviews/neverness-to-everness-review-beta-co-ex-test">Game8</a> ·
+          <a href="https://www.uberstrategist.com/press-releases/neverness-to-everness-welcomes-players-back-with-new-content-for-co-ex-test-in-2026">UberStrategist</a>
+        </div>
+      </div>
+
+      <!-- 🎯 Radar Signals -->
+      <div class="section-title">🎯 Radar Signals</div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Etheria Restart</div>
+        <div>A new gacha RPG generating YouTube and community interest; multiple content creators featured it in "Best New Gacha 2026" coverage. Currently in early visibility stage — watching for beta announcements or launch confirmation.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Star Savior</div>
+        <div>Confirmed for a March 2026 global release by Sportskeeda's gacha roundup. Limited information available on developer and monetization model; monitoring for launch details and early reception.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Bang Dream! Our Notes (EN)</div>
+        <div>English release officially confirmed via the @bangdreamon_EN account, with 189 upvotes on r/gachagaming. The rhythm gacha genre has a dedicated niche; watching for a concrete EN launch date and pre-registration campaign.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Granblue Fantasy (Steam Global)</div>
+        <div>Cygames will release the original Granblue Fantasy browser gacha on Steam globally on March 10, 2026 — covered by Gematsu, Siliconera, and r/Games. While not a new game, the platform expansion to Steam could introduce GBF to a significant new Western audience.</div>
+      </div>
+
+      <!-- Review Notice -->
+      <div class="review-notice">
+        <strong>📌 Review Checklist</strong>
+        <ul>
+          <li>Is Core List coverage complete?</li>
+          <li>Are Burst classifications accurate?</li>
+          <li>Does the candidate pool need manual adjustment?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 中文 ==================== -->
+  <div data-lang="zh">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 游戏营销周报 · W10</div>
+        <div class="report-meta">2026年2月25日 – 3月4日 · Core: 6 款 · Burst: 1条 (Neo Artifacts)</div>
+      </div>
+
+      <!-- 🚨 新品快报 -->
+      <div class="section-title">🚨 新品快报</div>
+      <div class="burst-card">
+        <div class="burst-card-title">Neo Artifacts</div>
+        <span class="burst-trigger-badge">全球上线</span>
+        <div class="card-section-label">是什么</div>
+        <div class="card-body">
+          Neo Artifacts 是由 cipaishe studio（Dragonest Games 旗下工作室）开发的策略 RPG 手游。游戏将历史文物和著名艺术作品拟人化为动漫风格的可收集角色（称为"Artifacter"）。目标市场覆盖日本、台湾及全球服务器，iOS 和 Android 双平台上线。
+        </div>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">
+          游戏确认于2026年3月5日全球上线，此前在1月15日至24日进行了封闭测试以打磨机制和性能。预注册持续进行中，内容创作者 ByteStix 及多个 YouTube 频道在"2026年3月新手游"选题中重点推介了这款游戏。上线赠送70次免费抽卡的力度引发了 r/gachagaming 及游戏社区的广泛讨论。
+        </div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">
+          SRPG 品类竞争激烈，Neo Artifacts 面临来自成熟产品的压力。其文物拟人化概念独特但偏小众——早期留存率和首周收入将是关键指标。需关注上线后72小时内美区 App Store / Google Play 榜单表现、r/gachagaming 上的 reroll 攻略与首轮口碑，以及 Dragonest 能否获得更多内容创作者合作以维持上线后的曝光热度。
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://www.reddit.com/r/gachagaming/comments/1r689tn/neo_artifacts_global_launch_march_5/">r/gachagaming</a> ·
+          <a href="https://game8.co/articles/release-dates/neo-artifacts-release-date-and-time">Game8</a> ·
+          <a href="https://ultimategacha.com/neo-artifacts-global-release-exact-launch-date-time-zones-server-list/">UltimateGacha</a> ·
+          <a href="https://x.com/ByteStix/status/2029207049427435575/photo/2">ByteStix (X)</a>
+        </div>
+      </div>
+
+      <!-- 🔍 长期追踪产品 -->
+      <div class="section-title">🔍 长期追踪产品快报</div>
+
+      <!-- Fortnite -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          本周最大话题是 Honkai: Star Rail 联动——Kafka 和 Blade 皮肤于2月26日上架商店，持续至3月4日。这次联动在 Gacha 社区与 Battle Royale 玩家群体间搭建了一座桥梁，在 r/FortNiteBR 和 r/gachagaming 上均引发了大量讨论。此外，Epic Games 确认 Chapter 7 Season 2 从原定的3月4日延期至约3月14日，社区反应不一——部分玩家不满等待，另一部分则对泄露的 Season 2 联动（Looney Tunes、Kingdom Hearts、Yakuza）充满期待。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          v39.50 更新（2月19日）带来了 Lantern Fest 2026 活动和 Solo Leveling 联动，为 Chapter 7 Season 1 画上了内容充实的句号。Resident Evil 联动同样处于本监测窗口内，Grace Ashcroft 服装2月28日至3月7日可购买，与 Resident Evil: Requiem 的宣发形成联动。Epic 确认2026年计划推出40+次联动，作为其 EGS 购买赠品策略的一部分。March Mobile Series 奖励也已公布，3月6日起参赛选手可获取专属物品。
+          <div class="card-highlight">💡 亮点案例：Honkai: Star Rail × Fortnite 联动（Kafka、Blade 皮肤，2月26日–3月4日）是一次标志性的 Gacha × Battle Royale 跨界合作，将两个IP的受众相互引流。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://fortnitetracker.com/article/2415/fortnite-39-50-update-all-you-need-to-know">FortniteTracker</a> ·
+          <a href="https://www.vice.com/en/article/honkai-star-rail-fortnite-skins-revealed-blade-kafka-release-date-times-confirmed/">Vice</a> ·
+          <a href="https://www.reddit.com/r/gachagaming/comments/1rejirm/hsr_x_fortnite_collab_skins_revealed/">r/gachagaming</a> ·
+          <a href="https://insider-gaming.com/fortnite-february-2026-roadmap/">Insider Gaming</a> ·
+          <a href="https://esports.gg/news/fortnite/fortnite-collabs-2026/">Esports.gg</a>
+        </div>
+      </div>
+
+      <!-- Genshin Impact -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact（原神）</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          6.4 版本"Luna V"于2月25日上线，核心亮点是蒙德大团长 Varka 的首次登场——这是自2020年游戏上线以来最受期待的角色之一。社区反响热烈，Varka Challenge 活动（2月25日–3月4日）有效拉动了参与度。收入方面，原神以约5400万美元的移动端收入连续两个月蝉联 Gacha 收入榜首。但 PS4 版将在本版本周期结束后（2026年4月8日）停止更新的消息引发了部分主机玩家的担忧。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          6.4 版本包含 Varka 首发卡池、Flins 复刻、Eula Chronicled Wish，以及3月1日开启的 Imaginarium Theater 第一季。版本副标题"Homeward, He Who Caught the Wind"标志着故事回归蒙德。HoYoverse 的营销节奏稳定，包括 drip marketing、官方日历壁纸、Eurogamer 等媒体的兑换码分发。PS4 停服通知也间接推动了向 PS5 和移动端的迁移。
+          <div class="card-highlight">💡 亮点案例：Varka 历经五年剧情铺垫后的首次登场形成了强大的情感号召力，帮助原神在整体收入较巅峰下滑的情况下仍以5400万美元守住2月 Gacha 收入第一的位置。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://genshin.hoyoverse.com/m/en/news/detail/162806">HoYoverse 官方</a> ·
+          <a href="https://game8.co/games/Genshin-Impact/archives/305012">Game8</a> ·
+          <a href="https://x.com/GachaGamingGG/status/2028109099934589174">GachaGaming (X)</a> ·
+          <a href="https://m.imdb.com/news/ni65718038/">IMDb News</a> ·
+          <a href="https://www.eurogamer.net/genshin-impact-codes-livestream-active-working-how-to-redeem-9026">Eurogamer</a>
+        </div>
+      </div>
+
+      <!-- Zenless Zone Zero -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero（绝区零）</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          ZZZ 2.6 版本"Encore for an Old Dream"处于中期运营阶段，Angels of Delusion 偶像派系持续引发社区讨论。Sunna 和 Aria 作为可操作角色的首次亮相广受好评，Aria 的新服装"Discordant Note"于3月2日公布后在社交媒体上引发热度。Phase I 限时频道于3月4日截止，在截止日形成了自然的参与高峰。收入方面，ZZZ 在2月 Gacha 收入排行中位列第7–8位，表现稳定但在 HoYoverse 系产品中并不突出。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          2.6 版本（2月6日上线）将 Angels of Delusion 偶像派系作为全新内容支柱推出——这是 ZZZ 迄今为止营销力度最大的派系。"Gilded Surprise"限时奖励活动贯穿整个版本，主线故事结束了 Waifei Peninsula 篇章。Push Square 指出 PS5 更新"改变了游戏的节奏"，显示出对主机品质体验的持续投入。Gematsu 对 2.6 公告的早期报道也助力了在西方游戏媒体中的曝光。
+          <div class="card-highlight">💡 亮点案例：Angels of Delusion 偶像派系的推出是 ZZZ 最具营销前瞻性的内容更新——该派系获得了比此前任何 ZZZ 派系都更强的宣发资源，包括专属服装揭示和社交媒体推广。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://zenless.hoyoverse.com/en-us/news/162561">HoYoverse 官方</a> ·
+          <a href="https://zenless.hoyoverse.com/en-us/news/162957">ZZZ 官方 (日历)</a> ·
+          <a href="https://game8.co/games/Zenless-Zone-Zero/archives/572598">Game8</a> ·
+          <a href="https://www.gematsu.com/2026/01/zenless-zone-zero-version-2-6-update-encore-for-an-old-dream-launches-february-6">Gematsu</a> ·
+          <a href="https://gamespace.com/all-articles/news/zenless-zone-zero-version-2-6-impressions/">GameSpace</a>
+        </div>
+      </div>
+
+      <!-- Arknights: Endfield -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield（明日方舟：终末地）</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          本周 Arknights: Endfield 的核心事件是 V1.1 版本公告。Dev Log 节目于3月1日播出，预告了首个重大内容更新"Old Deep Water Dies, by Rising Tide It is Denied"，定于3月12日上线。社区反响积极，r/Endfield 上的 Dev Log 讨论帖提到纪念奖励（1,000 Oroberyl + 素材）。Crunchyroll、Gematsu、RPGamer 和 GamesPress 同步发布报道，表明媒体对 Endfield 上线后走势保持关注。1月份的 PayPal 未授权扣款事件已由 Gryphline 完成退款处理，本周无新进展。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          V1.1 将引入新干员（含 Rossi，其卡池"Wolf Pearl"3月29日至4月14日开放）、新剧情内容及多项活动：Exploration Day（3月19日）、Cleanse and Rinse（3月29日）、Survival Training。Dev Log 着重展示了优化进展，直接回应了1月全球上线后的性能反馈。PocketGamer.biz 的1月榜单确认 Endfield 上线即进入全球 Top Grossing 第39位。2月收入排名约在第11–12位，原版 Arknights 凭借 Sakiko 卡池与 Endfield 的数据不相上下。
+          <div class="card-highlight">💡 亮点案例：V1.1 的多媒体同步发布（Crunchyroll、Gematsu、RPGamer、GamesPress 同日报道）展现了 Gryphline 日益成熟的 PR 策略——这种协调式媒体推送通常只出现在更成熟的实时服务产品中。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://www.crunchyroll.com/news/latest/2026/3/2/arknights-endfield-trailer-dates-and-previews-first-major-update">Crunchyroll</a> ·
+          <a href="https://www.gematsu.com/2026/03/arknights-endfield-version-1-1-update-old-deep-water-dies-by-rising-tide-it-is-denied-launches-march-12">Gematsu</a> ·
+          <a href="https://rpgamer.com/2026/03/arknights-endfields-first-major-content-update-arriving-next-week/">RPGamer</a> ·
+          <a href="https://www.gamespress.com/en-US/Arknights-Endfield-Announces-First-Major-Content-Update-Old-Deep-Water">GamesPress</a> ·
+          <a href="https://www.pocketgamer.biz/january-2026-mobile-game-charts/">PocketGamer.biz</a>
+        </div>
+      </div>
+
+      <!-- Wuthering Waves -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves（鸣潮）</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          鸣潮在2026年2月迎来了史上最强收入月之一，以约4600万美元的成绩跃升至 Gacha 收入榜第2位——排名上升9位，仅次于原神。社区为此庆祝，r/gachagaming 讨论中有声音肯定 Kuro Games "终于不再纯粹卖老婆"，Phase 2 卡池推出了男性角色 Luuk Herssen（2月26日）。"Whimpering Wastes"活动在监测窗口内持续推进。3.2 版本预计3月19日上线，社区期待值较高。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          3.1 版本"For You Who Walk in Snow"（2月5日上线）于2月26日进入 Phase 2，推出新可操作共鸣者 Luuk Herssen。MassivelyOP 对该版本的升级、刷取和性能优化给予了积极评价。"Thousand Gateways"内容和"Whimpering Wastes"活动目前活跃中。值得注意的是，LDShop 报道鸣潮在2月收入排名中跃升9位，GachaGaming 官方 Twitter 确认了4600万美元的数据，进一步强化了鸣潮已成为"Gacha 五巨头"（原神、HSR、ZZZ、Endfield、鸣潮）真正竞争者的叙事。
+          <div class="card-highlight">💡 亮点案例：鸣潮跃升至2月 Gacha 收入第2位（4600万美元，排名+9）创下其上线以来最强商业月，印证了 Kuro Games 持续增长的势头，并对原神长期保持的主导地位构成了实质性竞争压力。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://x.com/GachaGamingGG/status/2028109099934589174">GachaGaming (X)</a> ·
+          <a href="https://se7en.ws/most-profitable-gacha-games-of-february-2026-revealed-genshin-impact-revenue-drops-but-prevents-wuthering-waves-from-topping-the-chart/?lang=en">Se7en</a> ·
+          <a href="https://massivelyop.com/2026/01/26/wuthering-waves-february-5-patch-focuses-on-quality-of-life-for-leveling-farming-and-performance/">MassivelyOP</a> ·
+          <a href="https://www.sportskeeda.com/esports/wuthering-waves-3-1-second-phase-banners-events">Sportskeeda</a> ·
+          <a href="https://x.com/LDShop_Official/status/2028316606846390565">LDShop (X)</a>
+        </div>
+      </div>
+
+      <!-- NTE -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          本周 NTE 的核心事件是正式公布全球上线日期：2026年4月29日。该消息由官方 NTE_GL 账号在社交媒体发布后，迅速成为 r/NevernessToEverness 和 r/gachagaming 的热门话题。游戏将同步登陆 PC、Android、iOS、PlayStation 5 和 Mac，支持全平台互通——这是一项激进的多平台策略。GosuGamers 指出 NTE 的全球上线仅比中国版晚一周，这一极短的时间差显示了 Perfect World Games 对近乎同步全球发行的战略决心。IGN Fan Fest 2026 为 NTE 设置了"Anomaly Hunter's Guide"专题环节，提供了重要的主流媒体曝光。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          Co-Ex Test（第三次封测）持续进行中，Game8 于2月26日发布了详细的上手测评。IGN 发表了关于测试版改进的专题文章，关注了开放世界 RPG 玩法的优化。UberStrategist 的新闻稿分发表明有专业 PR 代理参与，PC 和 PS5 的注册通道已开放。作为 Hotta Studio（Tower of Fantasy 开发商）在更大预算下的新作，NTE 同时引发了兴奋与审慎的观望——社区密切关注 NTE 能否避免 Tower of Fantasy 上线后的动荡期。
+          <div class="card-highlight">💡 亮点案例：NTE 公布4月29日全球上线——仅比中国版晚一周——这是 Gacha 历史上最短的 CN-to-Global 发行间隔之一，体现了 Perfect World Games 抢占全球首发心智的战略押注。</div>
+        </div>
+        <div class="card-sources">
+          信源：
+          <a href="https://x.com/NTE_GL/status/2026824534544855522">NTE_GL 官方 (X)</a> ·
+          <a href="https://www.gosugamers.net/entertainment/news/78042-neverness-to-everness-nte-release-date-finally-revealed-launching-in-april-2026">GosuGamers</a> ·
+          <a href="https://www.ign.com/articles/neverness-to-everness-launches-new-closed-beta-with-latest-improvements">IGN</a> ·
+          <a href="https://game8.co/articles/reviews/neverness-to-everness-review-beta-co-ex-test">Game8</a> ·
+          <a href="https://www.uberstrategist.com/press-releases/neverness-to-everness-welcomes-players-back-with-new-content-for-co-ex-test-in-2026">UberStrategist</a>
+        </div>
+      </div>
+
+      <!-- 🎯 雷达信号 -->
+      <div class="section-title">🎯 雷达信号</div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Etheria Restart</div>
+        <div>一款新 Gacha RPG，在 YouTube 和社区中获得关注；多位内容创作者在"2026最佳新手游"选题中推荐。目前处于早期曝光阶段，等待测试或上线确认。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Star Savior</div>
+        <div>据 Sportskeeda 的 Gacha 年度盘点确认将于2026年3月全球发布。开发商和变现模型信息有限，持续监测上线细节和早期口碑。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Bang Dream! Our Notes (EN)</div>
+        <div>英文版由官方 @bangdreamon_EN 账号正式确认发布，r/gachagaming 相关帖获189票。音游 Gacha 拥有稳定的细分受众，等待具体 EN 上线日期和预注册活动。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Granblue Fantasy (Steam 全球版)</div>
+        <div>Cygames 将于2026年3月10日在 Steam 全球发行原版 Granblue Fantasy 浏览器手游，Gematsu、Siliconera 和 r/Games 均有报道。虽非新游，但 Steam 平台扩展可能为 GBF 引入大量西方新用户。</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 审核提示</strong>
+        <ul>
+          <li>Core List 信息是否完整？</li>
+          <li>Burst 定性是否准确？</li>
+          <li>候选池是否需要手动调整（晋升/加入）？</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语言切换脚本 -->
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+    }
+    // 页面加载时默认 EN
+    (function() {
+      document.documentElement.lang = 'en';
+    })();
+  </script>
+
+  <!-- Wave 推送摘要块 (EN) -->
+  <div id="wave-summary" style="display:none">
+🚨 Burst Alert
+• Neo Artifacts — Dragonest Games' artifact-personification SRPG launches globally on March 5 with 70 free pulls, entering a competitive gacha market with a distinctive art-history concept.
+
+🔍 Core Watch
+• Fortnite — The Honkai: Star Rail crossover (Kafka and Blade skins, Feb 26–Mar 4) bridged gacha and Battle Royale audiences, while Chapter 7 Season 2 was delayed to mid-March.
+• Genshin Impact — Version 6.4 "Luna V" debuted Varka after five years of lore buildup, helping Genshin hold #1 in February gacha revenue at $54M despite an overall revenue dip.
+• Zenless Zone Zero — The Angels of Delusion idol faction from Version 2.6 represents ZZZ's most marketing-forward content push, with Aria's new outfit generating fresh social buzz on March 2.
+• Arknights: Endfield — A coordinated V1.1 media blitz across Crunchyroll, Gematsu, RPGamer, and GamesPress previewed the March 12 update "Old Deep Water Dies," signaling growing PR sophistication.
+• Wuthering Waves — Surged to #2 in February gacha revenue with $46M (+9 ranks), its strongest month ever, as Phase 2 introduced Luuk Herssen and broke from the waifu-only banner pattern.
+• NTE: Neverness to Everness — Official global launch confirmed for April 29, just one week behind the Chinese release, marking one of the tightest CN-to-Global gaps in gacha history.
+
+🎯 On the Radar
+• Granblue Fantasy (Cygames) — The original browser gacha arrives on Steam globally on March 10, potentially expanding its Western audience significantly.
+• Bang Dream! Our Notes (Bushiroad) — English release confirmed, bringing the rhythm gacha to global markets in 2026.
+  </div>
+
+  <!-- Wave 推送摘要块 (中文) -->
+  <div id="wave-summary-zh" style="display:none">
+🚨 新品速报
+• Neo Artifacts — Dragonest Games 的文物拟人化 SRPG 于3月5日全球上线，开服赠送70抽，以独特的艺术史概念切入竞争激烈的 Gacha 市场。
+
+🔍 核心追踪
+• Fortnite — Honkai: Star Rail 联动（Kafka、Blade 皮肤，2月26日–3月4日）连接了 Gacha 与 Battle Royale 受众，Chapter 7 Season 2 延期至3月中旬。
+• Genshin Impact — 6.4 版本"Luna V"推出等待五年的 Varka，帮助原神以5400万美元守住2月 Gacha 收入第一，尽管整体收入较高峰有所回落。
+• Zenless Zone Zero — 2.6 版本的 Angels of Delusion 偶像派系是 ZZZ 迄今营销力度最大的内容更新，Aria 新服装于3月2日公布后引发新一波社交热度。
+• Arknights: Endfield — V1.1 在 Crunchyroll、Gematsu、RPGamer、GamesPress 同步发布媒体报道，预告3月12日更新"Old Deep Water Dies"，展现日益成熟的 PR 策略。
+• Wuthering Waves — 以4600万美元跃升至2月 Gacha 收入第2位（排名+9），创上线以来最强月，Phase 2 推出男性角色 Luuk Herssen 打破纯女性卡池模式。
+• NTE: Neverness to Everness — 正式确认4月29日全球上线，仅比中国版晚一周，创下 Gacha 史上最短 CN-to-Global 发行间隔之一。
+
+🎯 雷达信号
+• Granblue Fantasy (Cygames) — 原版浏览器手游将于3月10日登陆 Steam 全球，有望大幅拓展西方用户群。
+• Bang Dream! Our Notes (Bushiroad) — 英文版正式确认，2026年将音游 Gacha 带入全球市场。
+  </div>
+</body>
+</html>
