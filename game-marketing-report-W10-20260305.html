@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Marketing Report W10 | 游戏营销周报</title>
+  <style>
+    /* ============================================
+       语言切换核心样式 - 禁止修改
+       ============================================ */
+    [data-lang="zh"] { display: none; }
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="zh"] [data-lang="en"] { display: none; }
+
+    /* ============================================
+       基础重置与字体 - 禁止修改
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f5f6f8;
+    }
+
+    /* ============================================
+       语言切换按钮 - 禁止修改
+       ============================================ */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 7px 18px;
+      border: 1.5px solid #c9d0db;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.18s;
+    }
+    .lang-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+    .lang-btn.active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+
+    /* ============================================
+       页面容器 - 禁止修改
+       ============================================ */
+    .report-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ============================================
+       报告头部 - 禁止修改
+       ============================================ */
+    .report-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+    .report-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 6px;
+    }
+    .report-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ============================================
+       板块标题 - 禁止修改
+       ============================================ */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 40px 0 16px;
+      padding-left: 12px;
+      border-left: 4px solid #1a73e8;
+    }
+
+    /* ============================================
+       游戏卡片 - 禁止修改
+       ============================================ */
+    .game-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e8ebf0;
+    }
+    .game-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .card-section-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1a73e8;
+      margin: 16px 0 6px;
+    }
+    .card-body { font-size: 14px; color: #333; line-height: 1.75; }
+    .card-highlight {
+      background: #f0f7ff;
+      border-left: 3px solid #1a73e8;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+    .card-sources {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .card-sources a { color: #1a73e8; text-decoration: none; }
+    .card-sources a:hover { text-decoration: underline; }
+
+    /* ============================================
+       Burst 快报卡片 - 禁止修改
+       ============================================ */
+    .burst-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      border: 1.5px solid #f0b840;
+      box-shadow: 0 1px 4px rgba(240,184,64,0.10);
+    }
+    .burst-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #b8600a;
+      margin-bottom: 8px;
+    }
+    .burst-trigger-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f0b840;
+      color: #fff;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       风险标签 - 禁止修改
+       ============================================ */
+    .risk-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fff0f0;
+      color: #d93025;
+      border: 1px solid #f5c6c6;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================
+       雷达信号板块 - 禁止修改
+       ============================================ */
+    .radar-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border: 1px solid #e8ebf0;
+      font-size: 14px;
+      color: #333;
+    }
+    .radar-item-name {
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================
+       审核提示 - 禁止修改
+       ============================================ */
+    .review-notice {
+      margin-top: 48px;
+      padding: 18px 22px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border: 1px dashed #c9d0db;
+      font-size: 13px;
+      color: #666;
+    }
+    .review-notice ul { padding-left: 18px; margin-top: 8px; }
+    .review-notice li { margin-bottom: 4px; }
+
+    /* ============================================
+       响应式 - 禁止修改
+       ============================================ */
+    @media (max-width: 600px) {
+      .report-container { padding: 32px 14px 60px; }
+      .game-card, .burst-card { padding: 18px 16px; }
+      .lang-switch { top: 12px; right: 12px; }
+      .report-title { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 语言切换按钮 - 必须包含，禁止修改结构 -->
+  <div class="lang-switch">
+    <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" onclick="switchLang('zh')">中文</button>
+  </div>
+
+  <!-- 英文内容区块（默认显示）-->
+  <div data-lang="en">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 Game Marketing Report · W10</div>
+        <div class="report-meta">Feb 26 - Mar 04, 2026 · Core: 6 games · Burst: 1</div>
+      </div>
+
+      <!-- 🚨 Burst Alert -->
+      <div class="section-title">🚨 New Game Alert</div>
+      <div class="burst-card">
+        <div class="burst-card-title">HeavenHells</div>
+        <span class="burst-trigger-badge">Global Launch</span>
+        <div class="card-section-label">What</div>
+        <div class="card-body">A 3D Anime Squad RPG developed by CloverGames. The game features tactical combat with a team of "WiTCHes" and officially launched globally on March 5, 2026.</div>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">The game has just executed its global launch, sparking immediate discussions on Reddit (r/gachagaming) and YouTube. Initial community reception is mixed, with some players criticizing the visual quality as "dated" compared to 2026 standards, while others are exploring the gameplay mechanics.</div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Early sentiment leans negative regarding polish ("doesn't feel like a 2026 game"), which poses a retention risk. Monitoring the first-week stability and developer response to feedback will be crucial to see if it can overcome initial skepticism.</div>
+        <div class="card-sources">Sources: <a href="https://www.reddit.com/r/gachagaming/comments/1rl45q2/notice_heavenhells_global_launch/">Reddit</a>, <a href="https://blog-en.heavenhells.com/">Official Blog</a></div>
+      </div>
+
+      <!-- 🔍 Core Watch List -->
+      <div class="section-title">🔍 Core Watch List</div>
+
+      <!-- Fortnite -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">The community is buzzing with mixed reactions to the recent "Rocket Landing" live event (Feb 28), with some calling it underwhelming. On the business side, major news broke regarding Google revamping its fee structure, leading to Fortnite's return to the Google Play Store worldwide as of March 4.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">Chapter 7 Season 2 is highly anticipated with map changes already teased, expected to launch around March 20. The final update of the current season (v39.51) went live this week. The Honkai: Star Rail collaboration event just concluded on March 4.
+          <div class="card-highlight">💡 Highlight: Fortnite's return to Google Play marks a significant shift in mobile distribution strategy after years of legal disputes.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.reuters.com/business/fortnite-return-google-play-worldwide-2026-03-04/">Reuters</a>, <a href="https://www.gamespot.com/gallery/fortnite-chapter-7-season-2-start-date-and-all-leaks-and-teases-so-far/2900-7548/">GameSpot</a></div>
+      </div>
+
+      <!-- Genshin Impact -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Player sentiment is currently mixed regarding the "Imaginarium Theater" mode, with some users expressing frustration over its mechanics. Discussion is also active around leaks for Version 6.5 banners (rumored "Linnea & Reruns") expected in April.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">The "Homeward, He Who Caught the Wind" event is currently live (started Feb 27), alongside the tail end of Lantern Rite festivities ("A Lanternlit Ode to the Silver Moon"). Marketing focus is currently on sustaining engagement through these limited-time events during the patch cycle mid-point.</div>
+        <div class="card-sources">Sources: <a href="https://genshin.hoyoverse.com/m/en/news/detail/162876">Official News</a>, <a href="https://www.reddit.com/r/Genshin_Impact/comments/1rhsl38/and_the_award_for_the_worst_imaginarium_theater/">Reddit</a></div>
+      </div>
+
+      <!-- Zenless Zone Zero -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">The "Movie Dating Event" has generated positive community engagement ("already very hot"). The release of the Aria music trailer and gameplay kit has fueled hype for the new banner.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">Version 2.6 Phase 2 officially launched on March 4, introducing the S-Rank Agent Aria (Ether/Anomaly). Version 2.7 is now projected for March 24, likely featuring the final member of the Angels of Delusion.
+          <div class="card-highlight">💡 Highlight: The "Neon Angel" exclusive channel and associated character marketing for Aria are driving the current content cycle.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://zenless.hoyoverse.com/m/en-us/news">Official Site</a>, <a href="https://www.reddit.com/r/ZZZ_Official/comments/1rkfdw3/just_day_1_of_the_new_movie_dating_event_and_its/">Reddit</a></div>
+      </div>
+
+      <!-- Arknights: Endfield -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Discussion is focused on the upcoming Version 1.1 update. While some players express boredom ("Nothing to do in Endfield"), the recent Dev Log and 1.1 reveal (Rossi/Tangtang) have sparked renewed interest and debate over character rarity and weapon types.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">The first major content update, Version 1.1 "Old Deep Water Dies, by Rising Tide It is Denied," is scheduled for March 12, 2026. A Dev Log released on March 1 detailed optimization progress and new features like "Valley 4 Essences."</div>
+        <div class="card-sources">Sources: <a href="https://endfield.wiki.gg/wiki/Changelog/2026/March_02">Wiki/DevLog</a>, <a href="https://www.reddit.com/r/Endfield/comments/1rhv2lx/arknights_endfield_dev_log_optimization_progress/">Reddit</a></div>
+      </div>
+
+      <!-- Wuthering Waves -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Community sentiment is strained by reports of performance drops (over 50%) following the latest update. However, anticipation for the 2nd Anniversary (expected May) and Version 3.2 leaks (Ameath/Sigrika) remains high.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">3.1 版本下半部分已于 2 月底上线，推出了角色 Luuk Herssen。营销重心正开始转向 3.2 版本和即将到来的周年庆筹备。
+          <div class="card-highlight">💡 亮点案例：尽管存在技术层面的抱怨，“For Those Who Walk in Snow”(3.1) 中的剧情内容继续作为关键的参与度驱动因素。</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.reddit.com/r/WutheringWaves/comments/1rkxna0/my_performance_dropped_by_over_50_in_the_latest/">Reddit</a>, <a href="https://opencritic.com/news/27311/wuthering-waves-update-3-1-second-half-available-now">OpenCritic</a></div>
+      </div>
+
+      <!-- NTE: Neverness to Everness -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Hype has solidified following the confirmation of the release date. Comparisons to other open-world titles (like "Ananta") and positive feedback from the recent Beta (CBT3) are dominating discussions.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">The official release date is confirmed for April 29, 2026. Recent marketing activities included a showcase at IGN Fan Fest 2026 ("Anomaly Hunter's Guide") and celebrating 35 million pre-registrations.</div>
+        <div class="card-sources">Sources: <a href="https://game8.co/articles/latest/neverness-to-everness-nte-release-date-confirmed-for-april-29">Game8</a>, <a href="https://www.ign.com/videos/nte-neverness-to-everness-official-release-anomaly-hunters-guide-ign-fan-fest-2026">IGN</a></div>
+      </div>
+
+      <!-- 🎯 Radar Signals -->
+      <div class="section-title">🎯 Radar Signals</div>
+      <div class="radar-item">
+        <div class="radar-item-name">The Division Resurgence</div>
+        <div>Launch date reveal discussions have surfaced on Reddit, indicating renewed momentum for the title.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Haze Reverb x Chain Soldier</div>
+        <div>New collaboration event confirmed to start on March 11, driving niche community interest.</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 Review Checklist</strong>
+        <ul>
+          <li>Is Core List coverage complete? Yes, all 6 titles covered.</li>
+          <li>Are Burst classifications accurate? Yes, HeavenHells confirmed as Global Launch.</li>
+          <li>Does the candidate pool need manual adjustment? Monitoring HeavenHells for retention.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中文内容区块 -->
+  <div data-lang="zh">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 游戏营销周报 · W10</div>
+        <div class="report-meta">2026年2月26日 - 3月4日 · Core: 6 款 · Burst: 1</div>
+      </div>
+
+      <!-- 🚨 新品快报 -->
+      <div class="section-title">🚨 新品快报</div>
+      <div class="burst-card">
+        <div class="burst-card-title">HeavenHells</div>
+        <span class="burst-trigger-badge">全球上线</span>
+        <div class="card-section-label">是什么</div>
+        <div class="card-body">由 CloverGames 开发的 3D 动漫小队 RPG。游戏主打指挥“WiTCHes”小队进行战术战斗，并于 2026 年 3 月 5 日正式全球上线。</div>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">游戏刚刚执行了全球发布，立即在 Reddit (r/gachagaming) 和 YouTube 上引发了讨论。目前的社区评价褒贬不一，部分玩家批评其视觉质量相较于 2026 年的标准显得“过时”，而另一部分玩家则在探索其游戏机制。</div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">早期的舆情倾向于负面，主要集中在打磨程度不足（“感觉不像 2026 年的游戏”），这构成了留存风险。监测首周的稳定性以及开发者对反馈的响应将是其能否克服初期质疑的关键。</div>
+        <div class="card-sources">信源：<a href="https://www.reddit.com/r/gachagaming/comments/1rl45q2/notice_heavenhells_global_launch/">Reddit</a>, <a href="https://blog-en.heavenhells.com/">Official Blog</a></div>
+      </div>
+
+      <!-- 🔍 长期追踪产品 -->
+      <div class="section-title">🔍 长期追踪产品快报</div>
+
+      <!-- Fortnite -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite (堡垒之夜)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">社区对近期（2月28日）的“Rocket Landing”实时活动的反应褒贬不一，部分玩家认为略显平淡。商业方面，受 Google 费用结构调整影响，Fortnite 于 3 月 4 日正式重返全球 Google Play 商店，引发广泛关注。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">Chapter 7 Season 2 备受期待，地图变动预告已释出，预计于 3 月 20 日左右上线。本赛季的最终更新 (v39.51) 本周已实装。Honkai: Star Rail 联动活动刚于 3 月 4 日结束。
+          <div class="card-highlight">💡 亮点案例：在经历了多年的法律纠纷后，Fortnite 重返 Google Play 标志着移动分发策略的重大转变。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.reuters.com/business/fortnite-return-google-play-worldwide-2026-03-04/">Reuters</a>, <a href="https://www.gamespot.com/gallery/fortnite-chapter-7-season-2-start-date-and-all-leaks-and-teases-so-far/2900-7548/">GameSpot</a></div>
+      </div>
+
+      <!-- Genshin Impact -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact (原神)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">玩家对“Imaginarium Theater”模式的评价目前呈现两极分化，部分用户对其机制表示沮丧。此外，关于预计 4 月发布的 6.5 版本卡池（传闻为“Linnea & Reruns”）的爆料讨论也十分活跃。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">“Homeward, He Who Caught the Wind”活动目前正在进行中（2月27日开启），海灯节庆典（“A Lanternlit Ode to the Silver Moon”）也进入尾声。目前的营销重点是在版本中期通过这些限时活动维持用户活跃度。</div>
+        <div class="card-sources">信源：<a href="https://genshin.hoyoverse.com/m/en/news/detail/162876">Official News</a>, <a href="https://www.reddit.com/r/Genshin_Impact/comments/1rhsl38/and_the_award_for_the_worst_imaginarium_theater/">Reddit</a></div>
+      </div>
+
+      <!-- Zenless Zone Zero -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero (绝区零)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">“Movie Dating Event”引发了积极的社区互动（评价“非常火热”）。Aria 角色PV和技能演示的发布进一步推高了新卡池的热度。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">2.6 版本第二阶段于 3 月 4 日正式上线，推出了 S 级代理人 Aria (Ether/Anomaly)。2.7 版本目前预计将于 3 月 24 日发布，可能会推出 Angels of Delusion 的最后一名成员。
+          <div class="card-highlight">💡 亮点案例：针对 Aria 的“Neon Angel”独家频道及相关角色营销是当前内容周期的核心驱动力。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://zenless.hoyoverse.com/m/en-us/news">Official Site</a>, <a href="https://www.reddit.com/r/ZZZ_Official/comments/1rkfdw3/just_day_1_of_the_new_movie_dating_event_and_its/">Reddit</a></div>
+      </div>
+
+      <!-- Arknights: Endfield -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield (明日方舟：终末地)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">讨论集中在即将到来的 1.1 版本更新上。虽然部分玩家表示长草期无聊（“Nothing to do”），但近期的开发者日志和 1.1 版本揭秘（Rossi/Tangtang）重新点燃了关于角色稀有度和武器类型的讨论。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">首个大型内容更新 1.1 版本“Old Deep Water Dies, by Rising Tide It is Denied”定档 2026 年 3 月 12 日。3 月 1 日发布的开发者日志详细介绍了优化进度和“Valley 4 Essences”等新功能。</div>
+        <div class="card-sources">信源：<a href="https://endfield.wiki.gg/wiki/Changelog/2026/March_02">Wiki/DevLog</a>, <a href="https://www.reddit.com/r/Endfield/comments/1rhv2lx/arknights_endfield_dev_log_optimization_progress/">Reddit</a></div>
+      </div>
+
+      <!-- Wuthering Waves -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves (鸣潮)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">最新更新后出现的性能下降（部分报告称下降超过50%）导致社区情绪紧张。然而，对于预计 5 月到来的二周年庆典以及 3.2 版本爆料（Ameath/Sigrika）的期待值依然很高。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">3.1 版本下半部分已于 2 月底上线，推出了角色 Luuk Herssen。营销重心正开始转向 3.2 版本和即将到来的周年庆筹备。
+          <div class="card-highlight">💡 亮点案例：尽管存在技术层面的抱怨，“For Those Who Walk in Snow”(3.1) 中的剧情内容继续作为关键的参与度驱动因素。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.reddit.com/r/WutheringWaves/comments/1rkxna0/my_performance_dropped_by_over_50_in_the_latest/">Reddit</a>, <a href="https://opencritic.com/news/27311/wuthering-waves-update-3-1-second-half-available-now">OpenCritic</a></div>
+      </div>
+
+      <!-- NTE: Neverness to Everness -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness (异环)</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">随着发布日期的确认，热度进一步稳固。与“Ananta”等其他开放世界游戏的对比，以及来自近期 Beta 测试（CBT3）的积极反馈主导了讨论。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">官方正式定档 2026 年 4 月 29 日公测。近期的营销活动包括在 IGN Fan Fest 2026 上的展示（“Anomaly Hunter's Guide”）以及庆祝预注册突破 3500 万。</div>
+        <div class="card-sources">信源：<a href="https://game8.co/articles/latest/neverness-to-everness-nte-release-date-confirmed-for-april-29">Game8</a>, <a href="https://www.ign.com/videos/nte-neverness-to-everness-official-release-anomaly-hunters-guide-ign-fan-fest-2026">IGN</a></div>
+      </div>
+
+      <!-- 🎯 雷达信号 -->
+      <div class="section-title">🎯 雷达信号</div>
+      <div class="radar-item">
+        <div class="radar-item-name">The Division Resurgence</div>
+        <div>Reddit 上出现了关于发布日期揭晓的讨论，显示该作重新获得了关注动力。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Haze Reverb x Chain Soldier</div>
+        <div>新的联动活动确认为 3 月 11 日开启，带动了垂直社区的兴趣。</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 审核提示</strong>
+        <ul>
+          <li>Core List 信息是否完整？是，6款游戏均已覆盖。</li>
+          <li>Burst 定性是否准确？是，HeavenHells 确认为全球上线。</li>
+          <li>候选池是否需要手动调整（晋升/加入）？需关注 HeavenHells 的留存情况。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语言切换脚本 - 必须包含，禁止修改 -->
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      var url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      history.replaceState({}, '', url);
+    }
+    // 页面加载时检查 URL 参数，默认 EN
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var lang = params.get('lang') || 'en';
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        var isActive = (lang === 'en' && btn.textContent === 'EN') ||
+                       (lang === 'zh' && btn.textContent === '中文');
+        btn.classList.toggle('active', isActive);
+      });
+    })();
+  </script>
+
+  <!-- Wave 推送摘要块 - 必须包含，禁止省略 -->
+  <div id="wave-summary" style="display:none">
+🚨 Burst Alert
+• HeavenHells — Global Launch on March 5 has sparked immediate mixed reactions regarding its dated visuals versus gameplay potential.
+
+🔍 Core Watch
+• Fortnite — Returns to Google Play worldwide on March 4 following fee structure changes; C7S2 map teases begin.
+• Genshin Impact — "Homeward" event runs alongside leaks of Version 6.5 banners (Linnea), keeping community discussion active.
+• Zenless Zone Zero — Aria (S-Rank) banner launched March 4 with strong marketing via "Neon Angel" channel; v2.7 expected March 24.
+• Arknights: Endfield — First major update v1.1 scheduled for March 12, with Dev Log detailing new "Valley 4" features.
+• Wuthering Waves — v3.1 Second Half live with Luuk Herssen; community reports performance drops while anticipating v3.2.
+• NTE: Neverness to Everness — Release date officially confirmed for April 29, 2026, solidifying hype after IGN Fan Fest showcase.
+
+🎯 On the Radar
+• The Division Resurgence (Ubisoft) — Launch date reveal discussions resurface, signaling renewed marketing momentum.
+  </div>
+
+  <!-- Wave 推送摘要块（中文频道）- 必须包含，禁止省略 -->
+  <div id="wave-summary-zh" style="display:none">
+🚨 新品速报
+• HeavenHells — 3月5日全球上线，其视觉效果与游戏潜力的落差引发了褒贬不一的即时反馈。
+
+🔍 核心追踪
+• Fortnite — 受费率调整影响于3月4日重返全球 Google Play；C7S2 地图预热开启。
+• Genshin Impact — "Homeward"活动进行中，6.5版本卡池（Linnea）爆料维持了社区热度。
+• Zenless Zone Zero — S级角色 Aria 卡池于3月4日上线，"Neon Angel"频道营销强势；2.7版本预计3月24日。
+• Arknights: Endfield — 首个大型更新 v1.1 定档3月12日，开发者日志详解"Valley 4"新特性。
+• Wuthering Waves — 3.1下半版本上线 Luuk Herssen；社区反馈性能下降，同时期待3.2版本。
+• NTE: Neverness to Everness — 公测定档2026年4月29日，IGN Fan Fest 展示后热度稳固。
+
+🎯 雷达信号
+• The Division Resurgence (Ubisoft) — 发布日期揭晓的相关讨论重现，预示营销动力重启。
+  </div>
+</body>
+</html>
