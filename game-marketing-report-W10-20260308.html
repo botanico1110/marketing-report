@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Marketing Report W10 | 游戏营销周报</title>
+  <style>
+    /* ============================================
+       语言切换核心样式 - 禁止修改
+       ============================================ */
+    [data-lang="zh"] { display: none; }
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="zh"] [data-lang="en"] { display: none; }
+
+    /* ============================================
+       基础重置与字体 - 禁止修改
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f5f6f8;
+    }
+
+    /* ============================================
+       语言切换按钮 - 禁止修改
+       ============================================ */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 7px 18px;
+      border: 1.5px solid #c9d0db;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.18s;
+    }
+    .lang-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+    .lang-btn.active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+
+    /* ============================================
+       页面容器 - 禁止修改
+       ============================================ */
+    .report-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ============================================
+       报告头部 - 禁止修改
+       ============================================ */
+    .report-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+    .report-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 6px;
+    }
+    .report-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ============================================
+       板块标题 - 禁止修改
+       ============================================ */
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 36px 0 12px;
+      padding-left: 11px;
+      border-left: 4px solid #1a73e8;
+    }
+
+    /* ============================================
+       游戏卡片 - 禁止修改
+       ============================================ */
+    .game-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e8ebf0;
+    }
+    .game-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .card-section-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #1a73e8;
+      margin: 20px 0 4px;
+    }
+    .game-card-title + .card-section-label,
+    .burst-card-title + .card-section-label,
+    .burst-card-title ~ [style] + .card-section-label,
+    .burst-trigger-badge + .card-section-label {
+      margin-top: 2px;
+    }
+    .card-body {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.68;
+    }
+    .card-body + .card-body { margin-top: 6px; }
+    .card-highlight {
+      background: #f0f7ff;
+      border-left: 3px solid #1a73e8;
+      border-radius: 0 6px 6px 0;
+      padding: 9px 13px;
+      margin: 8px 0 2px;
+      font-size: 13.5px;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .card-sources {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid #f0f2f5;
+      font-size: 12px;
+      color: #bbb;
+    }
+    .card-sources a { color: #1a73e8; text-decoration: none; }
+    .card-sources a:hover { text-decoration: underline; }
+
+    /* ============================================
+       Burst 快报卡片 - 禁止修改
+       ============================================ */
+    .burst-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1.5px solid #f0b840;
+      box-shadow: 0 1px 4px rgba(240,184,64,0.10);
+    }
+    .burst-card-secondary {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1px solid #e8ebf0;
+      border-left: 3px solid #f0b840;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .burst-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #b8600a;
+      margin-bottom: 4px;
+    }
+    .burst-trigger-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f0b840;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       风险标签 - 禁止修改
+       ============================================ */
+    .risk-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fff0f0;
+      color: #d93025;
+      border: 1px solid #f5c6c6;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================
+       雷达信号板块 - 禁止修改
+       ============================================ */
+    .radar-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border: 1px solid #e8ebf0;
+      font-size: 14px;
+      color: #333;
+    }
+    .radar-item-name {
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================
+       审核提示 - 禁止修改
+       ============================================ */
+    .review-notice {
+      margin-top: 32px;
+      padding: 14px 20px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border: 1px dashed #c9d0db;
+      font-size: 13px;
+      color: #666;
+    }
+    .review-notice ul { padding-left: 18px; margin-top: 6px; }
+    .review-notice li { margin-bottom: 3px; }
+
+    /* ============================================
+       响应式 - 禁止修改
+       ============================================ */
+    @media (max-width: 600px) {
+      .report-container { padding: 32px 14px 60px; }
+      .game-card, .burst-card { padding: 18px 16px; }
+      .lang-switch { top: 12px; right: 12px; }
+      .report-title { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-target-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-target-lang="zh" onclick="switchLang('zh')">中文</button>
+  </div>
+
+  <!-- English Content -->
+  <div data-lang="en">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 Game Marketing Report · W10</div>
+        <div class="report-meta">March 2 – March 8, 2026 · Core: 6 games · Burst: 2</div>
+      </div>
+
+      <!-- Burst Alert -->
+      <div class="section-title">🚨 New Game Alert</div>
+      
+      <div class="burst-card">
+        <div class="burst-card-title">Marathon</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Bungie · Sony Interactive Entertainment · Extraction Shooter · PC, PS5, Xbox · Global</div>
+        <span class="burst-trigger-badge">HARD SIGNAL · MEDIA집火 + COMMUNITY SPEED</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">Bungie's $40 premium extraction shooter launched March 5, 2026, triggering a major monetization controversy. Multiple r/Games posts (2.9k+ upvotes) blast the game's "gacha-level predatory" microtransactions: $10 currency packs that fall 20 coins short of item prices, no premium currency refund in the Battle Pass, and duplicate cosmetics as filler. The game peaked at 88,337 concurrent players on Steam (below expectations), prompting Bungie to ask critics to delay final reviews until the "Cryo Archive" endgame zone releases. Despite the backlash, Xbox Store shows 4.6/5 rating (370+ reviews) and the game reportedly sold 250K copies on Steam in the first days.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">Bungie, creators of Halo and Destiny franchises, now owned by Sony Interactive Entertainment. Marathon is a reboot of Bungie's 1994 Macintosh FPS, repositioned as a modern live-service extraction shooter. The project represents Bungie's attempt to diversify beyond Destiny 2 amid recent layoffs and restructuring.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">Steam: 88,337 peak concurrent players (Day 1), ~250K copies sold. Hit #2 on Steam revenue chart during Server Slam playtest. Console figures unavailable, but unless PlayStation significantly outperforms Steam, the launch is underperforming for a $40 AAA title backed by Sony. No mobile release planned.</div>
+        <div class="card-section-label">Community Pulse <span class="risk-tag">MONETIZATION BACKLASH</span></div>
+        <div class="card-body">
+          Top Reddit threads (r/Games & r/Marathon):<br>
+          • "Marathon and MTX: Predatory and Dark Patterns" — 2.9k+ upvotes — https://reddit.com/r/Games/comments/1rm70m9<br>
+          • "Bungie asks sites to delay Marathon reviews, with release date Steam player count below 100K" — 2.9k — https://reddit.com/r/Games/comments/1rm4d5i<br>
+          • "Marathon's Battlepass is worse than any F2P shooter" — Heavy discussion in r/Marathon<br>
+          • "91% positive reviews on day one" — Counter-narrative from fans — r/Marathon<br>
+          • "Just had a game where the whole map was friendly and we all extracted together" — Wholesome gameplay moment<br>
+          <strong>Sentiment:</strong> Deeply polarized. Core gameplay praised ("world-class gunplay"), but monetization is widely condemned as "worse than gacha games." Bungie quickly announced patches to address currency pricing within 48 hours, signaling damage control mode.
+        </div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">
+          • Official: Marathon Server Slam recap (Feb 26–Mar 2 playtest footage)<br>
+          • IGN Review-in-Progress: "Marathon has Bungie's signature gunplay but familiar flaws"<br>
+          • M3RKMUS1C: "My HONEST Review of Marathon..." — Critical take on MTX model<br>
+          High-traffic creator content focused heavily on the monetization controversy rather than gameplay.
+        </div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Marathon faces a critical juncture: if Bungie doesn't overhaul the Battle Pass economics and the "Cryo Archive" endgame zone fails to impress, the game risks a rapid player exodus (40% drop-off already seen during Server Slam Day 2). However, if patches and content deliver, the strong core gameplay could stabilize retention. This is a textbook case of premium live-service monetization misalignment.</div>
+        <div class="card-sources">Sources: <a href="https://www.reddit.com/r/Games/comments/1rm70m9">r/Games</a> · <a href="https://www.forbes.com/sites/paultassi/2026/03/06">Forbes</a> · <a href="https://kotaku.com/marathon-lux-cosmetics-microtransactions-patch-ammo-2000676964">Kotaku</a> · <a href="https://www.ign.com/articles/marathon-review">IGN</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Star Savior</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Studiobside · Studiobside · Gacha RPG · PC, iOS, Android · Global</div>
+        <span class="burst-trigger-badge">HARD SIGNAL · GLOBAL LAUNCH</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">Korean developer Studiobside announced Star Savior's global launch for March 2026 (exact date TBD within the month) during a November 2025 livestream. Described as "Honkai: Star Rail meets Umamusume," the game combines turn-based gacha combat with character-raising simulation. Pre-registrations opened December 24, 2025. A Counterside collaboration event is confirmed for March 19, running for 3 weeks.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">Studiobside is a relatively new Korean studio led by CEO Ryu Geum-tae. Star Savior is their debut title. The studio has positioned itself as bridging Eastern gacha mechanics with narrative-driven RPG systems. Funding and publisher backing details remain undisclosed.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">Star Savior launched on Steam December 10, 2025 (Early Access or soft launch). Global mobile launch scheduled for March 2026. No public revenue or download figures available yet. The Counterside collab suggests the game is targeting the established Korean/global gacha audience.</div>
+        <div class="card-section-label">Community Pulse</div>
+        <div class="card-body">
+          r/gachagaming reaction is cautiously optimistic but muted. One notable thread mentioned a launch livestream where voice actors failed to pull a single SSR during a gacha session, sparking concerns about rates. Reddit communities r/StarSavior and r/StarSaviorGlobal exist but are low-activity (no major posts this week). Overall sentiment: "Wait and see" — the game hasn't broken through into mainstream gacha discourse yet.
+        </div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">
+          • Volkin Gacha: "STAR SAVIOR GLOBAL WAS JUST CONFIRMED FOR MARCH 2026!!!" — Hype announcement coverage<br>
+          • Gameplay preview videos from beta testers showing turn-based combat + "Journey" (Umamusume-style training mode)<br>
+          No major official cinematic or high-production trailer released this week.
+        </div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Star Savior enters a crowded March 2026 gacha market (Arknights: Endfield v1.1, Wuthering Waves v3.2, NTE pre-launch hype). Whether it can carve a niche depends on launch execution, gacha rates, and whether the Counterside collab drives crossover traffic. Early SSR rate concerns from the VA stream need addressing.</div>
+        <div class="card-sources">Sources: <a href="https://www.reddit.com/r/gachagaming/comments/1p767zy">r/gachagaming</a> · <a href="https://www.rpgsite.net/news/19029">RPGSite</a> · <a href="https://game8.co/articles/latest/star-savior-a-hsr-meets-umamusume-rpg-releases-globally-march-2026">Game8</a></div>
+      </div>
+
+      <!-- Core Watch List -->
+      <div class="section-title">🔍 Core Watch List</div>
+
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          r/FortNiteBR Top Posts This Week:<br>
+          • "This season has gotten so dry" — 4.2k upvotes — Community fatigue with current Chapter 7 Season 1 content pacing<br>
+          • "Month 5 of sidekicks: Still reusing animations" — 2.4k — Criticism of low-effort cosmetic features<br>
+          • Gameplay highlights and cosplay content dominate otherwise<br>
+          <strong>Sentiment:</strong> Mixed. Hardcore players express content drought concerns mid-season, but the game's massive casual base remains active. No major negative sentiment beyond routine feature complaints.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          <strong>Rick and Morty Collaboration (March 5 Update):</strong> New cosmetics including Pickle Rick skin teased in patch notes, accompanied by the Pickle Rick Cup competitive event (March 6). Lantern Fest Cup also live, offering Nights of Magic Bundle rewards. Wild Weeks Power Hour event (March 8) features revamped loadouts for one-hour sessions.<br>
+          <strong>Creator Program:</strong> Epic invited select content creators to HQ to test an unannounced new game mode (no details released yet).<br>
+          <strong>FNCS 2026:</strong> Fortnite Championship Series announced with $10M+ prize pool, alongside the debut Mobile Series.<br>
+          <div class="card-highlight">💡 Highlight: Epic Games filed a lawsuit against Hayden Cohen (leaker "AdiraFN"), a contracted Associate Producer who leaked Fortnite content while employed. This marks a rare case of an insider leaker being publicly sued, sending a strong signal about IP protection to the creator/leaker ecosystem.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.radiotimes.com/technology/gaming/fortnite-update-today-5-march-2026/">RadioTimes</a> · <a href="https://www.gamespot.com/articles/epic-games-is-suing-a-major-fortnite-leaker/">GameSpot</a> · <a href="https://www.reddit.com/r/FortNiteBR/top">r/FortNiteBR</a> · <a href="https://www.fortnite.com/competitive/">Fortnite Competitive</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">
+          r/Endfield Top Posts (via RSS, scores N/A):<br>
+          • "Scumbag plot" meme — Character story humor<br>
+          • "Glad most of the girls got practical combat shoes and not all heels" — Positive character design discussion<br>
+          • Fan art and gameplay clips of new characters Gilberta and Susuru trending<br>
+          <strong>Sentiment:</strong> Overwhelmingly positive. Post-launch honeymoon continues; community celebrating the game's quality and generous gacha rates.
+        </div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">
+          <strong>Version 1.1 "Old Deep Water Dies, by Rising Tide It Is Denied" launches March 12, 2026</strong> — First major content update featuring new story chapter, character Susuru banner, and the "Quietly Flows The Spring" event. Mi Fu and Sarca characters coming in v1.2 (April 20).<br>
+          <strong>FIVE TOWERS × ENDFIELD Collaboration (March 6–29):</strong> Partnership with five iconic Japanese towers (Tokyo Skytree, etc.) featuring photo spots and promotional merchandise. Pop-up store also announced.<br>
+          <div class="card-highlight">💡 Highlight: Arknights: Endfield hit $30 million in mobile revenue within two weeks of its January 22 global launch, per PocketGamer. This validates Gryphline's strategy of delivering a premium 3D gacha experience in 2026, setting a new quality benchmark for the genre. The Japan tower collaboration demonstrates aggressive localized marketing push.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.gematsu.com/2026/03/arknights-endfield-version-1-1-update">Gematsu</a> · <a href="https://www.pocketgamer.biz/arknights-endfield-hits-30m-in-two-weeks-on-mobile/">PocketGamer.biz</a> · <a href="https://www.haveagood-holiday.com/en/articles/arknights-endfield-five-towers-collab-march-2026">HaveaGood</a> · <a href="https://www.reddit.com/r/Endfield/top">r/Endfield</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Version Luna V (launched Feb 25) continues with Varka banner and Mondstadt-focused storyline. Official cutscene "Triumphant Return" released March 4. Siliconera confirmed Linnea as the first new Adventurer's Guild character in 6 years, playable in upcoming Luna VI update. Genshin Fes 2026 teased with new character reveals (Tartaglia, Arlecchino updates). Interactive themed area collaboration announced (tickets open March 13). Reddit Top: Varka size memes (12.8k upvotes), Fischl cosplay (9.3k). Sentiment: Positive, community enjoying current content and hyped for Linnea.</div>
+        <div class="card-sources">Sources: <a href="https://www.gematsu.com/2026/02/genshin-impact-version-luna-v">Gematsu</a> · <a href="https://www.siliconera.com/linnea-becomes-playable-in-genshin-impact-luna-vi-update/">Siliconera</a> · <a href="https://genshin.hoyoverse.com/">HoYoverse</a> · <a href="https://www.reddit.com/r/Genshin_Impact/top">r/Genshin_Impact</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Version 2.6 "Encore for an Old Dream" runs until March 24. Angels of Delusion debut livestream aired March 6, teasing next major update. "Snap! Hollow Realm Showdown" event starts March 9. ZZZ LIVE 2026 New York Concert scheduled March 21–22, with merchandise pre-orders open. Coca-Cola × FamilyMart collaboration announced (dates TBD). Reddit buzz around Aria VTuber model livestream and trust event. Sentiment: Active fanbase, strong engagement with event content.</div>
+        <div class="card-sources">Sources: <a href="https://zenless.hoyoverse.com/en-us/news">ZZZ Official</a> · <a href="https://www.siliconera.com/zenless-zone-zero-coca-cola-familymart-event-announced/">Siliconera</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero/comments/1q9frv1">r/ZZZ</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Version 3.1 "Bolt & Blitz!" event ongoing until March 16. Version 3.2 Preview Special Broadcast scheduled March 13 at 19:00 UTC+8, expected to reveal new characters Sigrika and Qiuyuan, with Phoebe rerun. V3.2 launch projected for March 19. "Fantasies of the Thousand Gateways" limited event running. Cyberpunk: Edgerunners collaboration teased for later in 2026. Reddit dominated by fan art (Aemeath cosplay, character artwork). Sentiment: Positive, stable community anticipating v3.2.</div>
+        <div class="card-sources">Sources: <a href="https://www.gematsu.com/2026/01/wuthering-waves-version-3-1-update">Gematsu</a> · <a href="https://wutheringwaves.kurogames.com/en/main/news">Kuro Games</a> · <a href="https://www.reddit.com/r/WutheringWaves/comments/1rm9yr9">r/WutheringWaves</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Official global launch date confirmed: April 29, 2026 (one week after China launch). Platforms: PC, iOS, Android, PlayStation 5, Mac (newly announced). IGN Fan Fest 2026 featured "Anomaly Hunter's Guide" trailer. Reddit community building pre-launch hype with beta scenery screenshots and "7 more weeks until release" countdown posts. Co-Ex Update Roadmap shared on r/gachagaming. Sentiment: High anticipation, Mac platform announcement positively received as rare for gacha titles.</div>
+        <div class="card-sources">Sources: <a href="https://simulationdaily.com/news/nte-neverness-to-everness-release-date/">SimulationDaily</a> · <a href="https://www.ign.com/videos/nte-neverness-to-everness-official-release-anomaly-hunters-guide-ign-fan-fest-2026">IGN</a> · <a href="https://www.reddit.com/r/NevernessToEverness/comments/1revy7q">r/NTE</a></div>
+      </div>
+
+      <!-- Radar Signals -->
+      <div class="section-title">🎯 Radar Signals</div>
+      <div class="radar-item">
+        <div class="radar-item-name">Etheria Restart</div>
+        <div>New gacha game gaining YouTube coverage, described as virtual world RPG. Status: Watching (first appearance this week).</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Dragon Quest Smash/Grow</div>
+        <div>Square Enix gacha title planned for 2026 launch per Gematsu. Closed beta set for October 2025 (now past). Status: Watching for launch window confirmation.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Dissidia Duellum Final Fantasy</div>
+        <div>Square Enix mobile fighting game gacha announced for 2026 launch. PocketGamer.biz coverage. Status: Watching.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Highguard (Shutdown Alert)</div>
+        <div>GaaS title permanently shutting down March 12, 2026. r/Games thread: 6.4k upvotes. Status: Case study for live-service failure analysis.</div>
+      </div>
+
+      <!-- Review Checklist -->
+      <div class="review-notice">
+        <strong>📌 Review Checklist</strong>
+        <ul>
+          <li>Burst classifications: Marathon (media + community backlash), Star Savior (global launch) — Accurate</li>
+          <li>Signal levels: Fortnite/Endfield L3 (major events), Genshin/ZZZ/WuWa/NTE L2 (active updates) — Verified</li>
+          <li>Candidate pool: 4 new Watching entries, 2 Burst triggers logged in YAML (see chat output)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chinese Content -->
+  <div data-lang="zh">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 游戏营销周报 · W10</div>
+        <div class="report-meta">2026年3月2日 – 3月8日 · Core: 6 款 · Burst: 2 条</div>
+      </div>
+
+      <!-- 新品快报 -->
+      <div class="section-title">🚨 新品快报</div>
+      
+      <div class="burst-card">
+        <div class="burst-card-title">Marathon</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Bungie · Sony Interactive Entertainment · 提取射击 · PC, PS5, Xbox · 全球</div>
+        <span class="burst-trigger-badge">硬信号·媒体集火 + 社区速度</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">Bungie 的 40 美元买断提取射击游戏于 3 月 5 日全球上线，引发重大内购争议。多篇 r/Games 帖子（2.9k+ upvotes）抨击游戏采用"gacha 级别的掠夺性"微交易：10 美元货币包比商品价格少 20 币，Battle Pass 不返还高级货币，以及用重复饰品充数。游戏在 Steam 的峰值同时在线为 88,337 人（低于预期），促使 Bungie 请求评测媒体延迟最终评分，直到 "Cryo Archive" 终局区域上线。尽管遭遇强烈抵制，Xbox Store 显示 4.6/5 评分（370+ 评价），游戏据报在 Steam 首日售出 25 万份。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">Bungie，Halo 和 Destiny 系列的创造者，现归 Sony Interactive Entertainment 所有。Marathon 是 Bungie 1994 年 Macintosh FPS 的重启作品，重新定位为现代 live-service 提取射击游戏。该项目代表 Bungie 在近期裁员和重组背景下试图在 Destiny 2 之外实现多元化。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">Steam：首日峰值 88,337 同时在线，约 25 万份售出。在 Server Slam 测试期间冲上 Steam 收入榜第 2 名。主机数据不可用，但除非 PlayStation 表现显著优于 Steam，否则对于一款由 Sony 支持的 40 美元 3A 作品而言，这一成绩低于预期。无移动端发布计划。</div>
+        <div class="card-section-label">社区反应 <span class="risk-tag">内购争议</span></div>
+        <div class="card-body">
+          Reddit 热门帖（r/Games & r/Marathon）：<br>
+          • "Marathon and MTX: Predatory and Dark Patterns" — 2.9k+ upvotes — https://reddit.com/r/Games/comments/1rm70m9<br>
+          • "Bungie asks sites to delay Marathon reviews, with release date Steam player count below 100K" — 2.9k — https://reddit.com/r/Games/comments/1rm4d5i<br>
+          • "Marathon's Battlepass is worse than any F2P shooter" — r/Marathon 激烈讨论<br>
+          • "91% positive reviews on day one" — 玩家反叙事 — r/Marathon<br>
+          • "Just had a game where the whole map was friendly and we all extracted together" — 温情玩法时刻<br>
+          <strong>情绪：</strong>严重两极分化。核心玩法获赞（"世界级枪械手感"），但内购模式被广泛谴责为"比 gacha 游戏还糟"。Bungie 在 48 小时内迅速宣布修复货币定价的补丁，显示进入危机公关模式。
+        </div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">
+          • 官方：Marathon Server Slam 回顾（2 月 26 日 – 3 月 2 日测试录像）<br>
+          • IGN Review-in-Progress："Marathon 具有 Bungie 标志性枪械手感但熟悉的缺陷"<br>
+          • M3RKMUS1C："My HONEST Review of Marathon..." — 对 MTX 模式的批判性评测<br>
+          高流量创作者内容大量聚焦于内购争议而非玩法本身。
+        </div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">Marathon 正处于关键节点：如果 Bungie 不彻底改革 Battle Pass 经济模型，且 "Cryo Archive" 终局区域未能打动玩家，游戏面临快速流失风险（Server Slam 第二天已出现 40% 掉线率）。然而，如果补丁和内容交付到位，强大的核心玩法可能稳住留存。这是买断制 live-service 内购错位的教科书案例。</div>
+        <div class="card-sources">信源：<a href="https://www.reddit.com/r/Games/comments/1rm70m9">r/Games</a> · <a href="https://www.forbes.com/sites/paultassi/2026/03/06">Forbes</a> · <a href="https://kotaku.com/marathon-lux-cosmetics-microtransactions-patch-ammo-2000676964">Kotaku</a> · <a href="https://www.ign.com/articles/marathon-review">IGN</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Star Savior</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Studiobside · Studiobside · Gacha RPG · PC, iOS, Android · 全球</div>
+        <span class="burst-trigger-badge">硬信号·全球上线</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">韩国开发商 Studiobside 在 2025 年 11 月直播中宣布 Star Savior 将于 2026 年 3 月全球上线（月内具体日期待定）。游戏被描述为"崩坏：星穹铁道遇见赛马娘"，结合回合制 gacha 战斗与角色养成模拟。预注册于 2025 年 12 月 24 日开启。确认 3 月 19 日开始为期 3 周的 Counterside 联动活动。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">Studiobside 是一家相对较新的韩国工作室，由 CEO Ryu Geum-tae 领导。Star Savior 是他们的首款作品。工作室将自己定位为连接东方 gacha 机制与叙事驱动 RPG 系统的桥梁。资金和发行支持细节未公开。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">Star Savior 于 2025 年 12 月 10 日在 Steam 上线（Early Access 或软上线）。全球移动端上线定于 2026 年 3 月。暂无公开收入或下载数据。Counterside 联动表明游戏瞄准已建立的韩国/全球 gacha 受众。</div>
+        <div class="card-section-label">社区反应</div>
+        <div class="card-body">
+          r/gachagaming 反应谨慎乐观但反响平淡。一篇帖子提到上线直播中声优未能抽到单个 SSR，引发对爆率的担忧。Reddit 社区 r/StarSavior 和 r/StarSaviorGlobal 存在但活跃度低（本周无重大帖子）。整体情绪："观望" — 游戏尚未进入主流 gacha 讨论视野。
+        </div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">
+          • Volkin Gacha："STAR SAVIOR GLOBAL WAS JUST CONFIRMED FOR MARCH 2026!!!" — 炒作公告报道<br>
+          • Beta 测试者的玩法预览视频展示回合制战斗 + "Journey"（赛马娘式训练模式）<br>
+          本周无重大官方过场动画或高制作预告片发布。
+        </div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">Star Savior 进入竞争激烈的 2026 年 3 月 gacha 市场（Arknights: Endfield v1.1、Wuthering Waves v3.2、NTE 预上线炒作）。能否开辟利基市场取决于上线执行、gacha 爆率，以及 Counterside 联动能否带来交叉流量。声优直播中的早期 SSR 爆率担忧需要解决。</div>
+        <div class="card-sources">信源：<a href="https://www.reddit.com/r/gachagaming/comments/1p767zy">r/gachagaming</a> · <a href="https://www.rpgsite.net/news/19029">RPGSite</a> · <a href="https://game8.co/articles/latest/star-savior-a-hsr-meets-umamusume-rpg-releases-globally-march-2026">Game8</a></div>
+      </div>
+
+      <!-- 长期追踪产品 -->
+      <div class="section-title">🔍 长期追踪产品快报</div>
+
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          r/FortNiteBR 本周热帖：<br>
+          • "This season has gotten so dry" — 4.2k upvotes — 社区对当前 Chapter 7 Season 1 内容节奏感到疲劳<br>
+          • "Month 5 of sidekicks: Still reusing animations" — 2.4k — 对低成本饰品功能的批评<br>
+          • 玩法高光和 cosplay 内容占据主导<br>
+          <strong>情绪：</strong>喜忧参半。核心玩家表达赛季中期内容干旱担忧，但游戏庞大的休闲玩家群体保持活跃。除常规功能抱怨外无重大负面情绪。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          <strong>Rick and Morty 联动（3 月 5 日更新）：</strong>补丁说明中预告新饰品包括 Pickle Rick 皮肤，伴随 Pickle Rick Cup 竞技赛事（3 月 6 日）。Lantern Fest Cup 同步开启，提供 Nights of Magic Bundle 奖励。Wild Weeks Power Hour 活动（3 月 8 日）提供一小时改良装备模式。<br>
+          <strong>创作者计划：</strong>Epic 邀请精选内容创作者到总部测试未公布的新游戏模式（无细节公开）。<br>
+          <strong>FNCS 2026：</strong>Fortnite Championship Series 宣布超 1000 万美元奖金池，同时首届 Mobile Series 登场。<br>
+          <div class="card-highlight">💡 亮点案例：Epic Games 起诉 Hayden Cohen（泄密者"AdiraFN"），一位合同制助理制作人在任职期间泄露 Fortnite 内容。这标志着内部泄密者被公开起诉的罕见案例，向创作者/泄密生态系统发出关于 IP 保护的强烈信号。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.radiotimes.com/technology/gaming/fortnite-update-today-5-march-2026/">RadioTimes</a> · <a href="https://www.gamespot.com/articles/epic-games-is-suing-a-major-fortnite-leaker/">GameSpot</a> · <a href="https://www.reddit.com/r/FortNiteBR/top">r/FortNiteBR</a> · <a href="https://www.fortnite.com/competitive/">Fortnite Competitive</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">
+          r/Endfield 热帖（via RSS，无 score 数据）：<br>
+          • "Scumbag plot" meme — 角色故事幽默<br>
+          • "Glad most of the girls got practical combat shoes and not all heels" — 角色设计正面讨论<br>
+          • 新角色 Gilberta 和 Susuru 的同人画和玩法片段流行<br>
+          <strong>情绪：</strong>压倒性正面。上线后蜜月期持续；社区庆祝游戏质量和慷慨的 gacha 爆率。
+        </div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">
+          <strong>Version 1.1 "Old Deep Water Dies, by Rising Tide It Is Denied" 于 3 月 12 日上线</strong> — 首个大型内容更新，包含新故事章节、角色 Susuru banner、以及 "Quietly Flows The Spring" 活动。角色 Mi Fu 和 Sarca 将在 v1.2（4 月 20 日）推出。<br>
+          <strong>FIVE TOWERS × ENDFIELD 联动（3 月 6–29 日）：</strong>与日本五大标志性塔楼（东京晴空塔等）合作，提供拍照点和促销周边。Pop-up 商店同步宣布。<br>
+          <div class="card-highlight">💡 亮点案例：Arknights: Endfield 在 1 月 22 日全球上线后两周内移动端收入达 3000 万美元，据 PocketGamer 报道。这验证了 Gryphline 在 2026 年交付高品质 3D gacha 体验的策略，为品类树立新的质量标杆。日本塔楼联动展示激进的本地化营销推进。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.gematsu.com/2026/03/arknights-endfield-version-1-1-update">Gematsu</a> · <a href="https://www.pocketgamer.biz/arknights-endfield-hits-30m-in-two-weeks-on-mobile/">PocketGamer.biz</a> · <a href="https://www.haveagood-holiday.com/en/articles/arknights-endfield-five-towers-collab-march-2026">HaveaGood</a> · <a href="https://www.reddit.com/r/Endfield/top">r/Endfield</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">Version Luna V（2 月 25 日上线）持续中，Varka banner 和蒙德故事线进行中。官方过场动画 "Triumphant Return" 于 3 月 4 日发布。Siliconera 确认 Linnea 为 6 年来首位新冒险家协会角色，将在即将到来的 Luna VI 更新中可玩。Genshin Fes 2026 预告新角色披露（Tartaglia、Arlecchino 更新）。互动主题区联动宣布（门票 3 月 13 日开售）。Reddit Top：Varka 体型梗（12.8k upvotes）、Fischl cosplay（9.3k）。情绪：正面，社区享受当前内容并期待 Linnea。</div>
+        <div class="card-sources">信源：<a href="https://www.gematsu.com/2026/02/genshin-impact-version-luna-v">Gematsu</a> · <a href="https://www.siliconera.com/linnea-becomes-playable-in-genshin-impact-luna-vi-update/">Siliconera</a> · <a href="https://genshin.hoyoverse.com/">HoYoverse</a> · <a href="https://www.reddit.com/r/Genshin_Impact/top">r/Genshin_Impact</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">Version 2.6 "Encore for an Old Dream" 运行至 3 月 24 日。Angels of Delusion 首次直播于 3 月 6 日播出，预告下次重大更新。"Snap! Hollow Realm Showdown" 活动 3 月 9 日开启。ZZZ LIVE 2026 纽约音乐会定于 3 月 21–22 日，周边预订开放。Coca-Cola × FamilyMart 联动宣布（日期待定）。Reddit 围绕 Aria VTuber 模型直播和信赖事件热议。情绪：活跃粉丝群体，活动内容参与度高。</div>
+        <div class="card-sources">信源：<a href="https://zenless.hoyoverse.com/en-us/news">ZZZ Official</a> · <a href="https://www.siliconera.com/zenless-zone-zero-coca-cola-familymart-event-announced/">Siliconera</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero/comments/1q9frv1">r/ZZZ</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">Version 3.1 "Bolt & Blitz!" 活动持续至 3 月 16 日。Version 3.2 Preview Special Broadcast 定于 3 月 13 日 19:00 UTC+8，预计披露新角色 Sigrika 和 Qiuyuan，以及 Phoebe 复刻。V3.2 上线预计 3 月 19 日。"Fantasies of the Thousand Gateways" 限时活动进行中。Cyberpunk: Edgerunners 联动预告 2026 年稍晚推出。Reddit 以同人画为主（Aemeath cosplay、角色作品）。情绪：正面，稳定社区期待 v3.2。</div>
+        <div class="card-sources">信源：<a href="https://www.gematsu.com/2026/01/wuthering-waves-version-3-1-update">Gematsu</a> · <a href="https://wutheringwaves.kurogames.com/en/main/news">Kuro Games</a> · <a href="https://www.reddit.com/r/WutheringWaves/comments/1rm9yr9">r/WutheringWaves</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">官方确认全球上线日期：2026 年 4 月 29 日（中国上线一周后）。平台：PC、iOS、Android、PlayStation 5、Mac（新宣布）。IGN Fan Fest 2026 展示 "Anomaly Hunter's Guide" 预告片。Reddit 社区通过 beta 风景截图和"还有 7 周上线"倒计时帖建立预上线热度。Co-Ex Update Roadmap 在 r/gachagaming 分享。情绪：高度期待，Mac 平台宣布作为 gacha 游戏罕见举措获正面反馈。</div>
+        <div class="card-sources">信源：<a href="https://simulationdaily.com/news/nte-neverness-to-everness-release-date/">SimulationDaily</a> · <a href="https://www.ign.com/videos/nte-neverness-to-everness-official-release-anomaly-hunters-guide-ign-fan-fest-2026">IGN</a> · <a href="https://www.reddit.com/r/NevernessToEverness/comments/1revy7q">r/NTE</a></div>
+      </div>
+
+      <!-- 雷达信号 -->
+      <div class="section-title">🎯 雷达信号</div>
+      <div class="radar-item">
+        <div class="radar-item-name">Etheria Restart</div>
+        <div>新 gacha 游戏在 YouTube 获得报道，描述为虚拟世界 RPG。状态：观察中（本周首次出现）。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Dragon Quest Smash/Grow</div>
+        <div>Square Enix gacha 作品计划 2026 年上线，据 Gematsu 报道。封闭测试定于 2025 年 10 月（现已过去）。状态：观察上线窗口确认。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Dissidia Duellum Final Fantasy</div>
+        <div>Square Enix 移动端格斗 gacha 游戏宣布 2026 年上线。PocketGamer.biz 报道。状态：观察中。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Highguard（关停警报）</div>
+        <div>GaaS 作品将于 2026 年 3 月 12 日永久关停。r/Games 帖子：6.4k upvotes。状态：作为 live-service 失败案例研究。</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 审核提示</strong>
+        <ul>
+          <li>Burst 定性：Marathon（媒体 + 社区争议）、Star Savior（全球上线）— 准确</li>
+          <li>信号等级：Fortnite/Endfield L3（重大事件）、Genshin/ZZZ/WuWa/NTE L2（活跃更新）— 已验证</li>
+          <li>候选池：4 个新 Watching 条目，2 个 Burst 触发已记录于 YAML（见 chat 输出）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-target-lang') === lang);
+      });
+    }
+    (function() {
+      document.documentElement.lang = 'en';
+    })();
+  </script>
+
+  <!-- Wave Summary -->
+  <div id="wave-summary" style="display:none">
+🚨 Burst Alert
+• Marathon (Bungie) — Launched March 5 with $40 price tag but triggered massive backlash over gacha-level predatory MTX (currency shortfall, no Battle Pass refund), peaking at 88K Steam players and prompting Bungie to request delayed reviews.
+• Star Savior (Studiobside) — Korean gacha RPG blending HSR and Umamusume launches globally in March 2026 with Counterside collab, pre-registrations opened Dec 24.
+
+🔍 Core Watch
+• Fortnite — Rick & Morty collab (Pickle Rick skin) + Pickle Rick Cup live, but Epic sued insider leaker AdiraFN (contracted employee) in rare IP protection enforcement, while community reports season fatigue (4.2k upvotes).
+• Arknights: Endfield — First major update v1.1 launches March 12 with new character Susuru, hit $30M mobile revenue in 2 weeks, and running FIVE TOWERS Japan collab (March 6-29).
+• Genshin Impact — Luna V ongoing with Varka banner, Linnea confirmed as first new Adventurer's Guild character in 6 years for Luna VI, Genshin Fes 2026 teased.
+• Zenless Zone Zero — V2.6 running until March 24, Angels of Delusion livestream aired March 6, ZZZ LIVE 2026 NY Concert March 21-22, Coca-Cola x FamilyMart collab announced.
+• Wuthering Waves — V3.1 events ongoing until March 16, V3.2 Preview Broadcast scheduled March 13 (new characters Sigrika/Qiuyuan), Cyberpunk Edgerunners collab teased for 2026.
+• NTE: Neverness to Everness — Global launch confirmed April 29, 2026 (one week after China), Mac platform announced, IGN Fan Fest featured Anomaly Hunter's Guide trailer.
+
+🎯 On the Radar
+• Highguard — GaaS title shutting down March 12, r/Games 6.4k upvotes, marked as live-service failure case study.
+  </div>
+
+  <div id="wave-summary-zh" style="display:none">
+🚨 新品速报
+• Marathon (Bungie) — 3 月 5 日以 40 美元价格上线但因 gacha 级掠夺性 MTX（货币差额、Battle Pass 不返币）引发大规模抵制，Steam 峰值 8.8 万人，促使 Bungie 请求延迟评分。
+• Star Savior (Studiobside) — 韩国 gacha RPG 融合 HSR 和赛马娘，3 月全球上线并推出 Counterside 联动，12 月 24 日开启预注册。
+
+🔍 核心追踪
+• Fortnite — Rick & Morty 联动（Pickle Rick 皮肤）+ Pickle Rick Cup 开启，但 Epic 起诉内部泄密者 AdiraFN（合同员工）进行罕见 IP 保护执法，同时社区报告赛季疲劳（4.2k upvotes）。
+• Arknights: Endfield — 首个大更新 v1.1 于 3 月 12 日上线新角色 Susuru，两周移动端收入达 3000 万美元，日本 FIVE TOWERS 联动进行中（3 月 6-29 日）。
+• Genshin Impact — Luna V 持续中 Varka banner，Linnea 确认为 6 年来首位新冒险家协会角色将在 Luna VI 推出，Genshin Fes 2026 预告。
+• Zenless Zone Zero — V2.6 运行至 3 月 24 日，Angels of Delusion 直播 3 月 6 日播出，ZZZ LIVE 2026 纽约音乐会 3 月 21-22 日，Coca-Cola x FamilyMart 联动宣布。
+• Wuthering Waves — V3.1 活动持续至 3 月 16 日，V3.2 Preview Broadcast 定于 3 月 13 日（新角色 Sigrika/Qiuyuan），Cyberpunk Edgerunners 联动预告 2026 年推出。
+• NTE: Neverness to Everness — 全球上线确认 2026 年 4 月 29 日（中国上线一周后），Mac 平台宣布，IGN Fan Fest 展示 Anomaly Hunter's Guide 预告片。
+
+🎯 雷达信号
+• Highguard — GaaS 作品 3 月 12 日关停，r/Games 6.4k upvotes，标记为 live-service 失败案例研究。
+  </div>
+</body>
+</html>
