@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Marketing Report W12 | 游戏营销周报</title>
+  <style>
+    /* ============================================
+       语言切换核心样式 - 禁止修改
+       ============================================ */
+    [data-lang="zh"] { display: none; }
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="zh"] [data-lang="en"] { display: none; }
+
+    /* ============================================
+       基础重置与字体 - 禁止修改
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f5f6f8;
+    }
+
+    /* ============================================
+       语言切换按钮 - 禁止修改
+       ============================================ */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 7px 18px;
+      border: 1.5px solid #c9d0db;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.18s;
+    }
+    .lang-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+    .lang-btn.active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+
+    /* ============================================
+       页面容器 - 禁止修改
+       ============================================ */
+    .report-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ============================================
+       报告头部 - 禁止修改
+       ============================================ */
+    .report-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+    .report-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 6px;
+    }
+    .report-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ============================================
+       板块标题 - 禁止修改
+       ============================================ */
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 36px 0 12px;
+      padding-left: 11px;
+      border-left: 4px solid #1a73e8;
+    }
+
+    /* ============================================
+       游戏卡片 - 禁止修改
+       ============================================ */
+    .game-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e8ebf0;
+    }
+    .game-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .card-section-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #1a73e8;
+      margin: 20px 0 4px;
+    }
+    .game-card-title + .card-section-label,
+    .burst-card-title + .card-section-label,
+    .burst-card-title ~ [style] + .card-section-label,
+    .burst-trigger-badge + .card-section-label {
+      margin-top: 2px;
+    }
+    .card-body {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.68;
+    }
+    .card-body + .card-body { margin-top: 6px; }
+    .card-highlight {
+      background: #f0f7ff;
+      border-left: 3px solid #1a73e8;
+      border-radius: 0 6px 6px 0;
+      padding: 9px 13px;
+      margin: 8px 0 2px;
+      font-size: 13.5px;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .card-sources {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid #f0f2f5;
+      font-size: 12px;
+      color: #bbb;
+    }
+    .card-sources a { color: #1a73e8; text-decoration: none; }
+    .card-sources a:hover { text-decoration: underline; }
+
+    /* ============================================
+       Burst 快报卡片 - 禁止修改
+       ============================================ */
+    .burst-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1.5px solid #f0b840;
+      box-shadow: 0 1px 4px rgba(240,184,64,0.10);
+    }
+    .burst-card-secondary {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1px solid #e8ebf0;
+      border-left: 3px solid #f0b840;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .burst-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #b8600a;
+      margin-bottom: 4px;
+    }
+    .burst-trigger-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f0b840;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       风险标签 - 禁止修改
+       ============================================ */
+    .risk-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fff0f0;
+      color: #d93025;
+      border: 1px solid #f5c6c6;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================
+       雷达信号板块 - 禁止修改
+       ============================================ */
+    .radar-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border: 1px solid #e8ebf0;
+      font-size: 14px;
+      color: #333;
+    }
+    .radar-item-name {
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================
+       审核提示 - 禁止修改
+       ============================================ */
+    .review-notice {
+      margin-top: 32px;
+      padding: 14px 20px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border: 1px dashed #c9d0db;
+      font-size: 13px;
+      color: #666;
+    }
+    .review-notice ul { padding-left: 18px; margin-top: 6px; }
+    .review-notice li { margin-bottom: 3px; }
+
+    /* ============================================
+       响应式 - 禁止修改
+       ============================================ */
+    @media (max-width: 600px) {
+      .report-container { padding: 32px 14px 60px; }
+      .game-card, .burst-card { padding: 18px 16px; }
+      .lang-switch { top: 12px; right: 12px; }
+      .report-title { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-target-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-target-lang="zh" onclick="switchLang('zh')">中文</button>
+  </div>
+
+  <!-- ==================== EN ==================== -->
+  <div data-lang="en">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 Game Marketing Report · W12</div>
+        <div class="report-meta">2026-03-14 ~ 2026-03-20 · Core: 6 games · Burst: 1 (StarSavior)</div>
+      </div>
+
+      <!-- 🚨 Burst Alert -->
+      <div class="section-title">🚨 New Game Alert</div>
+      <div class="burst-card">
+        <div class="burst-card-title">StarSavior</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Studiobside · Studiobside · Turn-based RPG / Gacha · Android, iOS, PC (Steam) · Global</div>
+        <span class="burst-trigger-badge">GLOBAL LAUNCH</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">StarSavior officially launched global service on March 19, 2026 across Android, iOS, and PC (Steam). The game generated significant pre-launch buzz in the gacha community, with YouTube gacha KOL ByteStix using "the greatest global gacha launch in history" as a promotional headline — notably, this is creator marketing language rather than a community consensus evaluation. A day-one Counter:Side crossover collaboration adds IP synergy from the same developer. Community reception is mixed: gameplay and animation quality are praised, but concerns about the game "trying to do too much" and KR-server launch issues linger.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">Studiobside is a South Korean studio best known for Counter:Side, a well-regarded side-scrolling RPG gacha with a dedicated global following. StarSavior is their second major title. The studio's strategy of cross-IP collaboration at launch (StarSavior x Counter:Side from day one) is a notable self-referential marketing move designed to funnel existing Counter:Side players.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">No public revenue or download data available for the global launch window yet. KR server pre-global revenue was modest. The game launched simultaneously on Steam, which could generate early concurrent player data. Game8 published a first-impression review rating gameplay 8/10.</div>
+        <div class="card-section-label">Community Pulse</div>
+        <div class="card-body">r/gachagaming — "StarSavior has released and begun official service" (633 comments, active discussion). First impressions on r/StarSavior rate art 7/10, gameplay 8/10 with praise for the unique turn-based system. r/Endfield users expressed skepticism, calling it a potential "cash grab." The concurrent r/gachagaming discussion about Endfield pull-tracker malware and gacha security concerns may have cast a shadow on new gacha launches in general. Overall sentiment: cautiously positive with vocal minority concerns.</div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">Multiple YouTube creators covered the launch. ByteStix (gacha KOL) promoted the game on X with the headline "THE GREATEST GLOBAL GACHA LAUNCH IN HISTORY!" — a hyperbolic promotional framing likely tied to sponsored/affiliate content rather than organic community sentiment. Other videos such as "STAR SAVIOR GLOBAL WAS JUST CONFIRMED" also gained traction. Beginner guides and banner recommendation videos appeared within 24 hours of launch.</div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Opportunity: Strong creator buzz and cross-IP collab strategy could drive first-week downloads. The simultaneous Steam launch broadens reach beyond mobile. Risk: KR server had rocky launch issues that could repeat on global. The broader gacha security climate (Endfield malware, Duet Night Abyss hacks) may make players hesitant to try new titles. Early retention data will be critical to monitor.</div>
+        <div class="card-sources">Sources: <a href="https://www.reddit.com/r/gachagaming/comments/1rxu56m/starsavior_has_released_and_begun_official_service/">r/gachagaming: StarSavior launch</a> · <a href="https://game8.co/articles/reviews/star-savior-review">Game8: Star Savior Review</a> · <a href="https://www.rpgsite.net/news/19029-star-savior-global-server-launch-window-set-in-march-2026-pre-registrations-will-open-on-december-24">RPGSite: Star Savior launch announcement</a> · <a href="https://gamingonphone.com/news/all-the-rewards-from-starsavior-x-counterside-collaboration/">GamingOnPhone: StarSavior x Counter:Side</a></div>
+      </div>
+
+      <!-- 🔍 Core Watch List -->
+      <div class="section-title">🔍 Core Watch List</div>
+
+      <!-- Fortnite — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite <span class="risk-tag">V-Bucks Controversy</span></div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">The V-Bucks price increase (effective March 19) ignited a firestorm across r/FortNiteBR. A PCGamer-reported player boycott was planned for March 19. Top posts include "Current state of Fortnite" (9.7k upvotes), bitter farewell to Season 1 (5.3k), and a tracker of "every new collab announced since the bills have gone up" (2.8k). Content creator iTalk publicly cancelled his Crew subscription. Battle Pass V-Bucks were cut from 1,500 to 800, with one user noting Fortnite is "more stingy than gacha games." The Looney Tunes collab (Bugs Bunny in Battle Pass) was a bright spot. Sentiment: heavily negative on monetization, but new season content generated genuine excitement among casual players.</div>
+        <div class="card-section-label">Updates &amp; Marketing</div>
+        <div class="card-body">Chapter 7 Season 2 "Showdown" launched March 19 with v40.00. Players choose Team Foundation or Team Ice King in a faction rivalry mechanic. New Battle Pass features anime-styled Icon skins and Looney Tunes collaboration (Bugs Bunny). Fortnite returned to Google Play worldwide, with a free Yeddy skin for mobile players completing missions. Save the World mode confirmed going free-to-play with Switch 2 launch (April 16). Star Wars island creation tools went live for developers. Epic Games accepted a EUR 1.1M fine over ads targeting children without appeal. PlayStation MrSavage Cup announced for competitive scene.
+          <div class="card-highlight">💡 Highlight: Fortnite's simultaneous Google Play return + new season launch + V-Bucks repricing creates a "triple event" scenario rarely seen in live-service games. The boycott-versus-new-content tension is a textbook case of monetization backlash management.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.fortnite.com/news/showdown-in-the-new-fortnite-battle-royale-season">Fortnite.com: Showdown</a> · <a href="https://www.fortnite.com/news/fortnite-returns-to-google-play-worldwide">Fortnite.com: Google Play Return</a> · <a href="https://www.reddit.com/r/FortNiteBR/comments/1rtrov7/fortnite_streamercontent_creator_italk_cancels/">r/FortNiteBR: iTalk cancels Crew</a> · <a href="https://cybernews.com/gaming/epic-games-eur1-1m-fine-fortnite-ads-kids/">CyberNews: Epic EUR 1.1M fine</a> · <a href="https://dev.epicgames.com/documentation/en-us/fortnite/40-00-fortnite-ecosystem-updates-and-release-notes">Epic Dev: v40.00 Release Notes</a></div>
+      </div>
+
+      <!-- Zenless Zone Zero — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Version 2.7 Special Program livestream dominated discussion, with new agents Nangong Yu and Cissia generating strong hype. r/ZenlessZoneZero top post hit 8.3k upvotes (fan art). The jump button announcement after 2 years (3.6k upvotes) was celebrated as a major QoL win. A ShiningSoul-sponsored streamer was fired for promoting Wuthering Waves during a ZZZ collab stream — this became a cross-community talking point. r/ZZZ_Official showed healthy engagement (4.4k, 4.1k, 4.0k top posts). Sentiment: positive with pre-update excitement, minor controversy around the sponsored streamer incident.</div>
+        <div class="card-section-label">Updates &amp; Marketing</div>
+        <div class="card-body">Version 2.7 "Champions Never Fall to the Past" confirmed for March 24, featuring the Hollow Champion Tournament faction competition. New agents Nangong Yu (demo video released March 20) and Cissia announced with banner details. 2nd anniversary banner reveals generated significant pull planning discussion. PS5/Xbox physical Collector's Edition announced for summer 2026, with pre-orders open — PushSquare and RPGSite both covered this as a notable move for a live-service gacha. HoYoverse taking action against third-party top-up sites.
+          <div class="card-highlight">💡 Highlight: ZZZ's physical retail Collector's Edition for a free-to-play gacha game is an unusual premium brand move that signals HoYoverse's confidence in the IP's collector appeal and retail presence strategy.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://zenless.hoyoverse.com/en-us/news/163136">ZZZ Official: V2.7 Special Program</a> · <a href="https://www.pushsquare.com/news/2026/03/always-online-live-service-ps5-gacha-zenless-zone-zero-is-getting-a-physical-retail-release">PushSquare: ZZZ Physical Release</a> · <a href="https://www.rpgsite.net/news/19876-zenless-zone-zero-physical-release-ps5-xbox-version-2-7-release-date">RPGSite: V2.7 + Physical</a> · <a href="https://zenless.hoyoverse.com/en-us/news/163204">ZZZ Official: Nangong Yu Demo</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero/comments/1rwq2ng/a_live_streamer_from_shiningsoul_was_fired_by_the/">r/ZZZ: ShiningSoul streamer fired</a></div>
+      </div>
+
+      <!-- Wuthering Waves — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Version 3.2 launch on March 19 drove strong community engagement. r/WutheringWaves top posts center on new character Hiyuki (5.6k upvotes) and Sigrika (3.5k). The NEWZOO 2026 report confirming Wuthering Waves as the #1 most-played gacha game on PC worldwide was widely shared across Reddit and X. Samsung Galaxy S26 Ultra promotion video surfaced from the KR team. Xbox port leak via code references (reported by Windows Central, r/GamingLeaksAndRumours) generated cross-platform excitement. Performance issues and RAM usage remain a recurring community concern. Sentiment: strongly positive with milestone celebrations, tempered by optimization complaints.</div>
+        <div class="card-section-label">Updates &amp; Marketing</div>
+        <div class="card-body">Version 3.2 "Resolution to Illuminate the Shadows" launched March 19 with new Resonator Sigrika, four rerun banners, new story chapters, and updated recurrent challenges. GamesPress distributed an official press release. Samsung Galaxy S26 Ultra brand collaboration promotion video launched in Korea. Windows Central reported code hints at an Xbox Series X|S port in development. Cyberpunk: Edgerunners collaboration for Version 3.4 was leaked (Lucy and Rebecca characters), generating massive hype. Kuro Games continues aggressive cross-platform expansion strategy.
+          <div class="card-highlight">💡 Highlight: Wuthering Waves' #1 PC gacha status (NEWZOO 2026) combined with Samsung hardware collab and Xbox port leaks paints a picture of aggressive multi-platform market expansion — a strategy that directly challenges Genshin Impact's cross-platform dominance.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://wutheringwaves.kurogames.com/en/main/news/detail/4447">Kuro Games: V3.2 Patch Notes</a> · <a href="https://www.gamespress.com/en-US/Wuthering-Waves-32-Available-Worldwide-With-New-Resonator-Sigrika-and-">GamesPress: WW 3.2</a> · <a href="https://www.windowscentral.com/gaming/xbox/one-of-the-biggest-genshin-style-hits-on-the-planet-might-finally-be-coming-to-xbox">Windows Central: WW Xbox leak</a> · <a href="https://x.com/ByteStix/status/2032818309503049966">ByteStix/X: NEWZOO #1 PC Gacha</a> · <a href="https://games.gg/wuthering-waves/guides/wuthering-waves-3-2-update-breakdown/">Games.gg: WW 3.2 Breakdown</a></div>
+      </div>
+
+      <!-- Arknights: Endfield — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield <span class="risk-tag">Security Incident</span></div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Version 1.1 update drove a wave of content — r/Endfield top post hit 8.4k upvotes (Tangtang animated fan content). Story discussion praised 1.1's narrative as "well-executed" but noted 1.0's issues persist. The T-credits resource shortage became a viral complaint (2.4k upvotes, 389 comments). A major security incident — third-party pull tracker malware — dominated r/gachagaming discourse, with users discussing broader gacha security fears and some calling for boycotts. An NVIDIA driver compatibility issue prompted an official notice (March 16). YouTube creators debated whether 1.1 is "actually good" with mixed conclusions. Sentiment: community divided between content appreciation and frustration over economy/security issues.</div>
+        <div class="card-section-label">Updates &amp; Marketing</div>
+        <div class="card-body">Version 1.1 went live with new operator Tangtang (Qingbo Stockade), new story content, free pulls, and sanity discount events. The Outerhaven and OpenCritic both covered the update launch. Automaton Media reported a viral gameplay discovery (Jincao's hidden production benefit). The Endfield pull-tracker malware incident cast a shadow — not a developer fault, but the community association with the game's ecosystem is notable. Official NVIDIA driver compatibility notice addressed PC stuttering issues. YouTube content output was high, with reaction videos and tier lists proliferating.
+          <div class="card-highlight">💡 Highlight: The pull-tracker malware incident, while caused by a third-party tool, illustrates the security risks that gacha ecosystems face from unofficial community tools — a growing concern across multiple titles (Endfield, Duet Night Abyss, Infinity Nikki).</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://endfield.gryphline.com/en-us/news/3844">Endfield Official: NVIDIA Driver Notice</a> · <a href="https://www.theouterhaven.net/arknights-endfield-update-1-1-is-live/">The Outerhaven: Endfield 1.1 Live</a> · <a href="https://automaton-media.com/en/news/arknights-endfield-players-in-disbelief-after-waking-up-to-jincaos-lesser-known-benefit-a-game-changer-for-your-xiranite-production-line/">Automaton: Jincao discovery</a> · <a href="https://www.reddit.com/r/gachagaming/comments/1rxrbat/with_the_endfield_pull_tracker_malware_incident/">r/gachagaming: Pull tracker malware</a> · <a href="https://www.reddit.com/r/Endfield/comments/1rtx2f2/my_thoughts_on_arknights_endfields_11_storyline_a/">r/Endfield: 1.1 Story Review</a></div>
+      </div>
+
+      <!-- Genshin Impact — Level 2 -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Version 6.4 Phase 2 continues with the "Void Star's Advent" event wish featuring Skirk (Cryo, 5-star) from March 17. The Universal Beijing Resort x Genshin offline collaboration event was previewed, running March 20 through May 31 (5.7k upvotes on r/Genshin_Impact). "Sightseeing With Friends" photo challenge event is active. Community mood is relaxed and positive — top posts are character appreciation (Varka, Skirk) and nostalgia content. No major controversy or risk signals detected. A minor copyright/Content ID issue was flagged by a streamer but has not escalated.</div>
+        <div class="card-sources">Sources: <a href="https://genshin.hoyoverse.com/en/news/detail/163113">HoYoverse: Skirk Event Wish</a> · <a href="https://www.reddit.com/r/Genshin_Impact/comments/1rx1mjq/universal_beijing_resort_x_genshin_offline_collab/">r/Genshin_Impact: Universal Beijing collab</a> · <a href="https://genshin.hoyoverse.com/en/news/396">Genshin News Hub</a></div>
+      </div>
+
+      <!-- NTE — Level 2 -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">April 29 global launch date continues to build momentum. NVIDIA confirmed NTE as a DLSS 5 launch title at GTC 2026. Tim Cook visited the NTE team in Shanghai, mentioning the game alongside Apple Silicon gaming showcases. MacOS support was officially confirmed. GosuGamers published a positive final CBT impression calling NTE "signs of another gacha hit." The community is focused on optimization concerns (r/NevernessToEverness) and hoping for a Steam launch alongside the mobile/console release. A fan-built database site (everness.info) launched in 9 languages. The gacha security climate (Endfield, DNA, ToF hacks) has the NTE community anxious about launch-window attacks.</div>
+        <div class="card-sources">Sources: <a href="https://www.gosugamers.net/entertainment/news/78099-impressions-neverness-to-everness-final-closed-beta-shows-signs-of-another-gacha-hit">GosuGamers: NTE CBT Impressions</a> · <a href="https://www.nvidia.com/en-us/geforce/news/death-stranding-2-crimson-desert-dlss-4-multi-frame-gen/">NVIDIA: DLSS 5 Titles</a> · <a href="https://www.windowscentral.com/gaming/xbox/one-of-the-biggest-genshin-style-hits-on-the-planet-might-finally-be-coming-to-xbox">Windows Central</a> · <a href="https://www.reddit.com/r/NevernessToEverness/comments/1rxnauw/i_hope_the_nte_devs_is_keeping_a_close_eye_on/">r/NTE: Security concerns</a></div>
+      </div>
+
+      <!-- 🎯 Radar Signals -->
+      <div class="section-title">🎯 Radar Signals</div>
+      <div class="radar-item">
+        <div class="radar-item-name">Marvel Rivals → Active</div>
+        <div>Season 7 major overhaul announced with new hero additions. Promoted from Watching to Active after consecutive signal hits across E-batch (new season) and N-batch (community discussion). TikTok creator coverage gaining traction.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Tower of Fantasy</div>
+        <div>Skin event hacked — attacker promoted Wuthering Waves and ZZZ within the compromised event (1.9k upvotes on r/gachagaming). Part of a broader pattern of gacha ecosystem security incidents this week.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Uma Musume (Pretty Derby)</div>
+        <div>5th Anniversary Campaign Vol. 4 launched March 19. Gacha pickup events active. Steady domestic (JP) signal but limited NA/EU traction.</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Deadlock (Valve)</div>
+        <div>Character-related content going viral on X/Twitter ("blowing up because of a Deadlock character"). Social proxy signal detected in S-batch. Early Watching status.</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 Review Checklist</strong>
+        <ul>
+          <li>Are signal levels (L1/L2/L3) accurately assigned?</li>
+          <li>Are Burst classifications accurate?</li>
+          <li>Does the candidate pool need manual adjustment?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ZH ==================== -->
+  <div data-lang="zh">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 游戏营销周报 · W12</div>
+        <div class="report-meta">2026-03-14 ~ 2026-03-20 · Core: 6 款 · Burst: 1条 (StarSavior)</div>
+      </div>
+
+      <!-- 🚨 新品快报 -->
+      <div class="section-title">🚨 新品快报</div>
+      <div class="burst-card">
+        <div class="burst-card-title">StarSavior</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Studiobside · Studiobside · 回合制 RPG / Gacha · Android, iOS, PC (Steam) · Global</div>
+        <span class="burst-trigger-badge">全球上线</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">StarSavior 于 2026 年 3 月 19 日正式全球上线，覆盖 Android、iOS 和 PC (Steam) 平台。该游戏在 gacha 社区引发了大量关注，YouTube gacha KOL ByteStix 以"史上最强全球 gacha 首发"为标题进行推广——需注意该表述为创作者营销话术，非社区共识评价。上线首日同步推出 Counter:Side 联动活动，实现同开发商 IP 协同。社区反馈褒贬不一：玩法和动画质量获得好评，但也有声音认为游戏"想做的太多"，韩服首发问题也令人担忧。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">Studiobside 是韩国工作室，以 Counter:Side 闻名——一款在全球拥有忠实玩家群体的横版 RPG gacha 游戏。StarSavior 是其第二款主力产品。上线首日即与自家 IP Counter:Side 联动的策略，旨在将现有 Counter:Side 玩家导流至新作。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">全球首发窗口期暂无公开收入或下载数据。韩服预上线期间收入规模有限。游戏同步登陆 Steam，可能产生早期在线人数数据。Game8 发布首发评测，玩法评分 8/10。</div>
+        <div class="card-section-label">社区反应</div>
+        <div class="card-body">r/gachagaming — "StarSavior has released and begun official service"（633 条评论，活跃讨论）。r/StarSavior 首发印象评分：美术 7/10，玩法 8/10，独特回合制系统获得认可。r/Endfield 用户持怀疑态度，有人称其为潜在"圈钱之作"。与此同时 r/gachagaming 关于 Endfield pull tracker 恶意软件和 gacha 安全问题的讨论，可能对新 gacha 游戏的首发氛围产生了负面影响。整体情绪：谨慎乐观，少数声音持批评态度。</div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">多位 YouTube 创作者报道了此次上线。Gacha KOL ByteStix 在 X 平台以"THE GREATEST GLOBAL GACHA LAUNCH IN HISTORY!"为标题进行推广——该夸张表述大概率属于赞助/导流内容，而非有机社区情绪。首发确认视频也获得了较高流量。上线 24 小时内已出现新手指南和卡池推荐视频。</div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">机会：强劲的创作者声量和跨 IP 联动策略有望推动首周下载量。同步上线 Steam 扩展了移动端之外的用户覆盖。风险：韩服首发出现过问题，全球服可能重演。更广泛的 gacha 安全事件（Endfield 恶意软件、Duet Night Abyss 被黑）可能令玩家对新游戏持观望态度。早期留存数据将是关键监测指标。</div>
+        <div class="card-sources">信源：<a href="https://www.reddit.com/r/gachagaming/comments/1rxu56m/starsavior_has_released_and_begun_official_service/">r/gachagaming: StarSavior 上线</a> · <a href="https://game8.co/articles/reviews/star-savior-review">Game8: Star Savior 评测</a> · <a href="https://www.rpgsite.net/news/19029-star-savior-global-server-launch-window-set-in-march-2026-pre-registrations-will-open-on-december-24">RPGSite: 上线公告</a> · <a href="https://gamingonphone.com/news/all-the-rewards-from-starsavior-x-counterside-collaboration/">GamingOnPhone: StarSavior x Counter:Side</a></div>
+      </div>
+
+      <!-- 🔍 长期追踪产品快报 -->
+      <div class="section-title">🔍 长期追踪产品快报</div>
+
+      <!-- Fortnite — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Fortnite <span class="risk-tag">V-Bucks 争议</span></div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">V-Bucks 涨价（3 月 19 日生效）在 r/FortNiteBR 引发了强烈反弹。PCGamer 报道了玩家计划于 3 月 19 日发起抵制行动。热帖包括"Current state of Fortnite"（9.7k upvotes）、对上赛季的告别（5.3k）、以及追踪"涨价后所有新联动"的帖子（2.8k）。内容创作者 iTalk 公开取消了 Crew 订阅。Battle Pass V-Bucks 从 1,500 削减至 800，有用户表示 Fortnite 变得"比 gacha 游戏还抠"。Looney Tunes 联动（Bugs Bunny 进入 Battle Pass）是亮点。整体情绪：对货币化策略强烈不满，但新赛季内容仍令休闲玩家兴奋。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">Chapter 7 Season 2 "Showdown" 于 3 月 19 日上线（v40.00）。玩家选择 Team Foundation 或 Team Ice King 参与阵营对抗。新 Battle Pass 包含动漫风格 Icon 皮肤和 Looney Tunes 联动（Bugs Bunny）。Fortnite 重返 Google Play 全球上架，移动端玩家完成任务可免费解锁 Yeddy 皮肤。Save the World 模式确认将于 4 月 16 日免费开放并登陆 Switch 2。Star Wars 岛屿创作工具向开发者开放。Epic Games 未上诉，接受因针对儿童广告而处的 112.5 万欧元罚款。PlayStation MrSavage Cup 电竞赛事公布。
+          <div class="card-highlight">💡 亮点案例：Fortnite 同时推进 Google Play 回归 + 新赛季上线 + V-Bucks 调价，形成了在 live-service 游戏中极为罕见的"三重事件"叠加。抵制运动与新内容之间的张力，是货币化反弹管理的教科书案例。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.fortnite.com/news/showdown-in-the-new-fortnite-battle-royale-season">Fortnite.com: Showdown</a> · <a href="https://www.fortnite.com/news/fortnite-returns-to-google-play-worldwide">Fortnite.com: Google Play 回归</a> · <a href="https://www.reddit.com/r/FortNiteBR/comments/1rtrov7/fortnite_streamercontent_creator_italk_cancels/">r/FortNiteBR: iTalk 取消 Crew</a> · <a href="https://cybernews.com/gaming/epic-games-eur1-1m-fine-fortnite-ads-kids/">CyberNews: Epic 罚款</a> · <a href="https://dev.epicgames.com/documentation/en-us/fortnite/40-00-fortnite-ecosystem-updates-and-release-notes">Epic Dev: v40.00 更新日志</a></div>
+      </div>
+
+      <!-- Zenless Zone Zero — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">Version 2.7 Special Program 直播成为本周讨论焦点，新角色 Nangong Yu 和 Cissia 引发强烈期待。r/ZenlessZoneZero 热帖达 8.3k upvotes（同人图）。时隔两年终于加入跳跃按钮（3.6k upvotes）被玩家视为重大 QoL 胜利。一名 ShiningSoul 赞助主播在 ZZZ 联动直播中推广鸣潮而被解雇，成为跨社区热议话题。r/ZZZ_Official 互动健康（4.4k、4.1k、4.0k 热帖）。整体情绪：正面，更新前期待值高，赞助主播事件引发小规模争议。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">Version 2.7 "Champions Never Fall to the Past" 确认于 3 月 24 日上线，核心内容为 Hollow Champion Tournament 阵营竞赛。新角色 Nangong Yu（3 月 20 日发布角色演示视频）和 Cissia 公布卡池详情。二周年 banner 公开引发大量抽卡规划讨论。PS5/Xbox 实体版 Collector's Edition 预售开放（夏季 2026 发售），PushSquare 和 RPGSite 均进行了独立报道，将其视为 live-service gacha 游戏的罕见举措。HoYoverse 对第三方充值站采取行动。
+          <div class="card-highlight">💡 亮点案例：ZZZ 为免费 gacha 游戏推出实体零售版 Collector's Edition，是一个不同寻常的高端品牌策略，显示出 HoYoverse 对该 IP 收藏价值和零售渠道布局的信心。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://zenless.hoyoverse.com/en-us/news/163136">ZZZ 官方: V2.7 Special Program</a> · <a href="https://www.pushsquare.com/news/2026/03/always-online-live-service-ps5-gacha-zenless-zone-zero-is-getting-a-physical-retail-release">PushSquare: ZZZ 实体版</a> · <a href="https://www.rpgsite.net/news/19876-zenless-zone-zero-physical-release-ps5-xbox-version-2-7-release-date">RPGSite: V2.7 + 实体版</a> · <a href="https://zenless.hoyoverse.com/en-us/news/163204">ZZZ 官方: Nangong Yu Demo</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero/comments/1rwq2ng/a_live_streamer_from_shiningsoul_was_fired_by_the/">r/ZZZ: 赞助主播被解雇</a></div>
+      </div>
+
+      <!-- Wuthering Waves — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves（鸣潮）</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">Version 3.2 于 3 月 19 日上线推动了社区活跃度。r/WutheringWaves 热帖聚焦新角色 Hiyuki（5.6k upvotes）和 Sigrika（3.5k）。NEWZOO 2026 报告确认鸣潮为全球 PC 端最多玩家的 gacha 游戏（#1），在 Reddit 和 X 平台广泛传播。三星 Galaxy S26 Ultra 宣传视频由韩国团队发布。Xbox 移植通过代码引用泄露（Windows Central、r/GamingLeaksAndRumours 报道），引发跨平台期待。性能问题和内存占用仍是社区反复提及的关注点。整体情绪：强烈正面，里程碑庆祝气氛浓厚，但优化抱怨持续存在。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">Version 3.2 "Resolution to Illuminate the Shadows" 于 3 月 19 日上线，包含新共鸣者 Sigrika、四个复刻卡池、新主线剧情和更新的循环挑战。GamesPress 发布了官方新闻稿。三星 Galaxy S26 Ultra 品牌联动宣传视频在韩国推出。Windows Central 报道代码暗示 Xbox Series X|S 移植正在开发中。Cyberpunk: Edgerunners 联动（Lucy 和 Rebecca 角色）在 Version 3.4 中被泄露，引发巨大期待。Kuro Games 持续推进激进的跨平台扩张策略。
+          <div class="card-highlight">💡 亮点案例：鸣潮 PC 端 gacha 第一（NEWZOO 2026）+ 三星硬件联动 + Xbox 移植泄露，勾勒出一幅激进的多平台市场扩张图景——这一策略直接挑战了原神的跨平台统治地位。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://wutheringwaves.kurogames.com/en/main/news/detail/4447">Kuro Games: V3.2 更新日志</a> · <a href="https://www.gamespress.com/en-US/Wuthering-Waves-32-Available-Worldwide-With-New-Resonator-Sigrika-and-">GamesPress: WW 3.2</a> · <a href="https://www.windowscentral.com/gaming/xbox/one-of-the-biggest-genshin-style-hits-on-the-planet-might-finally-be-coming-to-xbox">Windows Central: WW Xbox 泄露</a> · <a href="https://x.com/ByteStix/status/2032818309503049966">ByteStix/X: NEWZOO #1</a> · <a href="https://games.gg/wuthering-waves/guides/wuthering-waves-3-2-update-breakdown/">Games.gg: WW 3.2</a></div>
+      </div>
+
+      <!-- Arknights: Endfield — Level 3 -->
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield <span class="risk-tag">安全事件</span></div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">Version 1.1 更新带来了内容讨论潮——r/Endfield 热帖达 8.4k upvotes（Tangtang 动画同人内容）。剧情讨论称赞 1.1 叙事"执行到位"，但指出 1.0 遗留问题仍未解决。T-credits 资源紧缺成为病毒式吐槽话题（2.4k upvotes，389 条评论）。重大安全事件——第三方 pull tracker 恶意软件——在 r/gachagaming 引发广泛讨论，用户讨论更广泛的 gacha 安全担忧，部分玩家呼吁抵制。NVIDIA 驱动兼容性问题促使官方于 3 月 16 日发布公告。YouTube 创作者对 1.1 质量的评价褒贬不一。整体情绪：社区在内容好评和经济/安全问题的不满之间分裂。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">Version 1.1 上线，新干员 Tangtang（Qingbo Stockade）、新剧情、免费抽卡和体力折扣活动。The Outerhaven 和 OpenCritic 均报道了更新上线。Automaton Media 报道了一个社区病毒式传播的 gameplay 发现（Jincao 的隐藏生产线效益）。Endfield pull tracker 恶意软件事件虽非开发方责任，但与游戏生态的关联值得关注。NVIDIA 驱动兼容性公告针对 PC 卡顿问题。YouTube 内容产出活跃，反应视频和 tier list 大量涌现。
+          <div class="card-highlight">💡 亮点案例：Pull tracker 恶意软件事件虽由第三方工具引起，但揭示了 gacha 生态系统面临的安全风险——这是一个横跨多款产品的新兴关注点（Endfield、Duet Night Abyss、Infinity Nikki）。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://endfield.gryphline.com/en-us/news/3844">Endfield 官方: NVIDIA 驱动公告</a> · <a href="https://www.theouterhaven.net/arknights-endfield-update-1-1-is-live/">The Outerhaven: Endfield 1.1</a> · <a href="https://automaton-media.com/en/news/arknights-endfield-players-in-disbelief-after-waking-up-to-jincaos-lesser-known-benefit-a-game-changer-for-your-xiranite-production-line/">Automaton: Jincao 发现</a> · <a href="https://www.reddit.com/r/gachagaming/comments/1rxrbat/with_the_endfield_pull_tracker_malware_incident/">r/gachagaming: Pull tracker 恶意软件</a> · <a href="https://www.reddit.com/r/Endfield/comments/1rtx2f2/my_thoughts_on_arknights_endfields_11_storyline_a/">r/Endfield: 1.1 剧情评价</a></div>
+      </div>
+
+      <!-- Genshin Impact — Level 2 -->
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact（原神）</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">Version 6.4 Phase 2 持续推进，"Void Star's Advent" 活动祈愿于 3 月 17 日开启，限定五星角色 Skirk（冰元素）。Universal Beijing Resort x 原神线下联动活动预览发布，活动时间 3 月 20 日至 5 月 31 日（r/Genshin_Impact 获 5.7k upvotes）。"Sightseeing With Friends" 拍照挑战活动进行中。社区氛围轻松正面——热帖以角色鉴赏（Varka、Skirk）和怀旧内容为主。本周未检测到重大争议或风险信号。有主播反馈了轻微的版权/Content ID 问题，但未升级。</div>
+        <div class="card-sources">信源：<a href="https://genshin.hoyoverse.com/en/news/detail/163113">HoYoverse: Skirk 活动祈愿</a> · <a href="https://www.reddit.com/r/Genshin_Impact/comments/1rx1mjq/universal_beijing_resort_x_genshin_offline_collab/">r/Genshin_Impact: 北京环球联动</a> · <a href="https://genshin.hoyoverse.com/en/news/396">原神新闻中心</a></div>
+      </div>
+
+      <!-- NTE — Level 2 -->
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">4 月 29 日全球发售日持续积蓄势能。NVIDIA 在 GTC 2026 确认 NTE 为 DLSS 5 首发支持游戏。Tim Cook 访问上海期间到访 NTE 团队，在帖文中将该游戏与 Apple Silicon 游戏体验一同提及。MacOS 支持正式确认。GosuGamers 发布正面最终 CBT 评测，称 NTE 展现出"又一款 gacha 爆款的迹象"。社区聚焦优化问题（r/NevernessToEverness）并期待 Steam 同步上线。粉丝自建数据库网站 everness.info 以 9 种语言上线。Gacha 安全事件频发（Endfield、DNA、ToF 被黑）令 NTE 社区对上线窗口期的安全问题感到焦虑。</div>
+        <div class="card-sources">信源：<a href="https://www.gosugamers.net/entertainment/news/78099-impressions-neverness-to-everness-final-closed-beta-shows-signs-of-another-gacha-hit">GosuGamers: NTE CBT 评测</a> · <a href="https://www.nvidia.com/en-us/geforce/news/death-stranding-2-crimson-desert-dlss-4-multi-frame-gen/">NVIDIA: DLSS 5 支持</a> · <a href="https://www.windowscentral.com/gaming/xbox/one-of-the-biggest-genshin-style-hits-on-the-planet-might-finally-be-coming-to-xbox">Windows Central</a> · <a href="https://www.reddit.com/r/NevernessToEverness/comments/1rxnauw/i_hope_the_nte_devs_is_keeping_a_close_eye_on/">r/NTE: 安全担忧</a></div>
+      </div>
+
+      <!-- 🎯 雷达信号 -->
+      <div class="section-title">🎯 雷达信号</div>
+      <div class="radar-item">
+        <div class="radar-item-name">Marvel Rivals → Active</div>
+        <div>Season 7 大型重做公布，新增英雄。从 Watching 晋升为 Active，在 E 批（新赛季）和 N 批（社区讨论）连续命中。TikTok 创作者覆盖增长中。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Tower of Fantasy（幻塔）</div>
+        <div>皮肤活动遭黑客攻击——攻击者在被入侵的活动中推广鸣潮和 ZZZ（r/gachagaming 1.9k upvotes）。属于本周 gacha 生态安全事件系列的一部分。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Uma Musume（赛马娘）</div>
+        <div>5 周年活动 Vol. 4 于 3 月 19 日上线，gacha pickup 活动进行中。日本国内信号稳定，但 NA/EU 渗透有限。</div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-item-name">Deadlock (Valve)</div>
+        <div>角色相关内容在 X/Twitter 上病毒式传播（"blowing up because of a Deadlock character"）。S 批检测到社交代理信号。进入早期 Watching 状态。</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 审核提示</strong>
+        <ul>
+          <li>各产品信号等级（L1/L2/L3）判定是否准确？</li>
+          <li>Burst 定性是否准确？</li>
+          <li>候选池是否需要手动调整（晋升/加入）？</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语言切换脚本 -->
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-target-lang') === lang);
+      });
+    }
+    (function() {
+      document.documentElement.lang = 'en';
+    })();
+  </script>
+
+  <!-- Wave 推送摘要块 (EN) -->
+  <div id="wave-summary" style="display:none">
+🚨 Burst Alert
+• StarSavior (Studiobside) — Global launch on March 19 across mobile and Steam, with a day-one Counter:Side crossover collab; community reception is cautiously positive amid broader gacha security concerns.
+
+🔍 Core Watch
+• Fortnite — Chapter 7 Season 2 "Showdown" launched alongside a V-Bucks price increase that triggered a player boycott and creator backlash, while the game simultaneously returned to Google Play worldwide.
+• Zenless Zone Zero — Version 2.7 Special Program revealed new agents Nangong Yu and Cissia plus a PS5/Xbox physical Collector's Edition, an unusual premium move for a free-to-play gacha.
+• Wuthering Waves — Version 3.2 launched March 19 with new Resonator Sigrika; NEWZOO confirmed WuWa as the #1 PC gacha worldwide, and Xbox port code leaks suggest aggressive cross-platform expansion.
+• Arknights: Endfield — Version 1.1 delivered new operator Tangtang and strong story content, but a third-party pull-tracker malware incident dominated community discourse.
+• Genshin Impact — Version 6.4 Phase 2 continues with Skirk banner; Universal Beijing Resort offline collab announced for March-May 2026.
+• NTE: Neverness to Everness — April 29 global launch confirmed; NVIDIA DLSS 5 support and Tim Cook visit signal strong industry backing.
+
+🎯 On the Radar
+• Marvel Rivals — Season 7 overhaul promoted to Active status after consecutive multi-batch signal hits.
+• Tower of Fantasy — Skin event hacked as part of a broader wave of gacha ecosystem security incidents.
+  </div>
+
+  <!-- Wave 推送摘要块 (ZH) -->
+  <div id="wave-summary-zh" style="display:none">
+🚨 新品速报
+• StarSavior (Studiobside) — 3 月 19 日全球上线，覆盖移动端和 Steam，首日联动 Counter:Side；社区反馈谨慎乐观，但受到 gacha 安全事件影响。
+
+🔍 核心追踪
+• Fortnite — Chapter 7 Season 2 "Showdown" 上线同时 V-Bucks 涨价生效，引发玩家抵制和创作者反弹，同期重返 Google Play 全球上架。
+• Zenless Zone Zero — Version 2.7 直播公布新角色 Nangong Yu 和 Cissia，以及 PS5/Xbox 实体版 Collector's Edition，这是免费 gacha 游戏罕见的高端品牌策略。
+• Wuthering Waves（鸣潮）— Version 3.2 于 3 月 19 日上线，新共鸣者 Sigrika；NEWZOO 确认鸣潮为全球 PC 端 gacha 第一，Xbox 移植代码泄露暗示激进跨平台扩张。
+• Arknights: Endfield — Version 1.1 推出新干员 Tangtang 和优质剧情，但第三方 pull tracker 恶意软件事件主导了社区讨论。
+• Genshin Impact（原神）— Version 6.4 Phase 2 持续，Skirk 卡池开放；北京环球影城线下联动活动公布（3-5 月）。
+• NTE: Neverness to Everness — 4 月 29 日全球发售确认；NVIDIA DLSS 5 支持和 Tim Cook 到访彰显强劲行业背书。
+
+🎯 雷达信号
+• Marvel Rivals — Season 7 大型重做，晋升至 Active 状态。
+• Tower of Fantasy（幻塔）— 皮肤活动被黑客攻击，属于本周 gacha 生态安全事件系列。
+  </div>
+</body>
+</html>>
+</body>
+</html>
