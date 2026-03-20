@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Marketing Report W11 | 游戏营销周报</title>
+  <style>
+    /* ============================================
+       语言切换核心样式 - 禁止修改
+       ============================================ */
+    [data-lang="zh"] { display: none; }
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="zh"] [data-lang="en"] { display: none; }
+
+    /* ============================================
+       基础重置与字体 - 禁止修改
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #f5f6f8;
+    }
+
+    /* ============================================
+       语言切换按钮 - 禁止修改
+       ============================================ */
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      padding: 7px 18px;
+      border: 1.5px solid #c9d0db;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.18s;
+    }
+    .lang-btn:hover { border-color: #1a73e8; color: #1a73e8; }
+    .lang-btn.active {
+      background: #1a73e8;
+      color: #fff;
+      border-color: #1a73e8;
+    }
+
+    /* ============================================
+       页面容器 - 禁止修改
+       ============================================ */
+    .report-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ============================================
+       报告头部 - 禁止修改
+       ============================================ */
+    .report-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e0e4ea;
+    }
+    .report-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 6px;
+    }
+    .report-meta {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* ============================================
+       板块标题 - 禁止修改
+       ============================================ */
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 36px 0 12px;
+      padding-left: 11px;
+      border-left: 4px solid #1a73e8;
+    }
+
+    /* ============================================
+       游戏卡片 - 禁止修改
+       ============================================ */
+    .game-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border: 1px solid #e8ebf0;
+    }
+    .game-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+    .card-section-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #1a73e8;
+      margin: 20px 0 4px;
+    }
+    .game-card-title + .card-section-label,
+    .burst-card-title + .card-section-label,
+    .burst-card-title ~ [style] + .card-section-label,
+    .burst-trigger-badge + .card-section-label {
+      margin-top: 2px;
+    }
+    .card-body {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.68;
+    }
+    .card-body + .card-body { margin-top: 6px; }
+    .card-highlight {
+      background: #f0f7ff;
+      border-left: 3px solid #1a73e8;
+      border-radius: 0 6px 6px 0;
+      padding: 9px 13px;
+      margin: 8px 0 2px;
+      font-size: 13.5px;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .card-sources {
+      margin-top: 16px;
+      padding-top: 10px;
+      border-top: 1px solid #f0f2f5;
+      font-size: 12px;
+      color: #bbb;
+    }
+    .card-sources a { color: #1a73e8; text-decoration: none; }
+    .card-sources a:hover { text-decoration: underline; }
+
+    /* ============================================
+       Burst 快报卡片 - 禁止修改
+       ============================================ */
+    .burst-card {
+      background: #fff8f0;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1.5px solid #f0b840;
+      box-shadow: 0 1px 4px rgba(240,184,64,0.10);
+    }
+    .burst-card-secondary {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 26px 18px;
+      margin-bottom: 14px;
+      border: 1px solid #e8ebf0;
+      border-left: 3px solid #f0b840;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .burst-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #b8600a;
+      margin-bottom: 4px;
+    }
+    .burst-trigger-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f0b840;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================
+       风险标签 - 禁止修改
+       ============================================ */
+    .risk-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #fff0f0;
+      color: #d93025;
+      border: 1px solid #f5c6c6;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ============================================
+       雷达信号板块 - 禁止修改
+       ============================================ */
+    .radar-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border: 1px solid #e8ebf0;
+      font-size: 14px;
+      color: #333;
+    }
+    .radar-item-name {
+      font-weight: 700;
+      color: #0d0d0d;
+      margin-bottom: 4px;
+    }
+
+    /* ============================================
+       审核提示 - 禁止修改
+       ============================================ */
+    .review-notice {
+      margin-top: 32px;
+      padding: 14px 20px;
+      background: #f8f9fb;
+      border-radius: 8px;
+      border: 1px dashed #c9d0db;
+      font-size: 13px;
+      color: #666;
+    }
+    .review-notice ul { padding-left: 18px; margin-top: 6px; }
+    .review-notice li { margin-bottom: 3px; }
+
+    /* ============================================
+       响应式 - 禁止修改
+       ============================================ */
+    @media (max-width: 600px) {
+      .report-container { padding: 32px 14px 60px; }
+      .game-card, .burst-card { padding: 18px 16px; }
+      .lang-switch { top: 12px; right: 12px; }
+      .report-title { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-target-lang="en" onclick="switchLang('en')">EN</button>
+    <button class="lang-btn" data-target-lang="zh" onclick="switchLang('zh')">中文</button>
+  </div>
+
+  <!-- 英文内容区块 -->
+  <div data-lang="en">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 Game Marketing Report · W11</div>
+        <div class="report-meta">March 6-13, 2026 · Core: 6 games · Burst: 3</div>
+      </div>
+
+      <!-- 🚨 Burst Alert -->
+      <div class="section-title">🚨 New Game Alert</div>
+      
+      <div class="burst-card">
+        <div class="burst-card-title">Honkai Star Rail × Fortnite Collab</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">HoYoverse · Epic Games · Gacha RPG × Battle Royale · Cross-Platform · Global</div>
+        <span class="burst-trigger-badge">Major Collaboration</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">HoYoverse and Epic Games officially announced a Honkai Star Rail × Fortnite collaboration this week, marking one of the most unexpected gacha-mainstream gaming crossovers of 2026. The announcement generated significant buzz across YouTube (7.2K views within 24 hours on major creator channels), Reddit's r/gachagaming, and X/Twitter. Community sentiment is overwhelmingly positive with "CRAZIEST Gacha collab of all time" reactions, though some fans expressed surprise at the thematic mismatch. This signals HoYoverse's aggressive push into Western mainstream gaming culture and Epic's continued embrace of anime-style IPs.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">HoYoverse (miHoYo) is the Shanghai-based developer behind Genshin Impact, Honkai Star Rail, and Zenless Zone Zero, with estimated 2025 revenue exceeding $4 billion across titles. The studio has historically focused on anime-styled action RPGs and turn-based gacha games. This collaboration with Epic Games represents a strategic pivot toward broader Western audience engagement beyond traditional gacha communities.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">No specific revenue or download data disclosed for the collaboration itself. Honkai Star Rail consistently ranks in Top 50 Grossing on both App Store US and Google Play US. The collaboration announcement coincided with Fortnite Chapter 7 Season 2 teaser period, maximizing cross-promotional reach.</div>
+        <div class="card-section-label">Community Pulse</div>
+        <div class="card-body">Reddit r/gachagaming showed strong positive sentiment with multiple high-engagement threads. YouTube creator TheJonathon's video ("This might just be the CRAZIEST Gacha collab of all time...") garnered 7.2K views in one day with supportive comments. X/Twitter users expressed shock and excitement, with "HSR x Fortnite" trending briefly in gaming circles. No significant negative backlash detected; primary concern was thematic coherence between HSR's sci-fi aesthetic and Fortnite's eclectic style.</div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">Official teaser expected during Fortnite Chapter 7 Season 2 launch (March 19). TheJonathon (sponsored): "This might just be the CRAZIEST Gacha collab of all time..." (7.2K views, 1 day ago). Multiple smaller creators covered the announcement with analysis videos under 5K views each.</div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Collaboration details (exclusive skins, in-game events, cross-promotional rewards) will determine long-term community sentiment. Success metrics include Fortnite player adoption of HSR-themed content and HSR player engagement with Fortnite. This sets a precedent for future gacha × mainstream game collaborations and could influence HoYoverse's strategy for Zenless Zone Zero and Genshin Impact Western market expansion.</div>
+        <div class="card-sources">Sources: <a href="https://www.youtube.com/watch?v=7KN0qua-asw">YouTube (TheJonathon)</a> · <a href="https://www.reddit.com/r/gachagaming">Reddit r/gachagaming</a> · <a href="https://x.com">X/Twitter</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Pokémon Pokopia (Switch 2)</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">The Pokémon Company · Nintendo · Adventure · Switch 2 · Global</div>
+        <span class="burst-trigger-badge">Launch Success</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">Pokémon Pokopia, a Nintendo Switch 2 launch title, sold 2.2 million copies globally in its first four days (March 6-10, 2026). The game went viral on social media with Mashable and other outlets describing it as a "cozy new Pokémon game going viral for its colorful world and gentle gameplay." Reddit r/Games discussion thread reached 1.1K upvotes. The title represents Nintendo's first major new Pokémon IP debut on Switch 2 hardware.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">Developed internally by The Pokémon Company with Nintendo EPD support. This marks a departure from traditional Pokémon mainline mechanics, focusing on exploration and collection rather than competitive battling. Nintendo has historically used Pokémon titles as hardware launch anchors; Pokopia follows this pattern for Switch 2.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">2.2 million units sold in first 4 days (official Nintendo announcement). No digital/physical split disclosed. Switch 2 hardware adoption likely boosted by Pokopia's launch window positioning. No App Store/Google Play presence (exclusive to Switch 2).</div>
+        <div class="card-section-label">Community Pulse</div>
+        <div class="card-body">Reddit r/Games: "Global Sales of Pokémon Pokopia for Nintendo Switch 2 Surpass 2.2 Million in First Four Days" (1.1K upvotes, mostly positive reactions praising art style and accessibility). Mashable article highlighted viral spread on X/Twitter with focus on "colorful world, gentle gameplay, and refreshingly casual approach." No significant controversy detected; community consensus favors the cozy direction.</div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">Official Nintendo trailer on YouTube (view count not disclosed in search results). Multiple gameplay walkthroughs from early access reviewers. IGN and GameSpot coverage expected post-launch week.</div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Sustained sales beyond launch week will indicate whether Pokopia becomes a evergreen title or novelty purchase. Switch 2 install base growth directly impacts Pokopia's ceiling. Potential for DLC/seasonal content updates could extend engagement. Western market reception (particularly NA) will set tone for future cozy Pokémon spinoffs.</div>
+        <div class="card-sources">Sources: <a href="https://nintendo.co.jp">Nintendo Official</a> · <a href="https://www.reddit.com/r/Games">Reddit r/Games</a> · <a href="https://x.com/mashable/status/2031327248498794692">Mashable</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Slay the Spire 2 (Early Access)</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Mega Crit Games · Humble Games · Roguelike Deckbuilder · PC (Steam) · Global</div>
+        <span class="burst-trigger-badge">Launch Surge</span>
+        <div class="card-section-label">Why Now</div>
+        <div class="card-body">Slay the Spire 2 entered Steam Early Access this week and immediately hit 574,638 concurrent players, ranking 20th highest all-time peak on Steam. IGN published an Early Access review, and SteamDB data became a trending topic on Reddit r/Games (3.3K upvotes). The launch signals massive pent-up demand for the sequel to the 2017 roguelike deckbuilder that defined the genre.</div>
+        <div class="card-section-label">Developer Profile</div>
+        <div class="card-body">Mega Crit Games is a small indie studio that developed the original Slay the Spire (2017), which sold over 3 million copies and spawned dozens of genre imitators. The studio has no major publisher backing beyond Humble Games for distribution. Slay the Spire 2 represents their first full sequel after years of post-launch support for the original.</div>
+        <div class="card-section-label">Market Signals</div>
+        <div class="card-body">574,638 concurrent players on Steam (20th highest all-time peak, per SteamDB). No revenue figures disclosed. Steam Early Access pricing and sales data not publicly available. The game dominated Steam's "Top Sellers" chart within 24 hours of launch.</div>
+        <div class="card-section-label">Community Pulse</div>
+        <div class="card-body">Reddit r/Games: "Slay the Spire 2 reached 574,638 concurrent players, making it the 20th highest all-time peak on Steam" (3.3K upvotes, 474 comments). Community sentiment is overwhelmingly positive with discussions focused on gameplay balance and Early Access roadmap. No significant negative feedback beyond typical Early Access "needs polish" remarks. Speedrunning community already organizing competitive leaderboards.</div>
+        <div class="card-section-label">Video Highlights</div>
+        <div class="card-body">IGN Early Access Review video published this week. Multiple Twitch streamers (Northernlion, Baalorlord) began day-one streams with high viewership. YouTube creator coverage growing rapidly with build guides and theorycrafting content.</div>
+        <div class="card-section-label">Signals to Watch</div>
+        <div class="card-body">Early Access retention rates will determine whether the game sustains its initial surge or follows typical Early Access decline patterns. Mega Crit's update cadence and community communication will be critical. Potential for esports/competitive scene given the original's balance-focused design. Western market (especially NA/EU PC gamers) remains core demographic with limited mobile crossover potential.</div>
+        <div class="card-sources">Sources: <a href="https://steamdb.info">SteamDB</a> · <a href="https://www.reddit.com/r/Games/comments/1ro9b7b/">Reddit r/Games</a> · <a href="https://www.ign.com">IGN</a></div>
+      </div>
+
+      <!-- 🔍 Core Watch List -->
+      <div class="section-title">🔍 Core Watch List</div>
+
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Fortnite's subreddit r/FortNiteBR experienced a community firestorm this week following Epic's announcement of V-Bucks price increases and Battle Pass value reductions effective March 19. Top posts included "RIP Fortnite, the end times are here. Thank your creators greed" (3.0K upvotes) and "Hey, Epic! Here's a tip that will lower your bills..." (6.2K upvotes with heavy sarcasm). Players organized subscription cancellations and boycott calls. Sentiment turned sharply negative with accusations of greed despite Fortnite's profitability. IGN covered the backlash with "Fortnite Responds to Fan Uproar Over V-Bucks Changes, as Players Say They'll Skip the Next Battle Pass and Cancel Subscriptions." <span class="risk-tag">Community Backlash</span></div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body">Official announcements: <strong>V-Bucks Price Increase</strong> (March 19 effective date) raises pack prices ~15-20%; Battle Pass cost reduced from 1,000 to 800 V-Bucks but rewards also reduced from 1,500 to 800 V-Bucks earned, eliminating free currency accumulation. <strong>Save the World Goes F2P</strong> on April 16, ending early access after 8+ years; existing Founders retain V-Bucks earning. <strong>Chapter 7 Season 2: Showdown</strong> cinematic trailer dropped, revealing Battle Pass leaks (Bugs Bunny, Ice King via Vice). <strong>Lantern Fest 2026</strong> event introduced 8-player Reload Teams. Despite content richness, pricing controversy overshadowed all marketing efforts. TikTok and YouTube creator coverage focused almost exclusively on the pricing backlash rather than new content.
+          <div class="card-highlight">💡 Highlight: Epic's monetization adjustment demonstrates the razor's edge of live service pricing power—even dominant titles face instant community revolt when perceived value drops, regardless of content quality. The Save the World F2P shift appears timed to soften backlash but risks being interpreted as desperation rather than generosity.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://www.fortnite.com/news/fortnite-v-bucks-price-increase">Fortnite Official</a> · <a href="https://www.reddit.com/r/FortNiteBR/comments/1rqdvom/">Reddit r/FortNiteBR</a> · <a href="https://www.ign.com/articles/fortnite-responds-to-fan-uproar">IGN</a> · <a href="https://www.youtube.com/watch?v=m-c_3degE60">YouTube Official Trailer</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">Social Buzz</div>
+        <div class="card-body">Reddit r/Endfield exploded with activity following the Version 1.1 update launch. Top posts: fanart dominating (7.8K, 7.6K, 7.1K upvotes), "They put the free pulls on the first 3 days of the login event" (4.8K upvotes with strategic timing discussion), and new player lore questions ("For us newer fans, what's the lore behind 'returning characters'?" — 2.1K upvotes). Community sentiment is enthusiastically positive with high engagement on gameplay mechanics, character designs, and factory system updates. New player influx evident from tutorial and beginner guide request threads.</div>
+        <div class="card-section-label">Updates & Marketing</div>
+        <div class="card-body"><strong>Version 1.1 Major Update</strong> launched this week, introducing new operator Tangtang (with reported DPS bug becoming community meme), new explorable region, factory system upgrades, and significant quality-of-life improvements. Official patch notes published on endfield.gryphline.com. YouTube creators immediately produced guide content: "WHAT'S HAPPENING IN VERSION 1.1" (9.6K views, 1 day ago), "Arknights Endfield Just Got a HUGE 1.1 Update!" (Shorts format). Reddit "Version 1.1 Patch Notes" megathread became discussion hub. No major marketing push beyond organic community excitement; growth appears driven by word-of-mouth and original Arknights fanbase migration.
+          <div class="card-highlight">💡 Highlight: Endfield's Version 1.1 demonstrates how substantial content updates can drive organic social engagement without paid marketing—7K+ upvote fanart posts and 9K+ view creator videos emerged within 48 hours purely from community enthusiasm, a model that works best for IPs with pre-existing fanbases.</div>
+        </div>
+        <div class="card-sources">Sources: <a href="https://endfield.gryphline.com/news/8907">Official Patch Notes</a> · <a href="https://www.reddit.com/r/Endfield/comments/1rrh4im/">Reddit r/Endfield</a> · <a href="https://www.youtube.com/watch?v=dylBTaTi7YY">YouTube (Lin-0)</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Version Luna V Phase II launched with new character event wishes and limited-time exploration events ("Homeward, He Who Caught the Wind"). HoYoverse announced receiving $5.3 million in legal damages from multiple lawsuits against leaks, cheats, and counterfeit goods (GameRant coverage). Reddit r/GenshinImpact activity focused on character builds, memes, and Nod-Krai region lore discussions. Community sentiment remains positive with no significant controversies; Redlib access to r/Genshin_Impact was blocked by anti-scraping measures, indicating continued high engagement. Siliconera teased Linnea character for upcoming Luna VI update.</div>
+        <div class="card-sources">Sources: <a href="https://genshin.hoyoverse.com/en/news/detail/163094">HoYoverse Official</a> · <a href="https://gamerant.com/genshin-impact-5-million-damages-leaks-cheats/">GameRant</a> · <a href="https://www.reddit.com/r/GenshinImpact">Reddit</a> · <a href="https://www.siliconera.com/linnea-becomes-playable-in-genshin-impact-luna-vi-update/">Siliconera</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">HoYoverse announced Version 2.7 "Champions Never Fall to the Past" Special Program scheduled for March 14 at 19:30 (UTC+8), teasing the Hollow Champion Tournament storyline. "High Score Card Collector" event goes live March 16-23. Reddit r/ZenlessZoneZero remained highly active with fanart (9.1K upvotes for top post), character gameplay discussions, and community jokes about the "Astra Yao Simulator" being an in-universe adult game (3.8K upvotes). Season 2 content continues driving engagement with Aria/Evelyn characters trending. Overall sentiment positive with strong fanart community.</div>
+        <div class="card-sources">Sources: <a href="https://zenless.hoyoverse.com/en-us/news/163095">ZZZ Official</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero">Reddit r/ZenlessZoneZero</a> · <a href="https://x.com/ZZZ_EN">X @ZZZ_EN</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Kuro Games announced Version 3.2 Preview Special Broadcast for March 13 (today) at 19:00 (UTC+8). With the second anniversary approaching, Hiyuki character drip marketing for Version 3.3 gained traction (31K views on YouTube teaser). Community discussions focused on banner scheduling and upcoming collaboration rumors. Reddit sentiment mixed: excitement for anniversary content balanced against concerns about banner crowding ("Are you gonna pull Sigrika? I feel bad for Sigrika. Her banner is sandwiched..." — 2.2K upvotes). Some players complained about 150GB storage requirements. Overall anticipation high for 3.2 livestream reveal.</div>
+        <div class="card-sources">Sources: <a href="https://x.com/Wuthering_Waves/status/2032290567506252125">Official X/Twitter</a> · <a href="https://www.reddit.com/r/WutheringWaves">Reddit r/WutheringWaves</a> · <a href="https://www.youtube.com/watch?v=RTVJnmdc3kY">YouTube</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">This Week</div>
+        <div class="card-body">Hotta Studio officially confirmed NTE's global release date: April 29, 2026, across PC, Android, iOS, PlayStation 5, and Mac with full cross-platform support. Mac platform support announced via Apple/GDC event coverage, marking rare AAA gacha entry on macOS. Jiuyuan character showcase (wind/Anima type with fast crowd control) posted on X/Twitter. Reddit r/NevernessToEverness discussions centered on pre-registration rewards, beta testing, and apartment system features. GeForce NOW cloud gaming support requests emerging from community. Anticipation building as launch date nears.</div>
+        <div class="card-sources">Sources: <a href="https://lootbar.gg/blog/en/neverness-to-everness-release-date.html">LootBar</a> · <a href="https://x.com/Nonpawn/status/2032202067545133543">X @Nonpawn</a> · <a href="https://www.reddit.com/r/NevernessToEverness">Reddit r/NevernessToEverness</a></div>
+      </div>
+
+      <!-- 🎯 Radar Signals -->
+      <div class="section-title">🎯 Radar Signals</div>
+      
+      <div class="radar-item">
+        <div class="radar-item-name">Mongil: Star Dive (Netmarble)</div>
+        <div>Netmarble confirmed global launch date: April 15, 2026. Gacha/GaaS title entering crowded Q2 market window.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Rainbow Six Mobile (Ubisoft)</div>
+        <div>Full global release completed; PocketGamer reported $1.6M revenue in first 14 days, indicating modest launch performance for major IP.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Battle Cats (PONOS)</div>
+        <div>Demon Slayer collaboration announced for global servers, following successful JP/CN runs. Community anticipation high on Reddit r/gachagaming.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Limbus Company (Project Moon)</div>
+        <div>Anniversary celebrations sparked YouTube discourse ("Limbus Company Exposed the Entire Gacha Industry") on generosity standards and monetization ethics.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Block Blast! (Hungry Studio)</div>
+        <div>Casual puzzle game ranked #1 worldwide by downloads in both January and February 2026 (via Bakersfield / sensor data), demonstrating non-gacha mobile dominance.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Pickmon</div>
+        <div>New creature collector sparked controversy on X/Twitter for closely resembling Palworld, trending briefly in US gaming circles with skepticism about originality.</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Nekopara Sekai Connect</div>
+        <div>Visual novel gacha scheduled for mobile release April 14, 2026 (Android/iOS global). Steam version delayed to Autumn 2026 (Siliconera coverage).</div>
+      </div>
+
+      <!-- Review Notice -->
+      <div class="review-notice">
+        <strong>📌 Review Checklist</strong>
+        <ul>
+          <li>Are signal levels (L1/L2/L3) accurately assigned based on event magnitude, media coverage, and community engagement?</li>
+          <li>Are Burst classifications (HSR×Fortnite collab, Pokopia launch, StS2 Early Access surge) justified by multi-source verification?</li>
+          <li>Does the candidate pool require manual adjustment? Consider promoting Battle Cats (Demon Slayer collab) or Limbus Company (anniversary discourse) to Active status for next week.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 中文内容区块 -->
+  <div data-lang="zh">
+    <div class="report-container">
+      <div class="report-header">
+        <div class="report-title">🎮 游戏营销周报 · W11</div>
+        <div class="report-meta">2026年3月6-13日 · Core: 6 款 · Burst: 3条</div>
+      </div>
+
+      <!-- 🚨 新品快报 -->
+      <div class="section-title">🚨 新品快报</div>
+      
+      <div class="burst-card">
+        <div class="burst-card-title">Honkai Star Rail × Fortnite 联动</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">HoYoverse · Epic Games · Gacha RPG × 大逃杀 · 跨平台 · 全球</div>
+        <span class="burst-trigger-badge">重大联动</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">HoYoverse 与 Epic Games 本周正式宣布 Honkai Star Rail × Fortnite 联动,这是2026年最出人意料的二次元手游与主流游戏跨界合作之一。该消息在 YouTube（头部创作者频道24小时内7.2K观看）、Reddit r/gachagaming、X/Twitter 上引发巨大反响。社区情绪压倒性积极,出现"史上最疯狂gacha联动"等评价,尽管部分粉丝对题材契合度表示意外。此举标志着米哈游向欧美主流游戏文化的激进渗透,以及 Epic 对动漫风格IP的持续拥抱。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">HoYoverse（米哈游）是《原神》《崩坏:星穹铁道》《绝区零》的上海开发商,2025年全产品线预估收入超40亿美元。工作室历史上专注于动漫风格动作RPG和回合制gacha游戏。本次与Epic Games的合作代表了其超越传统gacha社群、面向更广泛西方受众的战略转向。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">联动本身未披露具体营收或下载数据。Honkai Star Rail 持续位列 App Store US 和 Google Play US Top 50 畅销榜。联动公告时机恰逢 Fortnite Chapter 7 Season 2 预热期,最大化跨界推广触达。</div>
+        <div class="card-section-label">社区反应</div>
+        <div class="card-body">Reddit r/gachagaming 呈现强烈正面情绪,多个高互动讨论帖。YouTube 创作者 TheJonathon 的视频（"This might just be the CRAZIEST Gacha collab of all time..."）一天内获7.2K观看,评论区支持为主。X/Twitter 用户表达震惊和兴奋,"HSR x Fortnite"短暂登上游戏圈热搜。无明显负面反弹;主要顾虑在于星铁科幻美学与堡垒夜兼容并蓄风格的题材契合度。</div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">官方预告片预计在 Fortnite Chapter 7 Season 2 发布（3月19日）期间公布。TheJonathon（赞助内容）:"This might just be the CRAZIEST Gacha collab of all time..."（7.2K观看,1天前）。多位中小创作者发布分析视频,单条观看量在5K以下。</div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">联动细节（独占皮肤、游戏内活动、跨平台奖励）将决定长期社区情绪。成功指标包括 Fortnite 玩家对星铁主题内容的采纳率,以及星铁玩家对堡垒夜的参与度。此举为未来gacha × 主流游戏联动树立先例,可能影响米哈游对《绝区零》和《原神》欧美市场扩张策略。</div>
+        <div class="card-sources">信源：<a href="https://www.youtube.com/watch?v=7KN0qua-asw">YouTube (TheJonathon)</a> · <a href="https://www.reddit.com/r/gachagaming">Reddit r/gachagaming</a> · <a href="https://x.com">X/Twitter</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Pokémon Pokopia (Switch 2)</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">The Pokémon Company · Nintendo · 冒险 · Switch 2 · 全球</div>
+        <span class="burst-trigger-badge">首发成功</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">Pokémon Pokopia 作为 Nintendo Switch 2 首发护航作,前四天（3月6-10日）全球销量达220万套。游戏在社交媒体走红,Mashable 等媒体将其描述为"凭借多彩世界和休闲玩法爆红的治愈系宝可梦新作"。Reddit r/Games 讨论帖获1.1K点赞。该作代表任天堂在 Switch 2 硬件上首个重磅宝可梦新IP。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">由 The Pokémon Company 内部开发,Nintendo EPD 提供支持。本作偏离传统宝可梦主线机制,专注探索和收集而非竞技对战。任天堂历史上常用宝可梦作品作为硬件首发锚点;Pokopia 延续了这一 Switch 2 策略。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">前4天销量220万套（任天堂官方公告）。未披露数字/实体销售占比。Switch 2 硬件采纳率可能因 Pokopia 的首发窗口定位而提升。无 App Store/Google Play 版本（Switch 2 独占）。</div>
+        <div class="card-section-label">社区反应</div>
+        <div class="card-body">Reddit r/Games:"Global Sales of Pokémon Pokopia for Nintendo Switch 2 Surpass 2.2 Million in First Four Days"（1.1K点赞,主流正面反应,称赞美术风格和易上手性）。Mashable 文章强调在 X/Twitter 上的病毒式传播,聚焦"多彩世界、温和玩法、令人耳目一新的休闲取向"。未发现明显争议;社区共识支持治愈系方向。</div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">任天堂官方预告片已在 YouTube 发布（搜索结果未显示观看量）。多位早期体验评测者发布流程演示。预计 IGN 和 GameSpot 将在首发周后跟进报道。</div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">首发周后的持续销售将指示 Pokopia 是否成为常青作品或新鲜感消费。Switch 2 装机量增长直接影响 Pokopia 销售天花板。DLC/季节性内容更新潜力可能延长参与度。欧美市场（尤其北美）接受度将为未来治愈系宝可梦衍生作定调。</div>
+        <div class="card-sources">信源：<a href="https://nintendo.co.jp">Nintendo Official</a> · <a href="https://www.reddit.com/r/Games">Reddit r/Games</a> · <a href="https://x.com/mashable/status/2031327248498794692">Mashable</a></div>
+      </div>
+
+      <div class="burst-card-secondary">
+        <div class="burst-card-title">Slay the Spire 2 (抢先体验)</div>
+        <div style="font-size:13px;color:#999;margin-bottom:10px">Mega Crit Games · Humble Games · Roguelike卡组构筑 · PC (Steam) · 全球</div>
+        <span class="burst-trigger-badge">首发激增</span>
+        <div class="card-section-label">为什么现在热</div>
+        <div class="card-body">Slay the Spire 2 本周登陆 Steam 抢先体验,立即达到574,638同时在线玩家,位列 Steam 史上第20高峰值。IGN 发布抢先体验评测,SteamDB 数据成为 Reddit r/Games 热门话题（3.3K点赞）。此次发布标志着对这款定义了 roguelike 卡组构筑类型的2017年游戏续作的巨大积压需求释放。</div>
+        <div class="card-section-label">开发商背景</div>
+        <div class="card-body">Mega Crit Games 是开发了初代《杀戮尖塔》（2017）的小型独立工作室,该作销量超300万份并催生了数十款同类模仿者。工作室除 Humble Games 发行支持外无大型发行商背书。《杀戮尖塔2》是他们在多年持续支持初代后的首部完整续作。</div>
+        <div class="card-section-label">市场信号</div>
+        <div class="card-body">Steam 574,638同时在线（史上第20高峰值,据 SteamDB）。未披露营收数据。Steam 抢先体验定价和销售数据未公开。游戏在上线24小时内霸占 Steam "热销榜"榜首。</div>
+        <div class="card-section-label">社区反应</div>
+        <div class="card-body">Reddit r/Games:"Slay the Spire 2 reached 574,638 concurrent players, making it the 20th highest all-time peak on Steam"（3.3K点赞,474条评论）。社区情绪压倒性积极,讨论聚焦游戏平衡和抢先体验路线图。除典型的抢先体验"需要打磨"评价外无明显负反馈。速通社区已开始组织竞技排行榜。</div>
+        <div class="card-section-label">YouTube 视频</div>
+        <div class="card-body">IGN 抢先体验评测视频本周发布。多位 Twitch 主播（Northernlion、Baalorlord）首日开播并获高观看量。YouTube 创作者报道快速增长,包括 build 指南和理论构筑内容。</div>
+        <div class="card-section-label">值得关注的信号</div>
+        <div class="card-body">抢先体验留存率将决定游戏能否维持初期激增还是遵循典型抢先体验衰减模式。Mega Crit 的更新节奏和社区沟通至关重要。考虑到初代的平衡导向设计,存在电竞/竞技场景潜力。欧美市场（尤其 NA/EU PC 玩家）仍是核心受众,移动端跨界潜力有限。</div>
+        <div class="card-sources">信源：<a href="https://steamdb.info">SteamDB</a> · <a href="https://www.reddit.com/r/Games/comments/1ro9b7b/">Reddit r/Games</a> · <a href="https://www.ign.com">IGN</a></div>
+      </div>
+
+      <!-- 🔍 长期追踪产品 -->
+      <div class="section-title">🔍 长期追踪产品快报</div>
+
+      <div class="game-card">
+        <div class="game-card-title">Fortnite</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">Fortnite 的 Reddit 社区 r/FortNiteBR 本周因 Epic 宣布 V-Bucks 涨价和 Battle Pass 价值削减（3月19日生效）而爆发社区风暴。热帖包括"RIP Fortnite, the end times are here. Thank your creators greed"（3.0K点赞）和"Hey, Epic! Here's a tip that will lower your bills..."（6.2K点赞,充满讽刺）。玩家组织订阅取消和抵制呼吁。情绪急转直下,尽管 Fortnite 盈利能力强劲仍被指责贪婪。IGN 报道了这次反弹:"Fortnite Responds to Fan Uproar Over V-Bucks Changes, as Players Say They'll Skip the Next Battle Pass and Cancel Subscriptions"。<span class="risk-tag">社区反弹</span></div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body">官方公告：<strong>V-Bucks 涨价</strong>（3月19日生效）提价约15-20%;Battle Pass 成本从1,000降至800 V-Bucks,但奖励也从1,500降至800 V-Bucks,消除了免费货币积累机制。<strong>Save the World 转 F2P</strong> 将于4月16日实施,结束8年以上的抢先体验;原有 Founders 保留 V-Bucks 收益权。<strong>Chapter 7 Season 2: Showdown</strong> 过场动画预告片发布,Battle Pass 泄露显示 Bugs Bunny、Ice King（via Vice）。<strong>Lantern Fest 2026</strong> 活动引入8人 Reload Teams。尽管内容丰富,定价争议盖过了所有营销努力。TikTok 和 YouTube 创作者报道几乎全部聚焦定价反弹而非新内容。
+          <div class="card-highlight">💡 亮点案例：Epic 的货币化调整展示了live service 定价权的钢丝绳——即使是占主导地位的产品,当感知价值下降时也会立即面临社区暴动,无论内容质量如何。Save the World 转 F2P 的时机似乎是为软化反弹,但有被解读为绝望而非慷慨的风险。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://www.fortnite.com/news/fortnite-v-bucks-price-increase">Fortnite Official</a> · <a href="https://www.reddit.com/r/FortNiteBR/comments/1rqdvom/">Reddit r/FortNiteBR</a> · <a href="https://www.ign.com/articles/fortnite-responds-to-fan-uproar">IGN</a> · <a href="https://www.youtube.com/watch?v=m-c_3degE60">YouTube Official Trailer</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Arknights: Endfield</div>
+        <div class="card-section-label">社媒热点</div>
+        <div class="card-body">Reddit r/Endfield 在 Version 1.1 更新上线后活跃度爆发。热帖：同人图主导（7.8K、7.6K、7.1K点赞）,"They put the free pulls on the first 3 days of the login event"（4.8K点赞,讨论策略时机）,新玩家 lore 提问（"For us newer fans, what's the lore behind 'returning characters'?" — 2.1K点赞）。社区情绪热情积极,游戏机制、角色设计、工厂系统更新参与度高。新玩家涌入从教程和新手指南需求帖中可见。</div>
+        <div class="card-section-label">内容更新与营销</div>
+        <div class="card-body"><strong>Version 1.1 大版本更新</strong>本周上线,引入新干员 Tangtang（其 DPS bug 成为社区梗）、新探索区域、工厂系统升级、显著的 QoL 改进。官方补丁说明发布于 endfield.gryphline.com。YouTube 创作者立即产出指南内容:"WHAT'S HAPPENING IN VERSION 1.1"（9.6K观看,1天前）,"Arknights Endfield Just Got a HUGE 1.1 Update!"（Shorts 格式）。Reddit "Version 1.1 Patch Notes" 主题帖成为讨论中心。无重大付费营销推广,增长主要靠口碑和原明日方舟粉丝迁移。
+          <div class="card-highlight">💡 亮点案例：Endfield 的 Version 1.1 展示了实质性内容更新如何在无付费营销情况下驱动自发社交互动——7K+ 点赞同人帖和9K+ 观看创作者视频在48小时内纯靠社区热情涌现,这一模式最适合拥有既有粉丝基础的 IP。</div>
+        </div>
+        <div class="card-sources">信源：<a href="https://endfield.gryphline.com/news/8907">Official Patch Notes</a> · <a href="https://www.reddit.com/r/Endfield/comments/1rrh4im/">Reddit r/Endfield</a> · <a href="https://www.youtube.com/watch?v=dylBTaTi7YY">YouTube (Lin-0)</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Genshin Impact</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">Version Luna V Phase II 上线,推出新角色祈愿和限时探索活动（"Homeward, He Who Caught the Wind"）。HoYoverse 宣布在针对泄露、作弊和假货的多起诉讼中获得530万美元法律赔偿（GameRant 报道）。Reddit r/GenshinImpact 活动聚焦角色 build、meme 和 Nod-Krai 地区 lore 讨论。社区情绪保持正面,无重大争议;Redlib 对 r/Genshin_Impact 的访问被反爬虫措施阻止,间接显示持续高参与度。Siliconera 预告了即将到来的 Luna VI 更新中的 Linnea 角色。</div>
+        <div class="card-sources">信源：<a href="https://genshin.hoyoverse.com/en/news/detail/163094">HoYoverse Official</a> · <a href="https://gamerant.com/genshin-impact-5-million-damages-leaks-cheats/">GameRant</a> · <a href="https://www.reddit.com/r/GenshinImpact">Reddit</a> · <a href="https://www.siliconera.com/linnea-becomes-playable-in-genshin-impact-luna-vi-update/">Siliconera</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Zenless Zone Zero</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">HoYoverse 宣布 Version 2.7 "Champions Never Fall to the Past" Special Program 定于3月14日19:30（UTC+8）举行,预告 Hollow Champion Tournament 剧情线。"High Score Card Collector" 活动将于3月16-23日开放。Reddit r/ZenlessZoneZero 保持高活跃度,同人图（热帖9.1K点赞）、角色玩法讨论、关于"Astra Yao Simulator" 是游戏内成人游戏的社区玩笑（3.8K点赞）。Season 2 内容持续驱动参与,Aria/Evelyn 角色热度高。整体情绪正面,同人社区强劲。</div>
+        <div class="card-sources">信源：<a href="https://zenless.hoyoverse.com/en-us/news/163095">ZZZ Official</a> · <a href="https://www.reddit.com/r/ZenlessZoneZero">Reddit r/ZenlessZoneZero</a> · <a href="https://x.com/ZZZ_EN">X @ZZZ_EN</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">Wuthering Waves</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">库洛游戏宣布 Version 3.2 Preview Special Broadcast 定于3月13日（今天）19:00（UTC+8）。随着二周年临近,Version 3.3 的 Hiyuki 角色 drip marketing 获得关注（YouTube 预告31K观看）。社区讨论聚焦卡池排期和即将到来的联动传闻。Reddit 情绪混合:对周年内容的兴奋与对卡池拥挤的担忧并存（"Are you gonna pull Sigrika? I feel bad for Sigrika. Her banner is sandwiched..." — 2.2K点赞）。部分玩家抱怨150GB存储需求。3.2直播公布的整体期待度高。</div>
+        <div class="card-sources">信源：<a href="https://x.com/Wuthering_Waves/status/2032290567506252125">Official X/Twitter</a> · <a href="https://www.reddit.com/r/WutheringWaves">Reddit r/WutheringWaves</a> · <a href="https://www.youtube.com/watch?v=RTVJnmdc3kY">YouTube</a></div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-card-title">NTE: Neverness to Everness</div>
+        <div class="card-section-label">本周动态</div>
+        <div class="card-body">霍塔工作室正式确认 NTE 全球发布日期:2026年4月29日,覆盖 PC、Android、iOS、PlayStation 5 和 Mac,支持完全跨平台。Mac 平台支持通过 Apple/GDC 活动报道宣布,标志着罕见的 AAA gacha 登陆 macOS。Jiuyuan 角色展示（风/Anima 属性,快速群控）发布于 X/Twitter。Reddit r/NevernessToEverness 讨论集中在预注册奖励、beta 测试、公寓系统功能。社区出现 GeForce NOW 云游戏支持请求。上线日期临近,期待值升温。</div>
+        <div class="card-sources">信源：<a href="https://lootbar.gg/blog/en/neverness-to-everness-release-date.html">LootBar</a> · <a href="https://x.com/Nonpawn/status/2032202067545133543">X @Nonpawn</a> · <a href="https://www.reddit.com/r/NevernessToEverness">Reddit r/NevernessToEverness</a></div>
+      </div>
+
+      <!-- 🎯 雷达信号 -->
+      <div class="section-title">🎯 雷达信号</div>
+      
+      <div class="radar-item">
+        <div class="radar-item-name">Mongil: Star Dive (Netmarble)</div>
+        <div>Netmarble 确认全球发布日期:2026年4月15日。Gacha/GaaS 作品进入拥挤的 Q2 市场窗口。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Rainbow Six Mobile (Ubisoft)</div>
+        <div>全球发布完成;PocketGamer 报道首14天营收160万美元,对于大型 IP 而言属于温和首发表现。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Battle Cats (PONOS)</div>
+        <div>Demon Slayer 联动宣布登陆全球服,继成功的 JP/CN 运营后推出。Reddit r/gachagaming 社区期待度高。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Limbus Company (Project Moon)</div>
+        <div>周年庆典引发 YouTube 话语讨论（"Limbus Company Exposed the Entire Gacha Industry"）,涉及慷慨度标准和货币化伦理。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Block Blast! (Hungry Studio)</div>
+        <div>休闲益智游戏在2026年1月和2月均位列全球下载量第一（via Bakersfield / sensor 数据）,展示非 gacha 移动端主导力。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Pickmon</div>
+        <div>新生物收集游戏因酷似 Palworld 在 X/Twitter 引发争议,短暂登上美国游戏圈热搜,原创性遭质疑。</div>
+      </div>
+
+      <div class="radar-item">
+        <div class="radar-item-name">Nekopara Sekai Connect</div>
+        <div>视觉小说 gacha 定于2026年4月14日移动端发布（Android/iOS 全球）。Steam 版本延至2026年秋季（Siliconera 报道）。</div>
+      </div>
+
+      <!-- 审核提示 -->
+      <div class="review-notice">
+        <strong>📌 审核提示</strong>
+        <ul>
+          <li>各产品信号等级（L1/L2/L3）判定是否基于事件规模、媒体覆盖和社区参与准确分配？</li>
+          <li>Burst 定性（HSR×Fortnite 联动、Pokopia 首发、StS2 抢先体验激增）是否有多信源验证支撑？</li>
+          <li>候选池是否需要手动调整？考虑将 Battle Cats（Demon Slayer 联动）或 Limbus Company（周年话语）晋升为下周 Active 状态。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语言切换脚本 -->
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-target-lang') === lang);
+      });
+    }
+    (function() {
+      document.documentElement.lang = 'en';
+    })();
+  </script>
+
+  <!-- Wave 推送摘要块 -->
+  <div id="wave-summary" style="display:none">
+🚨 Burst Alert
+• Honkai Star Rail × Fortnite — HoYoverse and Epic Games announced an unexpected gacha-mainstream collaboration, generating 7.2K+ YouTube views in 24 hours and positive community reactions, signaling aggressive Western market push.
+• Pokémon Pokopia (Switch 2) — Sold 2.2 million copies in first 4 days as Switch 2 launch title, going viral for its cozy gameplay and colorful world with 1.1K+ Reddit upvotes.
+• Slay the Spire 2 — Hit 574,638 concurrent players on Steam Early Access launch, ranking 20th all-time peak with 3.3K+ Reddit discussion engagement.
+
+🔍 Core Watch
+• Fortnite — V-Bucks price increase (March 19) sparked massive community backlash with 6.2K+ upvote protest posts and IGN coverage, overshadowing Chapter 7 Season 2 and Save the World F2P announcements.
+• Arknights: Endfield — Version 1.1 major update drove organic social explosion with 7K+ upvote fanart and 9.6K+ view creator videos within 48 hours, demonstrating IP-driven community engagement power.
+• Genshin Impact — Version Luna V Phase II launched; HoYoverse won $5.3M in legal damages against leaks/cheats; Linnea character teased for Luna VI.
+• Zenless Zone Zero — Version 2.7 Special Program announced for March 14; High Score Card Collector event March 16-23; Season 2 content sustains strong fanart community (9K+ upvotes).
+• Wuthering Waves — Version 3.2 Special Broadcast scheduled for March 13 (today); Hiyuki character drip marketing for 3.3 gained 31K YouTube views; anniversary anticipation high amid banner crowding concerns.
+• NTE: Neverness to Everness — Official launch date confirmed: April 29, 2026, across PC/Android/iOS/PS5/Mac with full cross-platform support; Mac support announced via Apple/GDC event.
+
+🎯 On the Radar
+• Mongil: Star Dive (Netmarble) — Global launch April 15, 2026, entering crowded Q2 gacha market.
+• Battle Cats × Demon Slayer — Collaboration announced for global servers with high Reddit community anticipation.
+• Limbus Company — Anniversary sparked YouTube discourse on gacha industry generosity standards.
+• Block Blast! — Ranked #1 global downloads in Jan-Feb 2026, demonstrating non-gacha mobile dominance.
+  </div>
+
+  <!-- Wave 推送摘要块（中文频道）-->
+  <div id="wave-summary-zh" style="display:none">
+🚨 新品速报
+• Honkai Star Rail × Fortnite — 米哈游与 Epic Games 宣布意外的 gacha-主流游戏联动,24小时内 YouTube 7.2K+观看和积极社区反应,标志着激进的西方市场推进。
+• Pokémon Pokopia (Switch 2) — 作为 Switch 2 首发作品前4天销售220万套,凭借治愈玩法和多彩世界病毒式传播,Reddit 1.1K+点赞。
+• Slay the Spire 2 — Steam 抢先体验首日达574,638同时在线,位列史上第20高峰值,Reddit 讨论3.3K+参与。
+
+🔍 核心追踪
+• Fortnite — V-Bucks 涨价（3月19日）引发大规模社区反弹,6.2K+点赞抗议帖和 IGN 报道,盖过 Chapter 7 Season 2 和 Save the World F2P 公告。
+• Arknights: Endfield — Version 1.1 大版本更新驱动自发社交爆发,48小时内7K+点赞同人和9.6K+观看创作者视频,展示 IP 驱动社区参与力。
+• Genshin Impact — Version Luna V Phase II 上线;米哈游获530万美元泄露/作弊法律赔偿;Linnea 角色 Luna VI 预告。
+• Zenless Zone Zero — Version 2.7 特别节目定于3月14日;High Score Card Collector 活动3月16-23日;Season 2 内容维持强劲同人社区（9K+点赞）。
+• Wuthering Waves — Version 3.2 特别直播定于3月13日（今天）;3.3 Hiyuki 角色 drip marketing 获 YouTube 31K观看;周年期待高涨,伴随卡池拥挤担忧。
+• NTE: Neverness to Everness — 官方确认发布日期:2026年4月29日,覆盖 PC/Android/iOS/PS5/Mac 完全跨平台;Mac 支持通过 Apple/GDC 事件宣布。
+
+🎯 雷达信号
+• Mongil: Star Dive (Netmarble) — 全球发布2026年4月15日,进入拥挤Q2 gacha 市场。
+• Battle Cats × Demon Slayer — 联动宣布登陆全球服,Reddit 社区期待度高。
+• Limbus Company — 周年引发 YouTube 关于 gacha 行业慷慨度标准的话语讨论。
+• Block Blast! — 2026年1-2月全球下载量第一,展示非 gacha 移动端主导力。
+  </div>
+</body>
+</html>
